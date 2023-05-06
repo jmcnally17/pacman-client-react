@@ -15,8 +15,8 @@ const sessionsUrl = process.env.REACT_APP_BACKEND_URL
   ? `${process.env.REACT_APP_BACKEND_URL}/sessions`
   : "http://localhost:9000/sessions";
 
-const redirectUrl = process.env.REACT_APP_BACKEND_URL
-  ? process.env.REACT_APP_BACKEND_URL
+const redirectUrl = process.env.REACT_APP_URL
+  ? process.env.REACT_APP_URL
   : "http://localhost:3000";
 
 export default function Signup() {
