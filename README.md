@@ -6,7 +6,7 @@ The backend API that pairs with this repo can be found at [https://github.com/jm
 
 For a full comprehensive commit history, see the old project repo found at [https://github.com/jmcnally17/pacman(old)](<https://github.com/jmcnally17/pacman(old)>).
 
-[<img src="./images/pacman-play-button.png">](https://pacman-7e4e.onrender.com)
+[<img src="./images/pacman-play-button.png">](https://pacman-btbi.onrender.com)
 
 ### Technologies Used
 
