@@ -1,0 +1,37 @@
+.game {
+  margin: auto;
+}
+
+.info {
+  margin: auto;
+  width: 100%;
+}
+
+.board {
+  margin: auto;
+  width: 100%;
+}
+
+.dpad {
+  display: none;
+}
+
+@media only screen and (min-device-width: 1024px) {
+  .game {
+    height: 90vh;
+    aspect-ratio: 900 / 1050;
+  }
+}
+
+@media only screen and (max-device-width: 1024px) {
+  .dpad {
+    display: inline;
+  }
+
+  .up,
+  .left,
+  .right,
+  .down {
+    cursor: pointer;
+  }
+}

@@ -1,0 +1,22 @@
+.border {
+  height: 30%;
+
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  margin: auto;
+}
+
+.username,
+.password,
+.error-message {
+  margin: auto;
+}
+
+.error-message {
+  color: rgb(251, 72, 72);
+  padding-top: 2%;
+}

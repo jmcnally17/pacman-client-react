@@ -1,0 +1,39 @@
+button {
+  font-size: 3vmin;
+  border-radius: 0.5vmin;
+  padding: 0.3vmin;
+  border: 0.3vmin solid #ccc;
+  cursor: pointer;
+}
+
+.logout-button,
+.login-button,
+.signup-button {
+  background-color: black;
+  color: yellow;
+}
+
+.login-button {
+  margin-right: 5px;
+}
+
+.signup-button {
+  margin-left: 5px;
+}
+
+.title-gif {
+  margin: auto;
+  width: 100%;
+  max-width: 100vmin;
+}
+
+.name-error {
+  color: rgb(251, 72, 72);
+}
+
+.signup-instructions,
+.instructions {
+  color: white;
+  margin: auto;
+  padding: 2vmin;
+}
