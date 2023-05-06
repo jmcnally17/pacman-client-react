@@ -4,7 +4,7 @@ This repository is the client application for my solo Pac-Man project. Players c
 
 The backend API that pairs with this repo can be found at [https://github.com/jmcnally17/pacman-API](https://github.com/jmcnally17/pacman-API).
 
-For a full comprehensive commit history, see the old project repo found at [https://github.com/jmcnally17/pacman(old)](<https://github.com/jmcnally17/pacman(old)>).
+For a full comprehensive commit history, see the old project repo found at [https://github.com/jmcnally17/pacman-old](https://github.com/jmcnally17/pacman-old).
 
 [<img src="./images/pacman-play-button.png">](https://pacman-btbi.onrender.com)
 
