@@ -83,9 +83,7 @@ export default function Signup() {
           throw res;
         }
       })
-      .catch((err) => {
-        setError(err.response.statusText);
-      });
+      .catch((err) => setError(err.response.statusText));
   };
 
   return (
