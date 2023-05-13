@@ -1,17 +1,5 @@
-import makeBoundaries from "./boundaries/makeBoundaries";
-import makePellets from "./pellets/makePellets";
-import makePowerUps from "./powerUps/makePowerUps";
-import makeGhosts from "./ghosts/makeGhosts";
-import makePacman from "./pacman/makePacman";
-import makeCycleTimer from "./timers/makeCycleTimer";
-import makeScaredTimer from "./timers/makeScaredTimer";
-import makeRetreatingTimers from "./timers/makeRetreatingTimers";
-import makeAudioPlayer from "./audio/makeAudioPlayer";
-import finishSetup from "./finishSetup";
-import implementObjects from "./implementObjects";
-import updateDisplay from "./display/updateDisplay";
-import manageGhostAudio from "./audio/manageGhostAudio";
-import makePauseTextImage from "./display/makePauseTextImage";
+import Factory from "./factory/factory";
+import Game from "./game/game";
 
 
 const map = [
@@ -66,26 +54,17 @@ const variables = {
   levelUpCount: 0,
 }
 
-const boundaries = makeBoundaries(map, variables);
-const pellets = makePellets(map, variables);
-const powerUps = makePowerUps(map, variables);
-const ghosts = makeGhosts(variables);
-const pacman = makePacman(variables);
-const cycleTimer = makeCycleTimer(ghosts)
-const scaredTimer = makeScaredTimer(ghosts)
-const retreatingTimers = makeRetreatingTimers(ghosts);
-const audioPlayer = makeAudioPlayer();
-const pauseTextImage = makePauseTextImage();
+const assets = Factory.makeAssets(map, variables);
 
-export default function playGame(player, reactRoot, callbackOne = finishSetup, callbackTwo = implementObjects, callbackThree = updateDisplay, callbackFour = manageGhostAudio) {
+export default function playGame(player, reactRoot) {
   variables.animationId = requestAnimationFrame(playGame);
   const board = document.querySelector("#board");
   const ctx = board.getContext("2d");
   ctx.clearRect(0, 0, board.width, board.height);
   if (variables.start === true) {
-    callbackOne(variables, player, reactRoot, cycleTimer, scaredTimer, retreatingTimers, audioPlayer, pacman, ctx, boundaries, pellets, powerUps, ghosts, pauseTextImage);
+    Game.finishSetup(variables, player, reactRoot, assets, ctx);
   }
-  callbackTwo(boundaries, ghosts, pacman, pellets, powerUps, cycleTimer, scaredTimer, ctx, variables, audioPlayer);
-  callbackThree(variables, pacman);
-  callbackFour(audioPlayer, scaredTimer, retreatingTimers);
+  Game.implementPhysics(assets, ctx, variables);
+  Game.implementGraphics(variables, assets["characters"]["pacman"]);
+  Game.manageGhostAudio(assets);
 };
