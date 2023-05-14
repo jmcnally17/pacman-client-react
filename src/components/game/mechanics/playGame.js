@@ -52,7 +52,7 @@ const variables = {
   visibilityEventListener: null,
   pauseEventListener: null,
   levelUpCount: 0,
-  frameLifetime: 6.25,
+  frameLifetime: 10,
   startTime: null,
 }
 
