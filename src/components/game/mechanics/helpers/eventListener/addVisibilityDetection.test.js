@@ -1,9 +1,9 @@
 import EventListener from "./eventListener";
 import AudioManager from "../audio/audioManager";
-import Timer from "../timers/timer";
+import Timer from "../timer/timer";
 
 jest.mock("../audio/audioManager");
-jest.mock("../timers/timer");
+jest.mock("../timer/timer");
 
 let variables;
 let assets;

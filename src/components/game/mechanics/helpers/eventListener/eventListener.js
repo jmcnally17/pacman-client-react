@@ -1,5 +1,5 @@
 import AudioManager from "../audio/audioManager";
-import Timer from "../timers/timer";
+import Timer from "../timer/timer";
 import Animator from "../graphics/animator/animator";
 
 export default class EventListener {
