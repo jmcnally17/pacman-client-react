@@ -46,15 +46,18 @@ export default class Graphics {
     variables.animationId = requestAnimationFrame(() =>
       runLevelUpAnimation(variables, assets, ctx)
     );
-    Animator.drawLevelUpBoard(ctx, assets["props"]["boundaries"]);
-    if (variables.levelUpCount % 10 === 0 && variables.levelUpCount !== 0)
-      assets["props"]["boundaries"].forEach((boundary) => boundary.flash());
-    variables.levelUpCount++;
-    if (variables.levelUpCount >= 350) {
-      assets["characters"]["pacman"].isLevellingUp = false;
-      cancelAnimationFrame(variables.animationId);
-      variables.level++;
-      PelletManager.resetAfterLevelUp(assets, variables);
+    if (performance.now() - variables.startTime >= variables.frameLifetime) {
+      Animator.drawLevelUpBoard(ctx, assets["props"]["boundaries"]);
+      if (variables.levelUpCount % 10 === 0 && variables.levelUpCount !== 0)
+        assets["props"]["boundaries"].forEach((boundary) => boundary.flash());
+      variables.levelUpCount++;
+      if (variables.levelUpCount >= 350) {
+        assets["characters"]["pacman"].isLevellingUp = false;
+        cancelAnimationFrame(variables.animationId);
+        variables.level++;
+        PelletManager.resetAfterLevelUp(assets, variables);
+      }
+      variables.startTime = performance.now();
     }
   }
 
@@ -67,14 +70,17 @@ export default class Graphics {
     variables.animationId = requestAnimationFrame(() =>
       runDeathAnimation(variables, ctx, assets)
     );
-    Animator.drawBoard(ctx, assets);
-    const pacman = assets["characters"]["pacman"];
-    if (pacman.radians < Math.PI) {
-      pacman.shrink(ctx);
-    } else {
-      pacman.isShrinking = false;
-      cancelAnimationFrame(variables.animationId);
-      GhostCollision.checkPacmanLives(assets, variables, ctx);
+    if (performance.now() - variables.startTime >= variables.frameLifetime) {
+      Animator.drawBoard(ctx, assets);
+      const pacman = assets["characters"]["pacman"];
+      if (pacman.radians < Math.PI) {
+        pacman.shrink(ctx);
+      } else {
+        pacman.isShrinking = false;
+        cancelAnimationFrame(variables.animationId);
+        GhostCollision.checkPacmanLives(assets, variables, ctx);
+      }
+      variables.startTime = performance.now();
     }
   }
 }

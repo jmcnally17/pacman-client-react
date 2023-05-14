@@ -52,6 +52,8 @@ const variables = {
   visibilityEventListener: null,
   pauseEventListener: null,
   levelUpCount: 0,
+  frameLifetime: 6.25,
+  startTime: null,
 }
 
 const assets = Factory.makeAssets(map, variables);
@@ -60,11 +62,15 @@ export default function playGame(player, reactRoot) {
   variables.animationId = requestAnimationFrame(playGame);
   const board = document.querySelector("#board");
   const ctx = board.getContext("2d");
-  ctx.clearRect(0, 0, board.width, board.height);
   if (variables.start === true) {
     Game.finishSetup(variables, player, reactRoot, assets, ctx);
+    variables.startTime = performance.now();
   }
-  Game.implementPhysics(assets, ctx, variables);
-  Game.implementGraphics(variables, assets["characters"]["pacman"]);
-  Game.manageGhostAudio(assets);
+  if (performance.now() - variables.startTime >= variables.frameLifetime) {
+    ctx.clearRect(0, 0, board.width, board.height);
+    Game.implementPhysics(assets, ctx, variables);
+    Game.implementGraphics(variables, assets["characters"]["pacman"]);
+    Game.manageGhostAudio(assets);
+    variables.startTime = performance.now();
+  }
 };
