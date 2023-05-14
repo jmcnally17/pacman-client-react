@@ -1,89 +1,50 @@
-import checkDirectionChange from "./movement/checkDirectionChange";
+import PacmanManager from "./pacmanManager";
+import BoundaryManager from "../boundaries/boundaryManager";
 
-let mockPacman;
-let mockBoundaryOne;
-let mockBoundaryTwo;
-let mockBoundaries;
-let mockVelocity;
-let mockHitBoundaryConditional;
+jest.mock("../boundaries/boundaryManager");
+
+let pacman;
+let boundaryOne;
+let boundaryTwo;
+let boundaries;
+let velocity;
 
 describe("checkDirectionChange", () => {
   beforeEach(() => {
-    mockPacman = {
-      velocity: {
-        x: 20,
-        y: 5,
-      },
-    };
-    mockBoundaryOne = "boundaryOne";
-    mockBoundaryTwo = "boundaryTwo";
-    mockBoundaries = [mockBoundaryOne, mockBoundaryTwo];
-    mockVelocity = {
-      velocity: {
-        x: -5,
-        y: 0,
-      },
-    };
-    mockHitBoundaryConditional = jest.fn();
+    BoundaryManager.mockClear();
+    pacman = { velocity: { x: 20, y: 5 } };
+    boundaryOne = "boundaryOne";
+    boundaryTwo = "boundaryTwo";
+    boundaries = [boundaryOne, boundaryTwo];
+    velocity = { velocity: { x: -5, y: 0 } };
   });
 
   it("calls hitBoundaryConditional for each boundary", () => {
-    checkDirectionChange(
-      mockPacman,
-      mockBoundaries,
-      mockVelocity,
-      mockHitBoundaryConditional
-    );
-    expect(mockHitBoundaryConditional).toHaveBeenCalledTimes(2);
-    expect(mockHitBoundaryConditional).toHaveBeenNthCalledWith(
+    PacmanManager.checkDirectionChange(pacman, boundaries, velocity);
+    expect(BoundaryManager.hitBoundaryConditional).toHaveBeenCalledTimes(2);
+    expect(BoundaryManager.hitBoundaryConditional).toHaveBeenNthCalledWith(
       1,
-      mockPacman,
-      mockBoundaryOne,
-      {
-        velocity: {
-          x: -5,
-          y: 0,
-        },
-      }
+      pacman,
+      boundaryOne,
+      { velocity: { x: -5, y: 0 } }
     );
-    expect(mockHitBoundaryConditional).toHaveBeenNthCalledWith(
+    expect(BoundaryManager.hitBoundaryConditional).toHaveBeenNthCalledWith(
       2,
-      mockPacman,
-      mockBoundaryTwo,
-      {
-        velocity: {
-          x: -5,
-          y: 0,
-        },
-      }
+      pacman,
+      boundaryTwo,
+      { velocity: { x: -5, y: 0 } }
     );
   });
 
   it("changes Pac-Man's velocity when he will not collide with any boundaries", () => {
-    mockHitBoundaryConditional.mockReturnValue(false);
-    checkDirectionChange(
-      mockPacman,
-      mockBoundaries,
-      mockVelocity,
-      mockHitBoundaryConditional
-    );
-    expect(mockPacman.velocity).toEqual({
-      x: -5,
-      y: 0,
-    });
+    BoundaryManager.hitBoundaryConditional.mockReturnValue(false);
+    PacmanManager.checkDirectionChange(pacman, boundaries, velocity);
+    expect(pacman.velocity).toEqual({ x: -5, y: 0 });
   });
 
   it("leaves Pac-Man's velocity unchanged when he will collide with any boundaries", () => {
-    mockHitBoundaryConditional.mockReturnValue(true);
-    checkDirectionChange(
-      mockPacman,
-      mockBoundaries,
-      mockVelocity,
-      mockHitBoundaryConditional
-    );
-    expect(mockPacman.velocity).toEqual({
-      x: 20,
-      y: 5,
-    });
+    BoundaryManager.hitBoundaryConditional.mockReturnValue(true);
+    PacmanManager.checkDirectionChange(pacman, boundaries, velocity);
+    expect(pacman.velocity).toEqual({ x: 20, y: 5 });
   });
 });

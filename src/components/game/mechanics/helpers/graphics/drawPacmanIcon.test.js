@@ -1,11 +1,11 @@
-import drawPacmanIcon from "../../display/drawPacmanIcon";
+import Graphics from "./graphics";
 
-let mockCtx;
-let mockPosition;
+let ctx;
+let position;
 
 describe("drawPacmanIcon", () => {
   beforeEach(() => {
-    mockCtx = {
+    ctx = {
       beginPath: () => undefined,
       arc: () => undefined,
       lineTo: () => undefined,
@@ -13,26 +13,26 @@ describe("drawPacmanIcon", () => {
       fill: () => undefined,
       closePath: () => undefined,
     };
-    mockPosition = {
+    position = {
       x: 580,
       y: 15,
     };
-    jest.spyOn(mockCtx, "beginPath");
-    jest.spyOn(mockCtx, "arc");
-    jest.spyOn(mockCtx, "lineTo");
-    jest.spyOn(mockCtx, "fill");
-    jest.spyOn(mockCtx, "closePath");
+    jest.spyOn(ctx, "beginPath");
+    jest.spyOn(ctx, "arc");
+    jest.spyOn(ctx, "lineTo");
+    jest.spyOn(ctx, "fill");
+    jest.spyOn(ctx, "closePath");
   });
 
   it("calls beginPath on ctx to begin drawing Pac-Man", () => {
-    drawPacmanIcon(mockCtx, mockPosition);
-    expect(mockCtx.beginPath).toHaveBeenCalledTimes(1);
+    Graphics.drawPacmanIcon(ctx, position);
+    expect(ctx.beginPath).toHaveBeenCalledTimes(1);
   });
 
   it("calls arc on ctx to begin drawing Pac-Man", () => {
-    drawPacmanIcon(mockCtx, mockPosition);
-    expect(mockCtx.arc).toHaveBeenCalledTimes(1);
-    expect(mockCtx.arc).toHaveBeenCalledWith(
+    Graphics.drawPacmanIcon(ctx, position);
+    expect(ctx.arc).toHaveBeenCalledTimes(1);
+    expect(ctx.arc).toHaveBeenCalledWith(
       580,
       15,
       15,
@@ -42,23 +42,23 @@ describe("drawPacmanIcon", () => {
   });
 
   it("calls lineTo on ctx to draw Pac-Man's mouth", () => {
-    drawPacmanIcon(mockCtx, mockPosition);
-    expect(mockCtx.lineTo).toHaveBeenCalledTimes(1);
-    expect(mockCtx.lineTo).toHaveBeenCalledWith(575, 15);
+    Graphics.drawPacmanIcon(ctx, position);
+    expect(ctx.lineTo).toHaveBeenCalledTimes(1);
+    expect(ctx.lineTo).toHaveBeenCalledWith(575, 15);
   });
 
   it("sets ctx fillStyle to yellow", () => {
-    drawPacmanIcon(mockCtx, mockPosition);
-    expect(mockCtx.fillStyle).toBe("yellow");
+    Graphics.drawPacmanIcon(ctx, position);
+    expect(ctx.fillStyle).toBe("yellow");
   });
 
   it("calls fill in order to colour the icon in", () => {
-    drawPacmanIcon(mockCtx, mockPosition);
-    expect(mockCtx.fill).toHaveBeenCalledTimes(1);
+    Graphics.drawPacmanIcon(ctx, position);
+    expect(ctx.fill).toHaveBeenCalledTimes(1);
   });
 
   it("calls closePath on ctx to finish the drawing", () => {
-    drawPacmanIcon(mockCtx, mockPosition);
-    expect(mockCtx.closePath).toHaveBeenCalledTimes(1);
+    Graphics.drawPacmanIcon(ctx, position);
+    expect(ctx.closePath).toHaveBeenCalledTimes(1);
   });
 });

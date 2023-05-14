@@ -1,167 +1,76 @@
-import checkLevelUpCondition from "./checkLevelUpCondition";
+import PelletManager from "./pelletManager";
+import Graphics from "../../graphics/graphics";
 
-let mockEatenPellet;
-let mockEatenPellets;
-let mockUneatenPellet;
-let mockUneatenPellets;
-let mockPacman;
-let mockVariables;
-let mockGhosts;
-let mockPowerUps;
-let mockCycleTimer;
-let mockScaredTimer;
-let mockCtx;
-let mockAudioPlayer;
-let mockBoundaries;
-let mockRunLevelUpAnimation;
+jest.mock("../../graphics/graphics");
+
+let eatenPellet;
+let eatenPellets;
+let pellet;
+let pellets;
+let pacman;
+let audioPlayer;
+let assets;
+let variables;
+let ctx;
 
 describe("checkLevelUpCondition", () => {
   beforeEach(() => {
-    mockEatenPellet = {
-      hasBeenEaten: true,
-    };
-    mockEatenPellets = [mockEatenPellet, mockEatenPellet, mockEatenPellet];
-    mockUneatenPellet = {
-      hasBeenEaten: false,
-    };
-    mockUneatenPellets = [mockUneatenPellet, mockUneatenPellet];
-    mockPacman = {
-      isLevellingUp: false,
-    };
-    mockVariables = {
-      animationId: 43,
-      level: 3,
-    };
-    mockGhosts = "ghosts";
-    mockPowerUps = "powerUps";
-    mockCycleTimer = "cycleTimer";
-    mockScaredTimer = "scaredTimer";
-    mockCtx = "ctx";
-    mockAudioPlayer = {
+    Graphics.mockClear();
+    eatenPellet = { hasBeenEaten: true };
+    eatenPellets = [eatenPellet, eatenPellet, eatenPellet];
+    pellet = { hasBeenEaten: false };
+    pellets = [pellet, pellet];
+    pacman = { isLevellingUp: false };
+    audioPlayer = {
       stopGhostAudio: () => undefined,
       playLevelUp: () => undefined,
     };
-    mockBoundaries = "boundaries";
-    mockRunLevelUpAnimation = jest.fn();
+    assets = {
+      props: { pellets: eatenPellets },
+      characters: { pacman: pacman },
+      audioPlayer: audioPlayer,
+    };
+    variables = { animationId: 43, level: 3 };
+    ctx = "ctx";
   });
 
   it("calls cancelAnimationFrame if all pellets have been eaten", () => {
     jest.spyOn(global, "cancelAnimationFrame");
-    checkLevelUpCondition(
-      mockEatenPellets,
-      mockPacman,
-      mockVariables,
-      mockGhosts,
-      mockPowerUps,
-      mockCycleTimer,
-      mockScaredTimer,
-      mockCtx,
-      mockAudioPlayer,
-      mockBoundaries,
-      mockRunLevelUpAnimation
-    );
+    PelletManager.checkLevelUpCondition(assets, variables, ctx);
     expect(cancelAnimationFrame).toHaveBeenCalledTimes(1);
-    expect(cancelAnimationFrame).toHaveBeenCalledWith(
-      mockVariables.animationId
-    );
+    expect(cancelAnimationFrame).toHaveBeenCalledWith(variables.animationId);
   });
 
   it("calls stopGhostAudio on the audioPlayer if all pellets have been eaten", () => {
-    jest.spyOn(mockAudioPlayer, "stopGhostAudio");
-    checkLevelUpCondition(
-      mockEatenPellets,
-      mockPacman,
-      mockVariables,
-      mockGhosts,
-      mockPowerUps,
-      mockCycleTimer,
-      mockScaredTimer,
-      mockCtx,
-      mockAudioPlayer,
-      mockBoundaries,
-      mockRunLevelUpAnimation
-    );
-    expect(mockAudioPlayer.stopGhostAudio).toHaveBeenCalledTimes(1);
+    jest.spyOn(audioPlayer, "stopGhostAudio");
+    PelletManager.checkLevelUpCondition(assets, variables, ctx);
+    expect(audioPlayer.stopGhostAudio).toHaveBeenCalledTimes(1);
   });
 
   it("calls playLevelUp on the audioPlayer if all pellets have been eaten", () => {
-    jest.spyOn(mockAudioPlayer, "playLevelUp");
-    checkLevelUpCondition(
-      mockEatenPellets,
-      mockPacman,
-      mockVariables,
-      mockGhosts,
-      mockPowerUps,
-      mockCycleTimer,
-      mockScaredTimer,
-      mockCtx,
-      mockAudioPlayer,
-      mockBoundaries,
-      mockRunLevelUpAnimation
-    );
-    expect(mockAudioPlayer.playLevelUp).toHaveBeenCalledTimes(1);
+    jest.spyOn(audioPlayer, "playLevelUp");
+    PelletManager.checkLevelUpCondition(assets, variables, ctx);
+    expect(audioPlayer.playLevelUp).toHaveBeenCalledTimes(1);
   });
 
   it("changes isLevellingUp in Pac-Man to true if all pellets have been eaten", () => {
-    checkLevelUpCondition(
-      mockEatenPellets,
-      mockPacman,
-      mockVariables,
-      mockGhosts,
-      mockPowerUps,
-      mockCycleTimer,
-      mockScaredTimer,
-      mockCtx,
-      mockAudioPlayer,
-      mockBoundaries,
-      mockRunLevelUpAnimation
-    );
-    expect(mockPacman.isLevellingUp).toBeTruthy();
+    PelletManager.checkLevelUpCondition(assets, variables, ctx);
+    expect(pacman.isLevellingUp).toBeTruthy();
   });
 
   it("calls runLevelUpAnimation if all pellets have been eaten", () => {
-    checkLevelUpCondition(
-      mockEatenPellets,
-      mockPacman,
-      mockVariables,
-      mockGhosts,
-      mockPowerUps,
-      mockCycleTimer,
-      mockScaredTimer,
-      mockCtx,
-      mockAudioPlayer,
-      mockBoundaries,
-      mockRunLevelUpAnimation
-    );
-    expect(mockRunLevelUpAnimation).toHaveBeenCalledTimes(1);
-    expect(mockRunLevelUpAnimation).toHaveBeenCalledWith(
-      mockVariables,
-      mockPacman,
-      mockGhosts,
-      mockEatenPellets,
-      mockPowerUps,
-      mockCycleTimer,
-      mockScaredTimer,
-      mockCtx,
-      mockBoundaries,
-      mockAudioPlayer
+    PelletManager.checkLevelUpCondition(assets, variables, ctx);
+    expect(Graphics.runLevelUpAnimation).toHaveBeenCalledTimes(1);
+    expect(Graphics.runLevelUpAnimation).toHaveBeenCalledWith(
+      variables,
+      assets,
+      ctx
     );
   });
 
   it("does not call runLevelUpAnimation if all pellets have not been eaten", () => {
-    checkLevelUpCondition(
-      mockUneatenPellets,
-      mockPacman,
-      mockVariables,
-      mockGhosts,
-      mockPowerUps,
-      mockCycleTimer,
-      mockScaredTimer,
-      mockCtx,
-      mockAudioPlayer,
-      mockBoundaries,
-      mockRunLevelUpAnimation
-    );
-    expect(mockRunLevelUpAnimation).toHaveBeenCalledTimes(0);
+    assets["props"]["pellets"] = pellets;
+    PelletManager.checkLevelUpCondition(assets, variables, ctx);
+    expect(Graphics.runLevelUpAnimation).toHaveBeenCalledTimes(0);
   });
 });

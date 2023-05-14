@@ -1,127 +1,63 @@
-import implementPowerUps from "./powerUps/implementPowerUps";
+import Physics from "./physics";
+import PowerUpManager from "./powerUps/powerUpManager";
 
-let mockUneatenPowerUp;
-let mockUneatenPowerUps;
-let mockEatenPowerUp;
-let mockEatenPowerUps;
-let mockCtx;
-let mockPacman;
-let mockVariables;
-let mockGhosts;
-let mockScaredTimer;
-let mockCycleTimer;
-let mockEatPowerUp;
+jest.mock("./powerUps/powerUpManager");
+
+let powerUp;
+let assets;
+let ctx;
+let variables;
 
 describe("implementPowerUps", () => {
   beforeEach(() => {
-    mockUneatenPowerUp = {
-      hasBeenEaten: false,
-      update: () => undefined,
-    };
-    mockUneatenPowerUps = [
-      mockUneatenPowerUp,
-      mockUneatenPowerUp,
-      mockUneatenPowerUp,
-    ];
-    mockEatenPowerUp = {
-      hasBeenEaten: true,
-      update: () => undefined,
-    };
-    mockEatenPowerUps = [mockEatenPowerUp, mockEatenPowerUp];
-    jest.spyOn(mockUneatenPowerUp, "update");
-    jest.spyOn(mockEatenPowerUp, "update");
-    mockCtx = "ctx";
-    mockPacman = "pacman";
-    mockVariables = "variables";
-    mockGhosts = "ghosts";
-    mockScaredTimer = "scaredTimer";
-    mockCycleTimer = "cycleTimer";
-    mockEatPowerUp = jest.fn();
+    PowerUpManager.mockClear();
+    powerUp = { hasBeenEaten: false, update: () => undefined };
+    assets = { props: { powerUps: [powerUp, powerUp, powerUp] } };
+    ctx = "ctx";
+    variables = "variables";
+    jest.spyOn(powerUp, "update");
   });
 
   it("calls update on each power up if they have not been eaten", () => {
-    implementPowerUps(
-      mockUneatenPowerUps,
-      mockCtx,
-      mockPacman,
-      mockVariables,
-      mockGhosts,
-      mockScaredTimer,
-      mockCycleTimer,
-      mockEatPowerUp
-    );
-    expect(mockUneatenPowerUp.update).toHaveBeenCalledTimes(3);
-    expect(mockUneatenPowerUp.update).toHaveBeenNthCalledWith(1, mockCtx);
-    expect(mockUneatenPowerUp.update).toHaveBeenNthCalledWith(2, mockCtx);
-    expect(mockUneatenPowerUp.update).toHaveBeenNthCalledWith(3, mockCtx);
+    Physics.implementPowerUps(assets, ctx, variables);
+    expect(powerUp.update).toHaveBeenCalledTimes(3);
+    expect(powerUp.update).toHaveBeenNthCalledWith(1, ctx);
+    expect(powerUp.update).toHaveBeenNthCalledWith(2, ctx);
+    expect(powerUp.update).toHaveBeenNthCalledWith(3, ctx);
   });
 
   it("does not call update on each power up if they have been eaten", () => {
-    implementPowerUps(
-      mockEatenPowerUps,
-      mockCtx,
-      mockPacman,
-      mockVariables,
-      mockGhosts,
-      mockScaredTimer,
-      mockCycleTimer,
-      mockEatPowerUp
-    );
-    expect(mockEatenPowerUp.update).toHaveBeenCalledTimes(0);
+    powerUp.hasBeenEaten = true;
+    Physics.implementPowerUps(assets, ctx, variables);
+    expect(powerUp.update).toHaveBeenCalledTimes(0);
   });
 
   it("calls eatPowerUp on each power up if they have not been eaten", () => {
-    implementPowerUps(
-      mockUneatenPowerUps,
-      mockCtx,
-      mockPacman,
-      mockVariables,
-      mockGhosts,
-      mockScaredTimer,
-      mockCycleTimer,
-      mockEatPowerUp
-    );
-    expect(mockEatPowerUp).toHaveBeenCalledTimes(3);
-    expect(mockEatPowerUp).toHaveBeenNthCalledWith(
+    Physics.implementPowerUps(assets, ctx, variables);
+    expect(PowerUpManager.eatPowerUp).toHaveBeenCalledTimes(3);
+    expect(PowerUpManager.eatPowerUp).toHaveBeenNthCalledWith(
       1,
-      mockUneatenPowerUp,
-      mockPacman,
-      mockVariables,
-      mockGhosts,
-      mockScaredTimer,
-      mockCycleTimer
+      powerUp,
+      assets,
+      variables
     );
-    expect(mockEatPowerUp).toHaveBeenNthCalledWith(
+    expect(PowerUpManager.eatPowerUp).toHaveBeenNthCalledWith(
       2,
-      mockUneatenPowerUp,
-      mockPacman,
-      mockVariables,
-      mockGhosts,
-      mockScaredTimer,
-      mockCycleTimer
+      powerUp,
+      assets,
+      variables
     );
-    expect(mockEatPowerUp).toHaveBeenNthCalledWith(
+    expect(PowerUpManager.eatPowerUp).toHaveBeenNthCalledWith(
       3,
-      mockUneatenPowerUp,
-      mockPacman,
-      mockVariables,
-      mockGhosts,
-      mockScaredTimer,
-      mockCycleTimer
+      powerUp,
+      assets,
+      variables
     );
   });
 
   it("does not call eatPowerUp on each power up if they have been eaten", () => {
-    implementPowerUps(
-      mockEatenPowerUps,
-      mockCtx,
-      mockPacman,
-      mockVariables,
-      mockGhosts,
-      mockScaredTimer,
-      mockCycleTimer,
-      mockEatPowerUp
-    );
-    expect(mockEatPowerUp).toHaveBeenCalledTimes(0);
+    powerUp.hasBeenEaten = true;
+    Physics.implementPowerUps(assets, ctx, variables);
+    expect(PowerUpManager.eatPowerUp).toHaveBeenCalledTimes(0);
   });
 });

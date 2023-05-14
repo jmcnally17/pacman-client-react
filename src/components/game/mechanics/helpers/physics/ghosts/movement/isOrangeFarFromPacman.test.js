@@ -1,47 +1,25 @@
-import isOrangeFarFromPacman from "./chaseAndScatter/isOrangeFarFromPacman";
+import GhostMovement from "./ghostMovement";
 
-let mockVariables;
+let variables;
 
 describe("isOrangeFarFromPacman", () => {
   beforeEach(() => {
-    mockVariables = {
-      tileLength: 32,
-    };
+    variables = { tileLength: 32 };
   });
 
   it("returns true if the orange ghost is more than eight squares away from Pac-Man", () => {
-    const mockOrangeGhost = {
-      position: {
-        x: 300,
-        y: 190,
-      },
-    };
-    const mockPacman = {
-      position: {
-        x: 50,
-        y: 560,
-      },
-    };
+    const orangeGhost = { position: { x: 300, y: 190 } };
+    const pacman = { position: { x: 50, y: 560 } };
     expect(
-      isOrangeFarFromPacman(mockOrangeGhost, mockPacman, mockVariables)
+      GhostMovement.isOrangeFarFromPacman(orangeGhost, pacman, variables)
     ).toBeTruthy();
   });
 
   it("returns false if the orange ghost is less than eight squares away from Pac-Man", () => {
-    const mockOrangeGhost = {
-      position: {
-        x: 300,
-        y: 190,
-      },
-    };
-    const mockPacman = {
-      position: {
-        x: 210,
-        y: 230,
-      },
-    };
+    const orangeGhost = { position: { x: 300, y: 190 } };
+    const pacman = { position: { x: 210, y: 230 } };
     expect(
-      isOrangeFarFromPacman(mockOrangeGhost, mockPacman, mockVariables)
+      GhostMovement.isOrangeFarFromPacman(orangeGhost, pacman, variables)
     ).toBeFalsy();
   });
 });

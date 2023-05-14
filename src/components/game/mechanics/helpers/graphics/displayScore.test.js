@@ -1,36 +1,36 @@
-import displayScore from "../../display/displayScore";
+import Graphics from "./graphics";
 
-let mockCtx;
-let mockVariables;
+let ctx;
+let variables;
 
 describe("displayScore", () => {
   beforeEach(() => {
-    mockCtx = {
+    ctx = {
       fillStyle: null,
       textAlign: null,
       fillText: () => undefined,
     };
-    mockVariables = {
+    variables = {
       score: 3590,
     };
   });
 
   it("changes the ctx fillStyle to white", () => {
-    displayScore(mockCtx, mockVariables);
-    expect(mockCtx.fillStyle).toBe("white");
+    Graphics.displayScore(ctx, variables);
+    expect(ctx.fillStyle).toBe("white");
   });
 
   it("changes the ctx textAlign to left", () => {
-    displayScore(mockCtx, mockVariables);
-    expect(mockCtx.textAlign).toBe("left");
+    Graphics.displayScore(ctx, variables);
+    expect(ctx.textAlign).toBe("left");
   });
 
   it("calls fillText on ctx to render the score text", () => {
-    jest.spyOn(mockCtx, "fillText");
-    displayScore(mockCtx, mockVariables);
-    expect(mockCtx.fillText).toHaveBeenCalledTimes(1);
-    expect(mockCtx.fillText).toHaveBeenCalledWith(
-      `Score: ${mockVariables.score}`,
+    jest.spyOn(ctx, "fillText");
+    Graphics.displayScore(ctx, variables);
+    expect(ctx.fillText).toHaveBeenCalledTimes(1);
+    expect(ctx.fillText).toHaveBeenCalledWith(
+      `Score: ${variables.score}`,
       10,
       15
     );

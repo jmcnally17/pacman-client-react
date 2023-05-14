@@ -1,143 +1,123 @@
-import calculateDistance from "./calculateDistance";
+import GhostMovement from "./ghostMovement";
 
-let mockPacman;
-let mockGhost;
-let mockPathwayOne;
-let mockPathwayTwo;
-let mockPathways;
-let mockVariables;
-let mockRedGhost;
-let mockAddCoordinates;
-let mockChase;
-let mockScatter;
-let mockCalculateHypotenuse;
+let assets;
+let ghost;
+let pathwayOne;
+let pathwayTwo;
+let pathways;
+let variables;
+let addCoordinates;
+let chase;
+let scatter;
+let calculateHypotenuse;
 
 describe("calculateDistance", () => {
   beforeEach(() => {
-    mockPacman = "pacman";
-    mockGhost = "ghost";
-    mockPathwayOne = "pathwayOne";
-    mockPathwayTwo = "pathwayTwo";
-    mockPathways = [mockPathwayOne, mockPathwayTwo];
-    mockVariables = "variables";
-    mockRedGhost = "redGhost";
-    mockAddCoordinates = jest.fn();
-    mockChase = jest.fn();
-    mockScatter = jest.fn();
-    mockCalculateHypotenuse = jest.fn();
+    assets = "assets";
+    ghost = "ghost";
+    pathwayOne = "pathwayOne";
+    pathwayTwo = "pathwayTwo";
+    pathways = [pathwayOne, pathwayTwo];
+    variables = "variables";
+    addCoordinates = jest.fn();
+    chase = jest.fn();
+    scatter = jest.fn();
+    calculateHypotenuse = jest.fn();
   });
 
   it("calls addCoordinates", () => {
-    calculateDistance(
-      mockPacman,
-      mockGhost,
-      mockPathways,
-      mockVariables,
-      mockRedGhost,
-      mockAddCoordinates,
-      mockChase,
-      mockScatter,
-      mockCalculateHypotenuse
+    GhostMovement.calculateDistance(
+      assets,
+      ghost,
+      pathways,
+      variables,
+      addCoordinates,
+      chase,
+      scatter,
+      calculateHypotenuse
     );
-    expect(mockAddCoordinates).toHaveBeenCalledTimes(2);
-    expect(mockAddCoordinates).toHaveBeenNthCalledWith(
+    expect(addCoordinates).toHaveBeenCalledTimes(2);
+    expect(addCoordinates).toHaveBeenNthCalledWith(
       1,
-      mockPathwayOne,
-      mockGhost,
-      mockVariables
+      pathwayOne,
+      ghost,
+      variables
     );
-    expect(mockAddCoordinates).toHaveBeenNthCalledWith(
+    expect(addCoordinates).toHaveBeenNthCalledWith(
       2,
-      mockPathwayTwo,
-      mockGhost,
-      mockVariables
+      pathwayTwo,
+      ghost,
+      variables
     );
   });
 
   it("calls chase if the ghost is chasing", () => {
-    const mockChasingGhost = {
-      isChasing: true,
-    };
-    calculateDistance(
-      mockPacman,
-      mockChasingGhost,
-      mockPathways,
-      mockVariables,
-      mockRedGhost,
-      mockAddCoordinates,
-      mockChase,
-      mockScatter,
-      mockCalculateHypotenuse
+    const chasingGhost = { isChasing: true };
+    GhostMovement.calculateDistance(
+      assets,
+      chasingGhost,
+      pathways,
+      variables,
+      addCoordinates,
+      chase,
+      scatter,
+      calculateHypotenuse
     );
-    expect(mockChase).toHaveBeenCalledTimes(2);
-    expect(mockChase).toHaveBeenNthCalledWith(
+    expect(chase).toHaveBeenCalledTimes(2);
+    expect(chase).toHaveBeenNthCalledWith(
       1,
-      mockChasingGhost,
-      mockPathwayOne,
-      mockPacman,
-      mockVariables,
-      mockRedGhost
+      chasingGhost,
+      pathwayOne,
+      assets,
+      variables
     );
-    expect(mockChase).toHaveBeenNthCalledWith(
+    expect(chase).toHaveBeenNthCalledWith(
       2,
-      mockChasingGhost,
-      mockPathwayTwo,
-      mockPacman,
-      mockVariables,
-      mockRedGhost
+      chasingGhost,
+      pathwayTwo,
+      assets,
+      variables
     );
   });
 
   it("calls scatter if the ghost is not chasing", () => {
-    const mockScatteringGhost = {
-      isChasing: false,
-    };
-    calculateDistance(
-      mockPacman,
-      mockScatteringGhost,
-      mockPathways,
-      mockVariables,
-      mockRedGhost,
-      mockAddCoordinates,
-      mockChase,
-      mockScatter,
-      mockCalculateHypotenuse
+    const scatteringGhost = { isChasing: false };
+    GhostMovement.calculateDistance(
+      assets,
+      scatteringGhost,
+      pathways,
+      variables,
+      addCoordinates,
+      chase,
+      scatter,
+      calculateHypotenuse
     );
-    expect(mockScatter).toHaveBeenCalledTimes(2);
-    expect(mockScatter).toHaveBeenNthCalledWith(
-      1,
-      mockScatteringGhost,
-      mockPathwayOne
-    );
-    expect(mockScatter).toHaveBeenNthCalledWith(
-      2,
-      mockScatteringGhost,
-      mockPathwayTwo
-    );
+    expect(scatter).toHaveBeenCalledTimes(2);
+    expect(scatter).toHaveBeenNthCalledWith(1, scatteringGhost, pathwayOne);
+    expect(scatter).toHaveBeenNthCalledWith(2, scatteringGhost, pathwayTwo);
   });
 
   it("calls calculateHypotenus", () => {
-    calculateDistance(
-      mockPacman,
-      mockGhost,
-      mockPathways,
-      mockVariables,
-      mockRedGhost,
-      mockAddCoordinates,
-      mockChase,
-      mockScatter,
-      mockCalculateHypotenuse
+    GhostMovement.calculateDistance(
+      assets,
+      ghost,
+      pathways,
+      variables,
+      addCoordinates,
+      chase,
+      scatter,
+      calculateHypotenuse
     );
-    expect(mockCalculateHypotenuse).toHaveBeenCalledTimes(2);
-    expect(mockCalculateHypotenuse).toHaveBeenNthCalledWith(
+    expect(calculateHypotenuse).toHaveBeenCalledTimes(2);
+    expect(calculateHypotenuse).toHaveBeenNthCalledWith(
       1,
       undefined,
-      mockPathwayOne
+      pathwayOne
     );
-    expect(mockCalculateHypotenuse).toHaveBeenNthCalledWith(
+    expect(calculateHypotenuse).toHaveBeenNthCalledWith(
       2,
       undefined,
-      mockPathwayTwo
+      pathwayTwo
     );
   });
 });

@@ -38,40 +38,28 @@ export default class GhostManager {
       if (
         !collisions.includes("down") &&
         BoundaryManager.hitBoundaryConditional(ghost, boundary, {
-          velocity: {
-            x: 0,
-            y: ghost.speed,
-          },
+          velocity: { x: 0, y: ghost.speed },
         })
       ) {
         collisions.push("down");
       } else if (
         !collisions.includes("right") &&
         BoundaryManager.hitBoundaryConditional(ghost, boundary, {
-          velocity: {
-            x: ghost.speed,
-            y: 0,
-          },
+          velocity: { x: ghost.speed, y: 0 },
         })
       ) {
         collisions.push("right");
       } else if (
         !collisions.includes("left") &&
         BoundaryManager.hitBoundaryConditional(ghost, boundary, {
-          velocity: {
-            x: -ghost.speed,
-            y: 0,
-          },
+          velocity: { x: -ghost.speed, y: 0 },
         })
       ) {
         collisions.push("left");
       } else if (
         !collisions.includes("up") &&
         BoundaryManager.hitBoundaryConditional(ghost, boundary, {
-          velocity: {
-            x: 0,
-            y: -ghost.speed,
-          },
+          velocity: { x: 0, y: -ghost.speed },
         })
       ) {
         collisions.push("up");

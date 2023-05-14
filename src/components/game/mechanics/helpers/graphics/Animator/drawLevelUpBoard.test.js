@@ -1,12 +1,12 @@
-import drawLevelUpBoard from "./drawLevelUpBoard";
+import Animator from "./animator";
 
-let mockCtx;
-let mockBoundary;
-let mockBoundaries;
+let ctx;
+let boundary;
+let boundaries;
 
 describe("drawLevelUpBoard", () => {
   beforeEach(() => {
-    mockCtx = {
+    ctx = {
       clearRect: () => undefined,
       font: undefined,
       fillStyle: undefined,
@@ -14,36 +14,36 @@ describe("drawLevelUpBoard", () => {
       textBaseline: undefined,
       fillText: () => undefined,
     };
-    mockBoundary = {
+    boundary = {
       draw: () => undefined,
     };
-    mockBoundaries = [mockBoundary, mockBoundary, mockBoundary];
+    boundaries = [boundary, boundary, boundary];
   });
 
   it("calls clearRect on ctx with the board dimensions", () => {
-    jest.spyOn(mockCtx, "clearRect");
-    drawLevelUpBoard(mockCtx, mockBoundaries);
-    expect(mockCtx.clearRect).toHaveBeenCalledTimes(1);
-    expect(mockCtx.clearRect).toHaveBeenCalledWith(0, 0, 896, 992);
+    jest.spyOn(ctx, "clearRect");
+    Animator.drawLevelUpBoard(ctx, boundaries);
+    expect(ctx.clearRect).toHaveBeenCalledTimes(1);
+    expect(ctx.clearRect).toHaveBeenCalledWith(0, 0, 896, 992);
   });
 
   it("calls draw on all the boundaries", () => {
-    jest.spyOn(mockBoundary, "draw");
-    drawLevelUpBoard(mockCtx, mockBoundaries);
-    expect(mockBoundary.draw).toHaveBeenCalledTimes(3);
-    expect(mockBoundary.draw).toHaveBeenNthCalledWith(1, mockCtx);
-    expect(mockBoundary.draw).toHaveBeenNthCalledWith(2, mockCtx);
-    expect(mockBoundary.draw).toHaveBeenNthCalledWith(3, mockCtx);
+    jest.spyOn(boundary, "draw");
+    Animator.drawLevelUpBoard(ctx, boundaries);
+    expect(boundary.draw).toHaveBeenCalledTimes(3);
+    expect(boundary.draw).toHaveBeenNthCalledWith(1, ctx);
+    expect(boundary.draw).toHaveBeenNthCalledWith(2, ctx);
+    expect(boundary.draw).toHaveBeenNthCalledWith(3, ctx);
   });
 
   it("uses ctx to display the level up text on the board", () => {
-    jest.spyOn(mockCtx, "fillText");
-    drawLevelUpBoard(mockCtx, mockBoundaries);
-    expect(mockCtx.font).toBe("40px Arial");
-    expect(mockCtx.fillStyle).toBe("yellow");
-    expect(mockCtx.textAlign).toBe("center");
-    expect(mockCtx.textBaseline).toBe("middle");
-    expect(mockCtx.fillText).toHaveBeenCalledTimes(1);
-    expect(mockCtx.fillText).toHaveBeenCalledWith("Level Up!", 448, 560);
+    jest.spyOn(ctx, "fillText");
+    Animator.drawLevelUpBoard(ctx, boundaries);
+    expect(ctx.font).toBe("40px Arial");
+    expect(ctx.fillStyle).toBe("yellow");
+    expect(ctx.textAlign).toBe("center");
+    expect(ctx.textBaseline).toBe("middle");
+    expect(ctx.fillText).toHaveBeenCalledTimes(1);
+    expect(ctx.fillText).toHaveBeenCalledWith("Level Up!", 448, 560);
   });
 });

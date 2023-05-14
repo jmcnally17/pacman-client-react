@@ -1,250 +1,109 @@
-import dealWithCollision from "./dealWithCollision";
+import GhostCollision from "./ghostCollision";
+import Graphics from "../../../graphics/graphics";
 
-let mockGhost;
-let mockScaredGhost;
-let mockPacman;
-let mockVariables;
-let mockGhosts;
-let mockPellets;
-let mockPowerUps;
-let mockCycleTimer;
-let mockScaredTimer;
-let mockAudioPlayer;
-let mockCtx;
-let mockBoundaries;
-let mockRunDeathAnimation;
+jest.mock("../../../graphics/graphics");
 
-describe("dealWithCollision", () => {
+let ghost;
+let scaredGhost;
+let pacman;
+let audioPlayer;
+let assets;
+let variables;
+let ctx;
+
+describe("GhostCollision.dealWithCollision", () => {
   beforeEach(() => {
-    mockGhost = {
+    Graphics.mockClear();
+    ghost = {
       isScared: false,
       isRetreating: false,
       reset: () => undefined,
     };
-    mockScaredGhost = {
+    scaredGhost = {
       isScared: true,
       changeScaredState: () => undefined,
       isRetreating: false,
       changeRetreatingState: () => undefined,
-      retreatingTimer: {
-        start: () => undefined,
-      },
+      retreatingTimer: { start: () => undefined },
     };
-    mockPacman = {
-      radians: Math.PI / 24,
-      isShrinking: false,
-    };
-    mockVariables = {
-      score: 100,
-      killCount: 2,
-      animationId: 97,
-    };
-    mockGhosts = "ghosts";
-    mockPellets = "pellets";
-    mockPowerUps = "powerUps";
-    mockCycleTimer = "cycleTimer";
-    mockScaredTimer = "scaredTimer";
-    mockAudioPlayer = {
+    pacman = { radians: Math.PI / 24, isShrinking: false };
+    audioPlayer = {
       stopGhostAudio: () => undefined,
       playPacmanDeath: () => undefined,
     };
-    mockCtx = "ctx";
-    mockBoundaries = "boundaries";
-    mockRunDeathAnimation = jest.fn();
-    jest.spyOn(mockScaredGhost, "changeRetreatingState");
-    jest.spyOn(mockScaredGhost.retreatingTimer, "start");
-    jest.spyOn(mockScaredGhost, "changeScaredState");
+    assets = { characters: { pacman: pacman }, audioPlayer: audioPlayer };
+    variables = { score: 100, killCount: 2, animationId: 97 };
+    ctx = "ctx";
+    jest.spyOn(scaredGhost, "changeRetreatingState");
+    jest.spyOn(scaredGhost.retreatingTimer, "start");
+    jest.spyOn(scaredGhost, "changeScaredState");
   });
 
   it("sets the radians in Pac-Man to PI / 4 if the ghost is not scared or retreating", () => {
-    dealWithCollision(
-      mockGhost,
-      mockPacman,
-      mockVariables,
-      mockGhosts,
-      mockPellets,
-      mockPowerUps,
-      mockCycleTimer,
-      mockScaredTimer,
-      mockAudioPlayer,
-      mockCtx,
-      mockBoundaries,
-      mockRunDeathAnimation
-    );
-    expect(mockPacman.radians).toBe(Math.PI / 4);
+    GhostCollision.dealWithCollision(ghost, assets, variables, ctx);
+    expect(pacman.radians).toBe(Math.PI / 4);
   });
 
   it("calls cancelAnimationFrame if the ghost is not scared or retreating", () => {
     jest.spyOn(global, "cancelAnimationFrame");
-    dealWithCollision(
-      mockGhost,
-      mockPacman,
-      mockVariables,
-      mockGhosts,
-      mockPellets,
-      mockPowerUps,
-      mockCycleTimer,
-      mockScaredTimer,
-      mockAudioPlayer,
-      mockCtx,
-      mockBoundaries,
-      mockRunDeathAnimation
-    );
+    GhostCollision.dealWithCollision(ghost, assets, variables, ctx);
     expect(cancelAnimationFrame).toHaveBeenCalledTimes(1);
-    expect(cancelAnimationFrame).toHaveBeenCalledWith(
-      mockVariables.animationId
-    );
+    expect(cancelAnimationFrame).toHaveBeenCalledWith(variables.animationId);
   });
 
   it("calls stopGhostAudio on the audioPlayer if the ghost is not scared or retreating", () => {
-    jest.spyOn(mockAudioPlayer, "stopGhostAudio");
-    dealWithCollision(
-      mockGhost,
-      mockPacman,
-      mockVariables,
-      mockGhosts,
-      mockPellets,
-      mockPowerUps,
-      mockCycleTimer,
-      mockScaredTimer,
-      mockAudioPlayer,
-      mockCtx,
-      mockBoundaries,
-      mockRunDeathAnimation
-    );
-    expect(mockAudioPlayer.stopGhostAudio).toHaveBeenCalledTimes(1);
+    jest.spyOn(audioPlayer, "stopGhostAudio");
+    GhostCollision.dealWithCollision(ghost, assets, variables, ctx);
+    expect(audioPlayer.stopGhostAudio).toHaveBeenCalledTimes(1);
   });
 
   it("calls playPacmanDeath on the audioPlayer if the ghost is not scared or retreating", () => {
-    jest.spyOn(mockAudioPlayer, "playPacmanDeath");
-    dealWithCollision(
-      mockGhost,
-      mockPacman,
-      mockVariables,
-      mockGhosts,
-      mockPellets,
-      mockPowerUps,
-      mockCycleTimer,
-      mockScaredTimer,
-      mockAudioPlayer,
-      mockCtx,
-      mockBoundaries,
-      mockRunDeathAnimation
-    );
-    expect(mockAudioPlayer.playPacmanDeath).toHaveBeenCalledTimes(1);
+    jest.spyOn(audioPlayer, "playPacmanDeath");
+    GhostCollision.dealWithCollision(ghost, assets, variables, ctx);
+    expect(audioPlayer.playPacmanDeath).toHaveBeenCalledTimes(1);
   });
 
   it("changes isShrinking in Pac-Man to true if the ghost is not scared or retreating", () => {
-    dealWithCollision(
-      mockGhost,
-      mockPacman,
-      mockVariables,
-      mockGhosts,
-      mockPellets,
-      mockPowerUps,
-      mockCycleTimer,
-      mockScaredTimer,
-      mockAudioPlayer,
-      mockCtx,
-      mockBoundaries,
-      mockRunDeathAnimation
-    );
-    expect(mockPacman.isShrinking).toBeTruthy();
+    GhostCollision.dealWithCollision(ghost, assets, variables, ctx);
+    expect(pacman.isShrinking).toBeTruthy();
   });
 
   it("calls runDeathAnimation if the ghost is not scared or retreating", () => {
-    dealWithCollision(
-      mockGhost,
-      mockPacman,
-      mockVariables,
-      mockGhosts,
-      mockPellets,
-      mockPowerUps,
-      mockCycleTimer,
-      mockScaredTimer,
-      mockAudioPlayer,
-      mockCtx,
-      mockBoundaries,
-      mockRunDeathAnimation
-    );
-    expect(mockRunDeathAnimation).toHaveBeenCalledTimes(1);
-    expect(mockRunDeathAnimation).toHaveBeenCalledWith(
-      mockVariables,
-      mockCtx,
-      mockBoundaries,
-      mockPellets,
-      mockPowerUps,
-      mockPacman,
-      mockGhosts,
-      mockCycleTimer,
-      mockScaredTimer,
-      mockAudioPlayer
+    GhostCollision.dealWithCollision(ghost, assets, variables, ctx);
+    expect(Graphics.runDeathAnimation).toHaveBeenCalledTimes(1);
+    expect(Graphics.runDeathAnimation).toHaveBeenCalledWith(
+      variables,
+      ctx,
+      assets
     );
   });
 
   it("increases the score and kill count if the ghost is scared", () => {
-    dealWithCollision(
-      mockScaredGhost,
-      mockPacman,
-      mockVariables,
-      mockGhosts,
-      mockPellets,
-      mockPowerUps,
-      mockCycleTimer,
-      mockScaredTimer,
-      mockAudioPlayer,
-      mockCtx,
-      mockBoundaries,
-      mockRunDeathAnimation
-    );
-    expect(mockVariables.score).toBe(900);
-    expect(mockVariables.killCount).toBe(3);
+    GhostCollision.dealWithCollision(scaredGhost, assets, variables, ctx);
+    expect(variables.score).toBe(900);
+    expect(variables.killCount).toBe(3);
   });
 
   it("sends the ghost into retreating mode if the ghost is scared", () => {
-    dealWithCollision(
-      mockScaredGhost,
-      mockPacman,
-      mockVariables,
-      mockGhosts,
-      mockPellets,
-      mockPowerUps,
-      mockCycleTimer,
-      mockScaredTimer,
-      mockAudioPlayer,
-      mockCtx,
-      mockBoundaries,
-      mockRunDeathAnimation
-    );
-    expect(mockScaredGhost.changeRetreatingState).toHaveBeenCalledTimes(1);
-    expect(mockScaredGhost.retreatingTimer.start).toHaveBeenCalledTimes(1);
-    expect(mockScaredGhost.changeScaredState).toHaveBeenCalledTimes(1);
+    GhostCollision.dealWithCollision(scaredGhost, assets, variables, ctx);
+    expect(scaredGhost.changeRetreatingState).toHaveBeenCalledTimes(1);
+    expect(scaredGhost.retreatingTimer.start).toHaveBeenCalledTimes(1);
+    expect(scaredGhost.changeScaredState).toHaveBeenCalledTimes(1);
   });
 
   it("has no effect when the ghost is retreating", () => {
-    const mockRetreatingGhost = {
-      isScared: false,
-      isRetreating: true,
-    };
-    dealWithCollision(
+    const mockRetreatingGhost = { isScared: false, isRetreating: true };
+    GhostCollision.dealWithCollision(
       mockRetreatingGhost,
-      mockPacman,
-      mockVariables,
-      mockGhosts,
-      mockPellets,
-      mockPowerUps,
-      mockCycleTimer,
-      mockScaredTimer,
-      mockAudioPlayer,
-      mockCtx,
-      mockBoundaries,
-      mockRunDeathAnimation
+      assets,
+      variables,
+      ctx
     );
-    expect(mockRunDeathAnimation).toHaveBeenCalledTimes(0);
-    expect(mockVariables.score).toBe(100);
-    expect(mockVariables.killCount).toBe(2);
-    expect(mockScaredGhost.changeRetreatingState).toHaveBeenCalledTimes(0);
-    expect(mockScaredGhost.retreatingTimer.start).toHaveBeenCalledTimes(0);
-    expect(mockScaredGhost.changeScaredState).toHaveBeenCalledTimes(0);
+    expect(Graphics.runDeathAnimation).toHaveBeenCalledTimes(0);
+    expect(variables.score).toBe(100);
+    expect(variables.killCount).toBe(2);
+    expect(scaredGhost.changeRetreatingState).toHaveBeenCalledTimes(0);
+    expect(scaredGhost.retreatingTimer.start).toHaveBeenCalledTimes(0);
+    expect(scaredGhost.changeScaredState).toHaveBeenCalledTimes(0);
   });
 });

@@ -10,31 +10,19 @@ export default class PacmanManager {
     const boundaries = assets["props"]["boundaries"];
     if (variables.lastKeyPressed === "up") {
       checkDirectionChange(pacman, boundaries, {
-        velocity: {
-          x: 0,
-          y: -pacman.speed,
-        },
+        velocity: { x: 0, y: -pacman.speed },
       });
     } else if (variables.lastKeyPressed === "down") {
       checkDirectionChange(pacman, boundaries, {
-        velocity: {
-          x: 0,
-          y: pacman.speed,
-        },
+        velocity: { x: 0, y: pacman.speed },
       });
     } else if (variables.lastKeyPressed === "right") {
       checkDirectionChange(pacman, boundaries, {
-        velocity: {
-          x: pacman.speed,
-          y: 0,
-        },
+        velocity: { x: pacman.speed, y: 0 },
       });
     } else if (variables.lastKeyPressed === "left") {
       checkDirectionChange(pacman, boundaries, {
-        velocity: {
-          x: -pacman.speed,
-          y: 0,
-        },
+        velocity: { x: -pacman.speed, y: 0 },
       });
     }
   }

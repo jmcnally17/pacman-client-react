@@ -1,70 +1,48 @@
-import findCyanAimPath from "./chaseAndScatter/chase/findCyanAimPath";
+import GhostMovement from "./ghostMovement";
 
-let mockPacman;
-let mockVariables;
-let mockRedGhost;
-let mockPathway;
+let redGhost;
+let pacman;
+let assets;
+let variables;
+let pathway;
 
 describe("findCyanAimPath", () => {
   beforeEach(() => {
-    mockPacman = {
-      position: {
-        x: 300,
-        y: 250,
-      },
-      rotation: 0,
-    };
-    mockVariables = {
-      tileLength: 32,
-    };
-    mockRedGhost = {
-      position: {
-        x: 480,
-        y: 170,
-      },
-    };
-    mockPathway = {
-      position: {
-        x: 250,
-        y: 620,
-      },
+    redGhost = { position: { x: 480, y: 170 } };
+    pacman = { position: { x: 300, y: 250 }, rotation: 0 };
+    assets = { characters: { ghosts: { red: redGhost }, pacman: pacman } };
+    variables = { tileLength: 32 };
+    pathway = {
+      position: { x: 250, y: 620 },
     };
   });
 
   it("returns a vector from the pathways position to the mirror of the red ghosts postion around two spaces to the right of Pac-Man when Pac-Man is facing right", () => {
-    expect(
-      findCyanAimPath(mockPacman, mockVariables, mockRedGhost, mockPathway)
-    ).toEqual({
+    expect(GhostMovement.findCyanAimPath(assets, variables, pathway)).toEqual({
       x: -66,
       y: -290,
     });
   });
 
   it("returns a vector from the pathways position to the mirror of the red ghosts postion around two spaces below Pac-Man when Pac-Man is facing downwards", () => {
-    mockPacman.rotation = Math.PI / 2;
-    expect(
-      findCyanAimPath(mockPacman, mockVariables, mockRedGhost, mockPathway)
-    ).toEqual({
+    pacman.rotation = Math.PI / 2;
+    expect(GhostMovement.findCyanAimPath(assets, variables, pathway)).toEqual({
       x: -130,
       y: -226,
     });
   });
 
   it("returns a vector from the pathways position to the mirror of the red ghosts postion around two spaces to the left of Pac-Man when Pac-Man is facing left", () => {
-    mockPacman.rotation = Math.PI;
-    expect(
-      findCyanAimPath(mockPacman, mockVariables, mockRedGhost, mockPathway)
-    ).toEqual({
+    pacman.rotation = Math.PI;
+    expect(GhostMovement.findCyanAimPath(assets, variables, pathway)).toEqual({
       x: -194,
       y: -290,
     });
   });
 
   it("returns a vector from the pathways position to the mirror of the red ghosts postion around two spaces above Pac-Man when Pac-Man is facing upwards", () => {
-    mockPacman.rotation = (Math.PI * 3) / 2;
-    expect(
-      findCyanAimPath(mockPacman, mockVariables, mockRedGhost, mockPathway)
-    ).toEqual({
+    pacman.rotation = (Math.PI * 3) / 2;
+    expect(GhostMovement.findCyanAimPath(assets, variables, pathway)).toEqual({
       x: -130,
       y: -354,
     });

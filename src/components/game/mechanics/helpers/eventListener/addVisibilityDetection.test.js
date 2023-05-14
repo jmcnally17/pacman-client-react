@@ -1,112 +1,85 @@
-import addVisibilityDetection from "./addVisibilityDetection";
+import EventListener from "./eventListener";
+import AudioManager from "../audio/audioManager";
+import Timer from "../timers/timer";
 
-let mockVariables;
-let mockCycleTimer;
-let mockScaredTimer;
-let mockRetreatingTimers;
-let mockAudioPlayer;
-let mockPauseAudioAndTimers;
-let mockResumeAudioAndTimers;
+jest.mock("../audio/audioManager");
+jest.mock("../timers/timer");
+
+let variables;
+let assets;
 let visibilityChange;
 
 describe("addVisibilityDetection", () => {
   beforeEach(() => {
-    mockVariables = {
+    AudioManager.mockClear();
+    Timer.mockClear();
+    variables = {
       isWindowVisible: true,
       isGamePaused: false,
       visibilityEventListener: null,
     };
-    mockCycleTimer = "cycleTimer";
-    mockScaredTimer = "scaredTimer";
-    mockRetreatingTimers = "retreatingTimers";
-    mockAudioPlayer = "audioPlayer";
-    mockPauseAudioAndTimers = jest.fn();
-    mockResumeAudioAndTimers = jest.fn();
+    assets = { timers: "timers", audioPlayer: "audioPlayer" };
     visibilityChange = new Event("visibilitychange");
   });
 
-  it("sets visibilityEventListener in the variables object to the arrow function that defines the event listener", () => {
-    addVisibilityDetection(
-      mockVariables,
-      mockCycleTimer,
-      mockScaredTimer,
-      mockRetreatingTimers,
-      mockAudioPlayer,
-      mockPauseAudioAndTimers,
-      mockResumeAudioAndTimers
+  afterEach(() => {
+    window.removeEventListener(
+      "visibilitychange",
+      variables["visibilityEventListener"]
     );
-    expect(mockVariables.visibilityEventListener).toEqual(expect.any(Function));
+  });
+
+  it("sets visibilityEventListener in the variables object to the arrow function that defines the event listener", () => {
+    EventListener.addVisibilityDetection(variables, assets);
+    expect(variables.visibilityEventListener).toEqual(expect.any(Function));
   });
 
   describe("adds an event listener to", () => {
     it("change isWindowVisible to false if it is initially true and if isGamePaused is false", () => {
-      addVisibilityDetection(
-        mockVariables,
-        mockCycleTimer,
-        mockScaredTimer,
-        mockRetreatingTimers,
-        mockAudioPlayer,
-        mockPauseAudioAndTimers,
-        mockResumeAudioAndTimers
-      );
+      EventListener.addVisibilityDetection(variables, assets);
       window.dispatchEvent(visibilityChange);
-      expect(mockVariables.isWindowVisible).toBeFalsy();
+      expect(variables.isWindowVisible).toBeFalsy();
     });
 
     it("change isWindowVisible to true if it is intially false and if isGamePaused is false", () => {
-      addVisibilityDetection(
-        mockVariables,
-        mockCycleTimer,
-        mockScaredTimer,
-        mockRetreatingTimers,
-        mockAudioPlayer,
-        mockPauseAudioAndTimers,
-        mockResumeAudioAndTimers
-      );
-      mockVariables.isWindowVisible = false;
+      EventListener.addVisibilityDetection(variables, assets);
+      variables.isWindowVisible = false;
       window.dispatchEvent(visibilityChange);
-      expect(mockVariables.isWindowVisible).toBeTruthy();
+      expect(variables.isWindowVisible).toBeTruthy();
     });
 
-    it("call pauseAudioAndTimers if isWindowVisible is intially true and isGamePaused is false", () => {
-      addVisibilityDetection(
-        mockVariables,
-        mockCycleTimer,
-        mockScaredTimer,
-        mockRetreatingTimers,
-        mockAudioPlayer,
-        mockPauseAudioAndTimers,
-        mockResumeAudioAndTimers
-      );
+    it("call pauseAudio if isWindowVisible is intially true and isGamePaused is false", () => {
+      EventListener.addVisibilityDetection(variables, assets);
       window.dispatchEvent(visibilityChange);
-      expect(mockPauseAudioAndTimers).toHaveBeenCalledTimes(1);
-      expect(mockPauseAudioAndTimers).toHaveBeenCalledWith(
-        mockAudioPlayer,
-        mockCycleTimer,
-        mockScaredTimer,
-        mockRetreatingTimers
+      expect(AudioManager.pauseAudio).toHaveBeenCalledTimes(1);
+      expect(AudioManager.pauseAudio).toHaveBeenCalledWith(
+        assets["audioPlayer"]
       );
     });
 
-    it("call resumeAudioAndTimers if isWindowVisible is intially false and isGamePaused is false", () => {
-      addVisibilityDetection(
-        mockVariables,
-        mockCycleTimer,
-        mockScaredTimer,
-        mockRetreatingTimers,
-        mockAudioPlayer,
-        mockPauseAudioAndTimers,
-        mockResumeAudioAndTimers
-      );
-      mockVariables.isWindowVisible = false;
+    it("call pauseTimers if isWindowVisible is intially true and isGamePaused is false", () => {
+      EventListener.addVisibilityDetection(variables, assets);
       window.dispatchEvent(visibilityChange);
-      expect(mockResumeAudioAndTimers).toHaveBeenCalledTimes(1);
-      expect(mockResumeAudioAndTimers).toHaveBeenCalledWith(
-        mockAudioPlayer,
-        mockCycleTimer,
-        mockScaredTimer,
-        mockRetreatingTimers
+      expect(Timer.pauseTimers).toHaveBeenCalledTimes(1);
+      expect(Timer.pauseTimers).toHaveBeenCalledWith(assets["timers"]);
+    });
+
+    it("call resumeAudio if isWindowVisible is intially false and isGamePaused is false", () => {
+      EventListener.addVisibilityDetection(variables, assets);
+      variables.isWindowVisible = false;
+      window.dispatchEvent(visibilityChange);
+      expect(AudioManager.resumeAudio).toHaveBeenCalledTimes(1);
+      expect(AudioManager.resumeAudio).toHaveBeenCalledWith(
+        assets["audioPlayer"]
       );
+    });
+
+    it("call resumeTimers if isWindowVisible is intially false and isGamePaused is false", () => {
+      EventListener.addVisibilityDetection(variables, assets);
+      variables.isWindowVisible = false;
+      window.dispatchEvent(visibilityChange);
+      expect(Timer.resumeTimers).toHaveBeenCalledTimes(1);
+      expect(Timer.resumeTimers).toHaveBeenCalledWith(assets["timers"]);
     });
   });
 });

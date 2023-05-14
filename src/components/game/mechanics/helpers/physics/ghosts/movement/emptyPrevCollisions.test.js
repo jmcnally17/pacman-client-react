@@ -1,11 +1,9 @@
-import emptyPrevCollisions from "./emptyPrevCollisions";
+import GhostMovement from "./ghostMovement";
 
 describe("emptyPrevCollisions", () => {
   it("empties the prevCollisions array on the ghost", () => {
-    const mockGhost = {
-      prevCollisions: ["up", "down"],
-    };
-    emptyPrevCollisions(mockGhost);
-    expect(mockGhost.prevCollisions).toEqual([]);
+    const ghost = { prevCollisions: ["up", "down"] };
+    GhostMovement.emptyPrevCollisions(ghost);
+    expect(ghost.prevCollisions).toEqual([]);
   });
 });

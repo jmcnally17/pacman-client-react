@@ -1,104 +1,57 @@
-import checkPacmanLives from "./pacmanDeath/checkPacmanLives";
+import GhostCollision from "./ghostCollision";
 
-let mockPacman;
-let mockNoLivesPacman;
-let mockVariables;
-let mockGhosts;
-let mockPellets;
-let mockPowerUps;
-let mockCycleTimer;
-let mockScaredTimer;
-let mockCtx;
-let mockAudioPlayer;
-let mockEndGame;
-let mockResetAfterDeath;
+let pacman;
+let noLivesPacman;
+let assets;
+let variables;
+let ctx;
+let endGame;
+let resetAfterDeath;
 
 describe("checkPacmanLives", () => {
   beforeEach(() => {
-    mockPacman = {
-      lives: 2,
-    };
-    mockNoLivesPacman = {
-      lives: 0,
-    };
-    mockVariables = "variables";
-    mockGhosts = "ghosts";
-    mockPellets = "pellets";
-    mockPowerUps = "powerUps";
-    mockCycleTimer = "cycleTimer";
-    mockScaredTimer = "scaredTimer";
-    mockCtx = "ctx";
-    mockAudioPlayer = "audioPlayer";
-    mockEndGame = jest.fn();
-    mockResetAfterDeath = jest.fn();
+    pacman = { lives: 2 };
+    noLivesPacman = { lives: 0 };
+    assets = { characters: { pacman: pacman } };
+    variables = "variables";
+    ctx = "ctx";
+    endGame = jest.fn();
+    resetAfterDeath = jest.fn();
   });
 
   it("calls endGame when Pac-Man has no lives left", () => {
-    checkPacmanLives(
-      mockNoLivesPacman,
-      mockVariables,
-      mockPellets,
-      mockPowerUps,
-      mockGhosts,
-      mockCycleTimer,
-      mockScaredTimer,
-      mockCtx,
-      mockAudioPlayer,
-      mockEndGame,
-      mockResetAfterDeath
+    assets["characters"]["pacman"] = noLivesPacman;
+    GhostCollision.checkPacmanLives(
+      assets,
+      variables,
+      ctx,
+      endGame,
+      resetAfterDeath
     );
-    expect(mockEndGame).toHaveBeenCalledTimes(1);
-    expect(mockEndGame).toHaveBeenCalledWith(
-      mockVariables,
-      mockPellets,
-      mockPowerUps,
-      mockGhosts,
-      mockNoLivesPacman,
-      mockCycleTimer,
-      mockScaredTimer,
-      mockCtx
-    );
+    expect(endGame).toHaveBeenCalledTimes(1);
+    expect(endGame).toHaveBeenCalledWith(variables, assets, ctx);
   });
 
   it("decreases Pac-Man's lives by 1 when he has lives left", () => {
-    checkPacmanLives(
-      mockPacman,
-      mockVariables,
-      mockPellets,
-      mockPowerUps,
-      mockGhosts,
-      mockCycleTimer,
-      mockScaredTimer,
-      mockCtx,
-      mockAudioPlayer,
-      mockEndGame,
-      mockResetAfterDeath
+    GhostCollision.checkPacmanLives(
+      assets,
+      variables,
+      ctx,
+      endGame,
+      resetAfterDeath
     );
-    expect(mockPacman.lives).toBe(1);
+    expect(pacman.lives).toBe(1);
   });
 
   it("calls resetAfterDeath when Pac-Man has lives left", () => {
-    checkPacmanLives(
-      mockPacman,
-      mockVariables,
-      mockPellets,
-      mockPowerUps,
-      mockGhosts,
-      mockCycleTimer,
-      mockScaredTimer,
-      mockCtx,
-      mockAudioPlayer,
-      mockEndGame,
-      mockResetAfterDeath
+    GhostCollision.checkPacmanLives(
+      assets,
+      variables,
+      ctx,
+      endGame,
+      resetAfterDeath
     );
-    expect(mockResetAfterDeath).toHaveBeenCalledTimes(1);
-    expect(mockResetAfterDeath).toHaveBeenCalledWith(
-      mockPacman,
-      mockVariables,
-      mockGhosts,
-      mockCycleTimer,
-      mockScaredTimer,
-      mockAudioPlayer
-    );
+    expect(resetAfterDeath).toHaveBeenCalledTimes(1);
+    expect(resetAfterDeath).toHaveBeenCalledWith(assets, variables);
   });
 });

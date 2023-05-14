@@ -1,172 +1,80 @@
-import implementPellets from "./pellets/implementPellets";
+import Physics from "./physics";
+import PelletManager from "./pellets/pelletManager";
 
-let mockUneatenPellet;
-let mockUneatenPellets;
-let mockEatenPellet;
-let mockEatenPellets;
-let mockCtx;
-let mockPacman;
-let mockVariables;
-let mockGhosts;
-let mockPowerUps;
-let mockCycleTimer;
-let mockScaredTimer;
-let mockAudioPlayer;
-let mockBoundaries;
-let mockEatPellet;
-let mockCheckLevelUpCondition;
+jest.mock("./pellets/pelletManager");
+
+let pellet;
+let pellets;
+let eatenPellet;
+let eatenPellets;
+let assets;
+let ctx;
+let variables;
 
 describe("implementPellets", () => {
   beforeEach(() => {
-    mockUneatenPellet = {
-      hasBeenEaten: false,
-      draw: () => undefined,
-    };
-    mockUneatenPellets = [
-      mockUneatenPellet,
-      mockUneatenPellet,
-      mockUneatenPellet,
-    ];
-    mockEatenPellet = {
-      hasBeenEaten: true,
-      draw: () => undefined,
-    };
-    mockEatenPellets = [mockEatenPellet, mockEatenPellet];
-    jest.spyOn(mockUneatenPellet, "draw");
-    jest.spyOn(mockEatenPellet, "draw");
-    mockCtx = "ctx";
-    mockPacman = "pacman";
-    mockVariables = "variables";
-    mockGhosts = "ghosts";
-    mockPowerUps = "powerUps";
-    mockCycleTimer = "cycleTimer";
-    mockScaredTimer = "scaredTimer";
-    mockAudioPlayer = "audioPlayer";
-    mockBoundaries = "boundaries";
-    mockEatPellet = jest.fn();
-    mockCheckLevelUpCondition = jest.fn();
+    PelletManager.mockClear();
+    pellet = { hasBeenEaten: false, draw: () => undefined };
+    pellets = [pellet, pellet, pellet];
+    eatenPellet = { hasBeenEaten: true, draw: () => undefined };
+    eatenPellets = [eatenPellet, eatenPellet];
+    assets = { props: { pellets: pellets }, characters: { pacman: "pacman" } };
+    ctx = "ctx";
+    variables = "variables";
+    jest.spyOn(pellet, "draw");
+    jest.spyOn(eatenPellet, "draw");
   });
 
   it("calls draw on each pellet if they have not been eaten", () => {
-    implementPellets(
-      mockUneatenPellets,
-      mockCtx,
-      mockPacman,
-      mockVariables,
-      mockGhosts,
-      mockPowerUps,
-      mockCycleTimer,
-      mockScaredTimer,
-      mockAudioPlayer,
-      mockBoundaries,
-      mockEatPellet,
-      mockCheckLevelUpCondition
-    );
-    expect(mockUneatenPellet.draw).toHaveBeenCalledTimes(3);
-    expect(mockUneatenPellet.draw).toHaveBeenNthCalledWith(1, mockCtx);
-    expect(mockUneatenPellet.draw).toHaveBeenNthCalledWith(2, mockCtx);
-    expect(mockUneatenPellet.draw).toHaveBeenNthCalledWith(3, mockCtx);
+    Physics.implementPellets(assets, ctx, variables);
+    expect(pellet.draw).toHaveBeenCalledTimes(3);
+    expect(pellet.draw).toHaveBeenNthCalledWith(1, ctx);
+    expect(pellet.draw).toHaveBeenNthCalledWith(2, ctx);
+    expect(pellet.draw).toHaveBeenNthCalledWith(3, ctx);
   });
 
   it("does not call draw on each pellet if they have been eaten", () => {
-    implementPellets(
-      mockEatenPellets,
-      mockCtx,
-      mockPacman,
-      mockVariables,
-      mockGhosts,
-      mockPowerUps,
-      mockCycleTimer,
-      mockScaredTimer,
-      mockAudioPlayer,
-      mockBoundaries,
-      mockEatPellet,
-      mockCheckLevelUpCondition
-    );
-    expect(mockUneatenPellet.draw).toHaveBeenCalledTimes(0);
+    assets["props"]["pellets"] = eatenPellets;
+    Physics.implementPellets(assets, ctx, variables);
+    expect(pellet.draw).toHaveBeenCalledTimes(0);
   });
 
   it("calls eatPellet on each pellet if they have not been eaten", () => {
-    implementPellets(
-      mockUneatenPellets,
-      mockCtx,
-      mockPacman,
-      mockVariables,
-      mockGhosts,
-      mockPowerUps,
-      mockCycleTimer,
-      mockScaredTimer,
-      mockAudioPlayer,
-      mockBoundaries,
-      mockEatPellet,
-      mockCheckLevelUpCondition
-    );
-    expect(mockEatPellet).toHaveBeenCalledTimes(3);
-    expect(mockEatPellet).toHaveBeenNthCalledWith(
+    Physics.implementPellets(assets, ctx, variables);
+    expect(PelletManager.eatPellet).toHaveBeenCalledTimes(3);
+    expect(PelletManager.eatPellet).toHaveBeenNthCalledWith(
       1,
-      mockUneatenPellet,
-      mockPacman,
-      mockVariables
+      pellet,
+      assets["characters"]["pacman"],
+      variables
     );
-    expect(mockEatPellet).toHaveBeenNthCalledWith(
-      2,
-      mockUneatenPellet,
-      mockPacman,
-      mockVariables
+    expect(PelletManager.eatPellet).toHaveBeenNthCalledWith(
+      1,
+      pellet,
+      assets["characters"]["pacman"],
+      variables
     );
-    expect(mockEatPellet).toHaveBeenNthCalledWith(
-      3,
-      mockUneatenPellet,
-      mockPacman,
-      mockVariables
+    expect(PelletManager.eatPellet).toHaveBeenNthCalledWith(
+      1,
+      pellet,
+      assets["characters"]["pacman"],
+      variables
     );
   });
 
   it("does not call eatPellet on each pellet if they have been eaten", () => {
-    implementPellets(
-      mockEatenPellets,
-      mockCtx,
-      mockPacman,
-      mockVariables,
-      mockGhosts,
-      mockPowerUps,
-      mockCycleTimer,
-      mockScaredTimer,
-      mockAudioPlayer,
-      mockBoundaries,
-      mockEatPellet,
-      mockCheckLevelUpCondition
-    );
-    expect(mockEatPellet).toHaveBeenCalledTimes(0);
+    assets["props"]["pellets"] = eatenPellets;
+    Physics.implementPellets(assets, ctx, variables);
+    expect(PelletManager.eatPellet).toHaveBeenCalledTimes(0);
   });
 
   it("calls checkLevelUpCondition", () => {
-    implementPellets(
-      mockUneatenPellets,
-      mockCtx,
-      mockPacman,
-      mockVariables,
-      mockGhosts,
-      mockPowerUps,
-      mockCycleTimer,
-      mockScaredTimer,
-      mockAudioPlayer,
-      mockBoundaries,
-      mockEatPellet,
-      mockCheckLevelUpCondition
-    );
-    expect(mockCheckLevelUpCondition).toHaveBeenCalledTimes(1);
-    expect(mockCheckLevelUpCondition).toHaveBeenCalledWith(
-      mockUneatenPellets,
-      mockPacman,
-      mockVariables,
-      mockGhosts,
-      mockPowerUps,
-      mockCycleTimer,
-      mockScaredTimer,
-      mockCtx,
-      mockAudioPlayer,
-      mockBoundaries
+    Physics.implementPellets(assets, ctx, variables);
+    expect(PelletManager.checkLevelUpCondition).toHaveBeenCalledTimes(1);
+    expect(PelletManager.checkLevelUpCondition).toHaveBeenCalledWith(
+      assets,
+      variables,
+      ctx
     );
   });
 });

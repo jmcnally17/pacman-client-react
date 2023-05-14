@@ -1,7 +1,7 @@
 import axios from "axios";
 import Graphics from "../../../graphics/graphics";
 import Leaderboard from "../../../../../../leaderboard/leaderboard";
-import Animator from "../../../graphics/Animator/animator";
+import Animator from "../../../graphics/animator/animator";
 import playGame from "../../../../playGame";
 
 export default class GhostCollision {
@@ -59,7 +59,6 @@ export default class GhostCollision {
     cancelAnimationFrame(variables.animationId);
     Animator.displayPleaseWait(ctx);
     if (variables.player) await saveScore(variables);
-
     resetAfterGameOver(assets, variables);
     variables.reactRoot.render(<Leaderboard variables={variables} />);
   }

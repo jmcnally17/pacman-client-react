@@ -1,238 +1,79 @@
 import Game from "./game";
+import EventListener from "../helpers/eventListener/eventListener";
 
-let mockVariables;
-let mockPlayer;
-let mockReactRoot;
-let mockCycleTimer;
-let mockScaredTimer;
-let mockRetreatingTimers;
-let mockAudioPlayer;
-let mockPacman;
-let mockCtx;
-let mockBoundaries;
-let mockPellets;
-let mockPowerUps;
-let mockGhosts;
-let mockPauseTextImage;
-let mockAddDirectionDetection;
-let mockAddVisibilityDetection;
-let mockAddPauseDetection;
+jest.mock("../helpers/eventListener/eventListener");
+
+let variables;
+let player;
+let reactRoot;
+let assets;
+let ctx;
 
 describe("finishSetup", () => {
   beforeEach(() => {
-    mockVariables = {
+    EventListener.mockClear();
+    variables = {
       player: undefined,
       reactRoot: "",
       start: true,
       directionEventListener: null,
       visibilityEventListener: null,
     };
-    mockPlayer = {
-      username: "John",
+    player = { username: "John" };
+    reactRoot = "reactRoot";
+    assets = {
+      timers: { cycleTimer: { start: () => undefined } },
+      audioPlayer: { ghostAudioWantsToPlay: false },
     };
-    mockReactRoot = "reactRoot";
-    mockCycleTimer = {
-      start: () => undefined,
-    };
-    jest.spyOn(mockCycleTimer, "start");
-    mockScaredTimer = "scaredTimer";
-    mockRetreatingTimers = "retreatingTimers";
-    mockAudioPlayer = {
-      ghostAudioWantsToPlay: false,
-    };
-    mockPacman = "pacman";
-    mockCtx = "ctx";
-    mockBoundaries = "boundaries";
-    mockPellets = "pellets";
-    mockPowerUps = "powerUps";
-    mockGhosts = "ghosts";
-    mockPauseTextImage = "pauseTextImage";
-    mockAddDirectionDetection = jest.fn();
-    mockAddVisibilityDetection = jest.fn();
-    mockAddPauseDetection = jest.fn();
+    jest.spyOn(assets["timers"]["cycleTimer"], "start");
+    ctx = "ctx";
   });
 
   it("sets the player and reactRoot", () => {
-    Game.finishSetup(
-      mockVariables,
-      mockPlayer,
-      mockReactRoot,
-      mockCycleTimer,
-      mockScaredTimer,
-      mockRetreatingTimers,
-      mockAudioPlayer,
-      mockPacman,
-      mockCtx,
-      mockBoundaries,
-      mockPellets,
-      mockPowerUps,
-      mockGhosts,
-      mockPauseTextImage,
-      mockAddDirectionDetection,
-      mockAddVisibilityDetection,
-      mockAddPauseDetection
-    );
-    expect(mockVariables.player).toBe(mockPlayer);
-    expect(mockVariables.reactRoot).toBe(mockReactRoot);
+    Game.finishSetup(variables, player, reactRoot, assets, ctx);
+    expect(variables.player).toBe(player);
+    expect(variables.reactRoot).toBe(reactRoot);
   });
 
   it("starts the cycle timer", () => {
-    Game.finishSetup(
-      mockVariables,
-      mockPlayer,
-      mockReactRoot,
-      mockCycleTimer,
-      mockScaredTimer,
-      mockRetreatingTimers,
-      mockAudioPlayer,
-      mockPacman,
-      mockCtx,
-      mockBoundaries,
-      mockPellets,
-      mockPowerUps,
-      mockGhosts,
-      mockPauseTextImage,
-      mockAddDirectionDetection,
-      mockAddVisibilityDetection,
-      mockAddPauseDetection
-    );
-    expect(mockCycleTimer.start).toHaveBeenCalledTimes(1);
+    const cycleTimer = assets["timers"]["cycleTimer"];
+    Game.finishSetup(variables, player, reactRoot, assets, ctx);
+    expect(cycleTimer.start).toHaveBeenCalledTimes(1);
   });
 
   it("calls addDirectionDetection to add the event listener", () => {
-    Game.finishSetup(
-      mockVariables,
-      mockPlayer,
-      mockReactRoot,
-      mockCycleTimer,
-      mockScaredTimer,
-      mockRetreatingTimers,
-      mockAudioPlayer,
-      mockPacman,
-      mockCtx,
-      mockBoundaries,
-      mockPellets,
-      mockPowerUps,
-      mockGhosts,
-      mockPauseTextImage,
-      mockAddDirectionDetection,
-      mockAddVisibilityDetection,
-      mockAddPauseDetection
-    );
-    expect(mockAddDirectionDetection).toHaveBeenCalledTimes(1);
-    expect(mockAddDirectionDetection).toHaveBeenCalledWith(mockVariables);
+    Game.finishSetup(variables, player, reactRoot, assets, ctx);
+    expect(EventListener.addDirectionDetection).toHaveBeenCalledTimes(1);
+    expect(EventListener.addDirectionDetection).toHaveBeenCalledWith(variables);
   });
 
   it("calls addVisibilityDetection to add the event listener", () => {
-    Game.finishSetup(
-      mockVariables,
-      mockPlayer,
-      mockReactRoot,
-      mockCycleTimer,
-      mockScaredTimer,
-      mockRetreatingTimers,
-      mockAudioPlayer,
-      mockPacman,
-      mockCtx,
-      mockBoundaries,
-      mockPellets,
-      mockPowerUps,
-      mockGhosts,
-      mockPauseTextImage,
-      mockAddDirectionDetection,
-      mockAddVisibilityDetection,
-      mockAddPauseDetection
-    );
-    expect(mockAddVisibilityDetection).toHaveBeenCalledTimes(1);
-    expect(mockAddVisibilityDetection).toHaveBeenCalledWith(
-      mockVariables,
-      mockCycleTimer,
-      mockScaredTimer,
-      mockRetreatingTimers,
-      mockAudioPlayer
+    Game.finishSetup(variables, player, reactRoot, assets, ctx);
+    expect(EventListener.addVisibilityDetection).toHaveBeenCalledTimes(1);
+    expect(EventListener.addVisibilityDetection).toHaveBeenCalledWith(
+      variables,
+      assets
     );
   });
 
   it("calls addPauseDetection to add the event listener", () => {
-    Game.finishSetup(
-      mockVariables,
-      mockPlayer,
-      mockReactRoot,
-      mockCycleTimer,
-      mockScaredTimer,
-      mockRetreatingTimers,
-      mockAudioPlayer,
-      mockPacman,
-      mockCtx,
-      mockBoundaries,
-      mockPellets,
-      mockPowerUps,
-      mockGhosts,
-      mockPauseTextImage,
-      mockAddDirectionDetection,
-      mockAddVisibilityDetection,
-      mockAddPauseDetection
-    );
-    expect(mockAddPauseDetection).toHaveBeenCalledTimes(1);
-    expect(mockAddPauseDetection).toHaveBeenCalledWith(
-      mockVariables,
-      mockCycleTimer,
-      mockScaredTimer,
-      mockRetreatingTimers,
-      mockAudioPlayer,
-      mockPacman,
-      mockCtx,
-      mockBoundaries,
-      mockPellets,
-      mockPowerUps,
-      mockGhosts,
-      mockPauseTextImage
+    Game.finishSetup(variables, player, reactRoot, assets, ctx);
+    expect(EventListener.addPauseDetection).toHaveBeenCalledTimes(1);
+    expect(EventListener.addPauseDetection).toHaveBeenCalledWith(
+      variables,
+      assets,
+      ctx
     );
   });
 
   it("sets the start variable to false", () => {
-    Game.finishSetup(
-      mockVariables,
-      mockPlayer,
-      mockReactRoot,
-      mockCycleTimer,
-      mockScaredTimer,
-      mockRetreatingTimers,
-      mockAudioPlayer,
-      mockPacman,
-      mockCtx,
-      mockBoundaries,
-      mockPellets,
-      mockPowerUps,
-      mockGhosts,
-      mockPauseTextImage,
-      mockAddDirectionDetection,
-      mockAddVisibilityDetection,
-      mockAddPauseDetection
-    );
-    expect(mockVariables.start).toBeFalsy();
+    Game.finishSetup(variables, player, reactRoot, assets, ctx);
+    expect(variables.start).toBeFalsy();
   });
 
   it("sets ghostAudioWantsToPlay in the audioPlayer to true", () => {
-    Game.finishSetup(
-      mockVariables,
-      mockPlayer,
-      mockReactRoot,
-      mockCycleTimer,
-      mockScaredTimer,
-      mockRetreatingTimers,
-      mockAudioPlayer,
-      mockPacman,
-      mockCtx,
-      mockBoundaries,
-      mockPellets,
-      mockPowerUps,
-      mockGhosts,
-      mockPauseTextImage,
-      mockAddDirectionDetection,
-      mockAddVisibilityDetection,
-      mockAddPauseDetection
-    );
-    expect(mockAudioPlayer.ghostAudioWantsToPlay).toBe(true);
+    const audioPlayer = assets["audioPlayer"];
+    Game.finishSetup(variables, player, reactRoot, assets, ctx);
+    expect(audioPlayer.ghostAudioWantsToPlay).toBe(true);
   });
 });

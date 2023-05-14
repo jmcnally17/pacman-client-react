@@ -1,4 +1,4 @@
-import Animator from "./Animator/animator";
+import Animator from "./animator/animator";
 import PelletManager from "../physics/pellets/pelletManager";
 import GhostCollision from "../physics/ghosts/collisions/ghostCollision";
 

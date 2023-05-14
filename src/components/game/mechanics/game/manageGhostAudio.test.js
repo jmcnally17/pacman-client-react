@@ -1,44 +1,23 @@
-import manageGhostAudio from "../audio/manageGhostAudio";
+import Game from "./game";
+import AudioManager from "../helpers/audio/audioManager";
 
-let mockScaredTimer;
-let mockRetreatingTimer;
-let mockPlayGhostAudio;
+jest.mock("../helpers/audio/audioManager");
 
 describe("manageGhostAudio", () => {
   beforeEach(() => {
-    mockScaredTimer = "scaredTimer";
-    mockRetreatingTimer = "retreatingTimer";
-    mockPlayGhostAudio = jest.fn();
+    AudioManager.mockClear();
   });
 
   it("calls playGhostAudio if ghostAudioWantsToPlay in the audioPlayer is true", () => {
-    const mockAudioPlayer = {
-      ghostAudioWantsToPlay: true,
-    };
-    manageGhostAudio(
-      mockAudioPlayer,
-      mockScaredTimer,
-      mockRetreatingTimer,
-      mockPlayGhostAudio
-    );
-    expect(mockPlayGhostAudio).toHaveBeenCalledTimes(1);
-    expect(mockPlayGhostAudio).toHaveBeenCalledWith(
-      mockAudioPlayer,
-      mockScaredTimer,
-      mockRetreatingTimer
-    );
+    const assets = { audioPlayer: { ghostAudioWantsToPlay: true } };
+    Game.manageGhostAudio(assets);
+    expect(AudioManager.playGhostAudio).toHaveBeenCalledTimes(1);
+    expect(AudioManager.playGhostAudio).toHaveBeenCalledWith(assets);
   });
 
   it("does not call playGhostAudio if ghostAudioWantsToPlay in the audioPlayer is false", () => {
-    const mockAudioPlayer = {
-      ghostAudioWantsToPlay: false,
-    };
-    manageGhostAudio(
-      mockAudioPlayer,
-      mockScaredTimer,
-      mockRetreatingTimer,
-      mockPlayGhostAudio
-    );
-    expect(mockPlayGhostAudio).toHaveBeenCalledTimes(0);
+    const assets = { audioPlayer: { ghostAudioWantsToPlay: false } };
+    Game.manageGhostAudio(assets);
+    expect(AudioManager.playGhostAudio).toHaveBeenCalledTimes(0);
   });
 });

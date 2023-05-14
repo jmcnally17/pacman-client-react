@@ -1,231 +1,104 @@
-import implementGhosts from "./ghosts/implementGhosts";
+import Physics from "./physics";
+import GhostManager from "./ghosts/ghostManager";
+import BoundaryManager from "./boundaries/boundaryManager";
 
-let mockGhostOne;
-let mockGhostsOne;
-let mockGhostTwo;
-let mockGhostsTwo;
-let mockBoundaries;
-let mockCtx;
-let mockVariables;
-let mockPacman;
-let mockPellets;
-let mockPowerUps;
-let mockCycleTimer;
-let mockScaredTimer;
-let mockAudioPlayer;
-let mockcheckSpeedMatchesState;
-let mockImplementTunnel;
-let mockUpdateCollisions;
-let mockChooseMovement;
-let mockCheckPacmanGhostCollision;
+jest.mock("./ghosts/ghostManager");
+jest.mock("./boundaries/boundaryManager");
+
+let ghostOne;
+let ghostsOne;
+let ghostTwo;
+let ghostsTwo;
+let assets;
+let ctx;
+let variables;
 
 describe("implementGhosts", () => {
   beforeEach(() => {
-    mockGhostOne = {
-      update: () => undefined,
-      prevCollisions: ["up", "down"],
+    GhostManager.mockClear();
+    BoundaryManager.mockClear();
+    ghostOne = { update: () => undefined, prevCollisions: ["up", "down"] };
+    ghostsOne = {
+      red: ghostOne,
+      pink: ghostOne,
+      cyan: ghostOne,
+      orange: ghostOne,
     };
-    mockGhostsOne = [mockGhostOne, mockGhostOne, mockGhostOne];
-    mockGhostTwo = {
-      update: () => undefined,
-      prevCollisions: [],
+    ghostTwo = { update: () => undefined, prevCollisions: [] };
+    ghostsTwo = {
+      red: ghostTwo,
+      pink: ghostTwo,
+      cyan: ghostTwo,
+      orange: ghostTwo,
     };
-    mockGhostsTwo = [mockGhostTwo, mockGhostTwo];
-    mockBoundaries = "boundaries";
-    mockCtx = "ctx";
-    mockVariables = "variables";
-    mockPacman = "pacman";
-    mockPellets = "pellets";
-    mockPowerUps = "powerUps";
-    mockCycleTimer = "cycleTimer";
-    mockScaredTimer = "scaredTimer";
-    mockAudioPlayer = "audioPlayer";
-    mockcheckSpeedMatchesState = jest.fn();
-    mockImplementTunnel = jest.fn();
-    mockUpdateCollisions = jest.fn();
-    mockChooseMovement = jest.fn();
-    mockCheckPacmanGhostCollision = jest.fn();
+    assets = {
+      props: { boundaries: "boundaries" },
+      characters: { ghosts: ghostsOne, pacman: "pacman" },
+    };
+    ctx = "ctx";
+    variables = "variables";
   });
 
   it("calls checkSpeedMatchesState on each ghost", () => {
-    implementGhosts(
-      mockGhostsOne,
-      mockBoundaries,
-      mockCtx,
-      mockVariables,
-      mockPacman,
-      mockPellets,
-      mockPowerUps,
-      mockCycleTimer,
-      mockScaredTimer,
-      mockAudioPlayer,
-      mockcheckSpeedMatchesState,
-      mockImplementTunnel,
-      mockUpdateCollisions,
-      mockChooseMovement,
-      mockCheckPacmanGhostCollision
-    );
-    expect(mockcheckSpeedMatchesState).toHaveBeenCalledTimes(3);
-    expect(mockcheckSpeedMatchesState).toHaveBeenCalledWith(
-      mockGhostOne,
-      mockVariables
+    Physics.implementGhosts(assets, ctx, variables);
+    expect(GhostManager.checkSpeedMatchesState).toHaveBeenCalledTimes(4);
+    expect(GhostManager.checkSpeedMatchesState).toHaveBeenCalledWith(
+      ghostOne,
+      variables
     );
   });
 
   it("calls update on each ghost", () => {
-    jest.spyOn(mockGhostOne, "update");
-    implementGhosts(
-      mockGhostsOne,
-      mockBoundaries,
-      mockCtx,
-      mockVariables,
-      mockPacman,
-      mockPellets,
-      mockPowerUps,
-      mockCycleTimer,
-      mockScaredTimer,
-      mockAudioPlayer,
-      mockcheckSpeedMatchesState,
-      mockImplementTunnel,
-      mockUpdateCollisions,
-      mockChooseMovement,
-      mockCheckPacmanGhostCollision
-    );
-    expect(mockGhostOne.update).toHaveBeenCalledTimes(3);
-    expect(mockGhostOne.update).toHaveBeenCalledWith(mockCtx);
+    jest.spyOn(ghostOne, "update");
+    Physics.implementGhosts(assets, ctx, variables);
+    expect(ghostOne.update).toHaveBeenCalledTimes(4);
+    expect(ghostOne.update).toHaveBeenCalledWith(ctx);
   });
 
   it("calls implementTunnel on each ghost", () => {
-    implementGhosts(
-      mockGhostsOne,
-      mockBoundaries,
-      mockCtx,
-      mockVariables,
-      mockPacman,
-      mockPellets,
-      mockPowerUps,
-      mockCycleTimer,
-      mockScaredTimer,
-      mockAudioPlayer,
-      mockcheckSpeedMatchesState,
-      mockImplementTunnel,
-      mockUpdateCollisions,
-      mockChooseMovement,
-      mockCheckPacmanGhostCollision
-    );
-    expect(mockImplementTunnel).toHaveBeenCalledTimes(3);
-    expect(mockImplementTunnel).toHaveBeenCalledWith(
-      mockGhostOne,
-      mockVariables
+    Physics.implementGhosts(assets, ctx, variables);
+    expect(BoundaryManager.implementTunnel).toHaveBeenCalledTimes(4);
+    expect(BoundaryManager.implementTunnel).toHaveBeenCalledWith(
+      ghostOne,
+      variables
     );
   });
 
   it("calls updatesCollisions on each ghost", () => {
-    implementGhosts(
-      mockGhostsOne,
-      mockBoundaries,
-      mockCtx,
-      mockVariables,
-      mockPacman,
-      mockPellets,
-      mockPowerUps,
-      mockCycleTimer,
-      mockScaredTimer,
-      mockAudioPlayer,
-      mockcheckSpeedMatchesState,
-      mockImplementTunnel,
-      mockUpdateCollisions,
-      mockChooseMovement,
-      mockCheckPacmanGhostCollision
-    );
-    expect(mockUpdateCollisions).toHaveBeenCalledTimes(3);
-    expect(mockUpdateCollisions).toHaveBeenCalledWith(
-      mockBoundaries,
+    Physics.implementGhosts(assets, ctx, variables);
+    expect(GhostManager.updateCollisions).toHaveBeenCalledTimes(4);
+    expect(GhostManager.updateCollisions).toHaveBeenCalledWith(
+      assets["props"]["boundaries"],
       [],
-      mockGhostOne
+      ghostOne
     );
   });
 
   it("calls chooseMovement on each ghost if the collisions array does not match the prevCollisions array in the ghost", () => {
-    implementGhosts(
-      mockGhostsOne,
-      mockBoundaries,
-      mockCtx,
-      mockVariables,
-      mockPacman,
-      mockPellets,
-      mockPowerUps,
-      mockCycleTimer,
-      mockScaredTimer,
-      mockAudioPlayer,
-      mockcheckSpeedMatchesState,
-      mockImplementTunnel,
-      mockUpdateCollisions,
-      mockChooseMovement,
-      mockCheckPacmanGhostCollision
-    );
-    expect(mockChooseMovement).toHaveBeenCalledTimes(3);
-    expect(mockChooseMovement).toHaveBeenCalledWith(
-      mockGhostOne,
-      mockPacman,
+    Physics.implementGhosts(assets, ctx, variables);
+    expect(GhostManager.chooseMovement).toHaveBeenCalledTimes(4);
+    expect(GhostManager.chooseMovement).toHaveBeenCalledWith(
+      ghostOne,
+      assets,
       [],
-      mockVariables,
-      mockGhostOne
+      variables
     );
   });
 
   it("does not call chooseMovement on each ghost when the collisions array is equal to the prevCollisions array", () => {
-    implementGhosts(
-      mockGhostsTwo,
-      mockBoundaries,
-      mockCtx,
-      mockVariables,
-      mockPacman,
-      mockPellets,
-      mockPowerUps,
-      mockCycleTimer,
-      mockScaredTimer,
-      mockAudioPlayer,
-      mockcheckSpeedMatchesState,
-      mockImplementTunnel,
-      mockUpdateCollisions,
-      mockChooseMovement,
-      mockCheckPacmanGhostCollision
-    );
-    expect(mockChooseMovement).toHaveBeenCalledTimes(0);
+    assets["characters"]["ghosts"] = ghostsTwo;
+    Physics.implementGhosts(assets, ctx, variables);
+    expect(GhostManager.chooseMovement).toHaveBeenCalledTimes(0);
   });
 
   it("calls checkPacmanGhostCollision on each ghost", () => {
-    implementGhosts(
-      mockGhostsOne,
-      mockBoundaries,
-      mockCtx,
-      mockVariables,
-      mockPacman,
-      mockPellets,
-      mockPowerUps,
-      mockCycleTimer,
-      mockScaredTimer,
-      mockAudioPlayer,
-      mockcheckSpeedMatchesState,
-      mockImplementTunnel,
-      mockUpdateCollisions,
-      mockChooseMovement,
-      mockCheckPacmanGhostCollision
-    );
-    expect(mockCheckPacmanGhostCollision).toHaveBeenCalledTimes(3);
-    expect(mockCheckPacmanGhostCollision).toHaveBeenCalledWith(
-      mockGhostOne,
-      mockPacman,
-      mockVariables,
-      mockGhostsOne,
-      mockPellets,
-      mockPowerUps,
-      mockCycleTimer,
-      mockScaredTimer,
-      mockAudioPlayer,
-      mockCtx,
-      mockBoundaries
+    Physics.implementGhosts(assets, ctx, variables);
+    expect(GhostManager.checkPacmanGhostCollision).toHaveBeenCalledTimes(4);
+    expect(GhostManager.checkPacmanGhostCollision).toHaveBeenCalledWith(
+      ghostOne,
+      assets,
+      variables,
+      ctx
     );
   });
 });

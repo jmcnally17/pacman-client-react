@@ -1,230 +1,122 @@
-import resetAfterGameOver from "./pacmanDeath/gameOver/resetAfterGameOver";
+import GhostCollision from "./ghostCollision";
 
-let mockEatenPellet;
-let mockEatenPellets;
-let mockUneatenPellet;
-let mockUneatenPellets;
-let mockEatenPowerUp;
-let mockEatenPowerUps;
-let mockUneatenPowerUp;
-let mockUneatenPowerUps;
-let mockGhost;
-let mockGhosts;
-let mockPacman;
-let mockVariables;
-let mockCycleTimer;
-let mockScaredTimer;
+let eatenPellet;
+let eatenPellets;
+let pellet;
+let pellets;
+let eatenPowerUp;
+let eatenPowerUps;
+let powerUp;
+let powerUps;
+let ghost;
+let ghosts;
+let pacman;
+let cycleTimer;
+let scaredTimer;
+let assets;
+let variables;
 
 describe("resetAfterGameOver", () => {
   beforeEach(() => {
-    mockEatenPellet = {
+    eatenPellet = {
       hasBeenEaten: true,
       changeEatenState: () => undefined,
     };
-    mockEatenPellets = [mockEatenPellet, mockEatenPellet, mockEatenPellet];
-    mockUneatenPellet = {
-      hasBeenEaten: false,
-      changeEatenState: () => undefined,
-    };
-    mockUneatenPellets = [mockUneatenPellet, mockUneatenPellet];
-    mockEatenPowerUp = {
+    eatenPellets = [eatenPellet, eatenPellet, eatenPellet];
+    pellet = { hasBeenEaten: false, changeEatenState: () => undefined };
+    pellets = [pellet, pellet];
+    eatenPowerUp = {
       hasBeenEaten: true,
       changeEatenState: () => undefined,
     };
-    mockEatenPowerUps = [mockEatenPowerUp, mockEatenPowerUp];
-    mockUneatenPowerUp = {
-      hasBeenEaten: false,
-      changeEatenState: () => undefined,
+    eatenPowerUps = [eatenPowerUp, eatenPowerUp];
+    powerUp = { hasBeenEaten: false, changeEatenState: () => undefined };
+    powerUps = [powerUp, powerUp, powerUp];
+    ghost = { reset: () => undefined };
+    ghosts = { red: ghost, pink: ghost, cyan: ghost, orange: ghost };
+    pacman = { reset: () => undefined, lives: 0 };
+    cycleTimer = { reset: () => undefined };
+    scaredTimer = { reset: () => undefined, duration: 2500 };
+    assets = {
+      props: { pellets: pellets, powerUps: powerUps },
+      characters: { ghosts: ghosts, pacman: pacman },
+      timers: { cycleTimer: cycleTimer, scaredTimer: scaredTimer },
     };
-    mockUneatenPowerUps = [
-      mockUneatenPowerUp,
-      mockUneatenPowerUp,
-      mockUneatenPowerUp,
-    ];
-    mockGhost = {
-      reset: () => undefined,
-    };
-    mockGhosts = [mockGhost, mockGhost];
-    mockPacman = {
-      reset: () => undefined,
-      lives: 0,
-    };
-    mockVariables = {
+    variables = {
       lastKeyPressed: "down",
       level: 5,
       directionEventListener: () => undefined,
       visibilityEventListener: () => undefined,
     };
-    mockCycleTimer = {
-      reset: () => undefined,
-    };
-    mockScaredTimer = {
-      reset: () => undefined,
-      duration: 2500,
-    };
   });
 
   it("calls changeEatenState on the pellets if they have been eaten", () => {
-    jest.spyOn(mockEatenPellet, "changeEatenState");
-    resetAfterGameOver(
-      mockEatenPellets,
-      mockEatenPowerUps,
-      mockGhosts,
-      mockPacman,
-      mockVariables,
-      mockCycleTimer,
-      mockScaredTimer
-    );
-    expect(mockEatenPellet.changeEatenState).toHaveBeenCalledTimes(3);
+    assets["props"]["pellets"] = eatenPellets;
+    jest.spyOn(eatenPellet, "changeEatenState");
+    GhostCollision.resetAfterGameOver(assets, variables);
+    expect(eatenPellet.changeEatenState).toHaveBeenCalledTimes(3);
   });
 
   it("does not call changeEatenState on the pellets if they have not been eaten", () => {
-    jest.spyOn(mockUneatenPellet, "changeEatenState");
-    resetAfterGameOver(
-      mockUneatenPellets,
-      mockUneatenPowerUps,
-      mockGhosts,
-      mockPacman,
-      mockVariables,
-      mockCycleTimer,
-      mockScaredTimer
-    );
-    expect(mockUneatenPellet.changeEatenState).toHaveBeenCalledTimes(0);
+    jest.spyOn(pellet, "changeEatenState");
+    GhostCollision.resetAfterGameOver(assets, variables);
+    expect(pellet.changeEatenState).toHaveBeenCalledTimes(0);
   });
 
   it("calls changeEatenState on the power ups if they have been eaten", () => {
-    jest.spyOn(mockEatenPowerUp, "changeEatenState");
-    resetAfterGameOver(
-      mockEatenPellets,
-      mockEatenPowerUps,
-      mockGhosts,
-      mockPacman,
-      mockVariables,
-      mockCycleTimer,
-      mockScaredTimer
-    );
-    expect(mockEatenPowerUp.changeEatenState).toHaveBeenCalledTimes(2);
+    assets["props"]["powerUps"] = eatenPowerUps;
+    jest.spyOn(eatenPowerUp, "changeEatenState");
+    GhostCollision.resetAfterGameOver(assets, variables);
+    expect(eatenPowerUp.changeEatenState).toHaveBeenCalledTimes(2);
   });
 
   it("does not call changeEatenState on the power ups if they have not been eaten", () => {
-    jest.spyOn(mockUneatenPowerUp, "changeEatenState");
-    resetAfterGameOver(
-      mockUneatenPellets,
-      mockUneatenPowerUps,
-      mockGhosts,
-      mockPacman,
-      mockVariables,
-      mockCycleTimer,
-      mockScaredTimer
-    );
-    expect(mockUneatenPowerUp.changeEatenState).toHaveBeenCalledTimes(0);
+    jest.spyOn(powerUp, "changeEatenState");
+    GhostCollision.resetAfterGameOver(assets, variables);
+    expect(powerUp.changeEatenState).toHaveBeenCalledTimes(0);
   });
 
   it("resets the cycle timer", () => {
-    jest.spyOn(mockCycleTimer, "reset");
-    resetAfterGameOver(
-      mockEatenPellets,
-      mockEatenPowerUps,
-      mockGhosts,
-      mockPacman,
-      mockVariables,
-      mockCycleTimer,
-      mockScaredTimer
-    );
-    expect(mockCycleTimer.reset).toHaveBeenCalledTimes(1);
+    jest.spyOn(cycleTimer, "reset");
+    GhostCollision.resetAfterGameOver(assets, variables);
+    expect(cycleTimer.reset).toHaveBeenCalledTimes(1);
   });
 
   it("resets the scared timer", () => {
-    jest.spyOn(mockScaredTimer, "reset");
-    resetAfterGameOver(
-      mockEatenPellets,
-      mockEatenPowerUps,
-      mockGhosts,
-      mockPacman,
-      mockVariables,
-      mockCycleTimer,
-      mockScaredTimer
-    );
-    expect(mockScaredTimer.reset).toHaveBeenCalledTimes(1);
+    jest.spyOn(scaredTimer, "reset");
+    GhostCollision.resetAfterGameOver(assets, variables);
+    expect(scaredTimer.reset).toHaveBeenCalledTimes(1);
   });
 
   it("sets the duration on the scared timer back to 7000", () => {
-    resetAfterGameOver(
-      mockEatenPellets,
-      mockEatenPowerUps,
-      mockGhosts,
-      mockPacman,
-      mockVariables,
-      mockCycleTimer,
-      mockScaredTimer
-    );
-    expect(mockScaredTimer.duration).toBe(7000);
+    GhostCollision.resetAfterGameOver(assets, variables);
+    expect(scaredTimer.duration).toBe(7000);
   });
 
   it("resets the ghosts", () => {
-    jest.spyOn(mockGhost, "reset");
-    resetAfterGameOver(
-      mockEatenPellets,
-      mockEatenPowerUps,
-      mockGhosts,
-      mockPacman,
-      mockVariables,
-      mockCycleTimer,
-      mockScaredTimer
-    );
-    expect(mockGhost.reset).toHaveBeenCalledTimes(2);
+    jest.spyOn(ghost, "reset");
+    GhostCollision.resetAfterGameOver(assets, variables);
+    expect(ghost.reset).toHaveBeenCalledTimes(4);
   });
 
   it("resets Pac-Man", () => {
-    jest.spyOn(mockPacman, "reset");
-    resetAfterGameOver(
-      mockEatenPellets,
-      mockEatenPowerUps,
-      mockGhosts,
-      mockPacman,
-      mockVariables,
-      mockCycleTimer,
-      mockScaredTimer
-    );
-    expect(mockPacman.reset).toHaveBeenCalledTimes(1);
+    jest.spyOn(pacman, "reset");
+    GhostCollision.resetAfterGameOver(assets, variables);
+    expect(pacman.reset).toHaveBeenCalledTimes(1);
   });
 
   it("resets Pac-Man's lives back to 2", () => {
-    resetAfterGameOver(
-      mockEatenPellets,
-      mockEatenPowerUps,
-      mockGhosts,
-      mockPacman,
-      mockVariables,
-      mockCycleTimer,
-      mockScaredTimer
-    );
-    expect(mockPacman.lives).toBe(2);
+    GhostCollision.resetAfterGameOver(assets, variables);
+    expect(pacman.lives).toBe(2);
   });
 
   it("resets the last key pressed", () => {
-    resetAfterGameOver(
-      mockEatenPellets,
-      mockEatenPowerUps,
-      mockGhosts,
-      mockPacman,
-      mockVariables,
-      mockCycleTimer,
-      mockScaredTimer
-    );
-    expect(mockVariables.lastKeyPressed).toBe("");
+    GhostCollision.resetAfterGameOver(assets, variables);
+    expect(variables.lastKeyPressed).toBe("");
   });
 
   it("resets the level back to 1", () => {
-    resetAfterGameOver(
-      mockEatenPellets,
-      mockEatenPowerUps,
-      mockGhosts,
-      mockPacman,
-      mockVariables,
-      mockCycleTimer,
-      mockScaredTimer
-    );
-    expect(mockVariables.level).toBe(1);
+    GhostCollision.resetAfterGameOver(assets, variables);
+    expect(variables.level).toBe(1);
   });
 });

@@ -1,280 +1,123 @@
-import resetAfterLevelUp from "./resetAfterLevelUp";
+import PelletManager from "./pelletManager";
 
-let mockPacman;
-let mockVariables;
-let mockGhost;
-let mockGhosts;
-let mockPellet;
-let mockPellets;
-let mockEatenPowerUp;
-let mockEatenPowerUps;
-let mockUneatenPowerUp;
-let mockUneatenPowerUps;
-let mockCycleTimer;
-let mockScaredTimer;
-let mockAudioPlayer;
-let mockPlayGame;
+let pacman;
+let ghost;
+let ghosts;
+let pellet;
+let pellets;
+let eatenPowerUp;
+let eatenPowerUps;
+let powerUp;
+let powerUps;
+let cycleTimer;
+let scaredTimer;
+let audioPlayer;
+let assets;
+let variables;
+let playGame;
 
 describe("resetAfterLevelUp", () => {
   beforeEach(() => {
-    mockPacman = {
-      reset: () => undefined,
+    pacman = { reset: () => undefined };
+    ghost = { reset: () => undefined };
+    pellet = { changeEatenState: () => undefined };
+    eatenPowerUp = { hasBeenEaten: true, changeEatenState: () => undefined };
+    powerUp = { hasBeenEaten: false, changeEatenState: () => undefined };
+    ghosts = { red: ghost, pink: ghost, cyan: ghost, orange: ghost };
+    pellets = [pellet, pellet];
+    eatenPowerUps = [eatenPowerUp];
+    powerUps = [powerUp];
+    cycleTimer = { reset: () => undefined, start: () => undefined };
+    scaredTimer = { reset: () => undefined, duration: 5000 };
+    audioPlayer = { ghostAudioWantsToPlay: false };
+    assets = {
+      props: { pellets: pellets, powerUps: powerUps },
+      characters: { ghosts: ghosts, pacman: pacman },
+      timers: { cycleTimer: cycleTimer, scaredTimer: scaredTimer },
+      audioPlayer: audioPlayer,
     };
-    mockVariables = {
-      lastKeyPressed: "up",
-      levelUpCount: 1000,
-    };
-    mockGhost = {
-      reset: () => undefined,
-    };
-    mockPellet = {
-      changeEatenState: () => undefined,
-    };
-    mockEatenPowerUp = {
-      hasBeenEaten: true,
-      changeEatenState: () => undefined,
-    };
-    mockUneatenPowerUp = {
-      hasBeenEaten: false,
-      changeEatenState: () => undefined,
-    };
-    mockGhosts = [mockGhost, mockGhost, mockGhost];
-    mockPellets = [mockPellet, mockPellet];
-    mockEatenPowerUps = [mockEatenPowerUp];
-    mockUneatenPowerUps = [mockUneatenPowerUp];
-    mockCycleTimer = {
-      reset: () => undefined,
-      start: () => undefined,
-    };
-    mockScaredTimer = {
-      reset: () => undefined,
-      duration: 5000,
-    };
-    mockAudioPlayer = {
-      ghostAudioWantsToPlay: false,
-    };
-    mockPlayGame = jest.fn();
+    variables = { lastKeyPressed: "up", levelUpCount: 1000 };
+    playGame = jest.fn();
   });
 
   it("calls reset on Pac-Man", () => {
-    jest.spyOn(mockPacman, "reset");
-    resetAfterLevelUp(
-      mockPacman,
-      mockVariables,
-      mockGhosts,
-      mockPellets,
-      mockEatenPowerUps,
-      mockCycleTimer,
-      mockScaredTimer,
-      mockAudioPlayer,
-      mockPlayGame
-    );
-    expect(mockPacman.reset).toHaveBeenCalledTimes(1);
+    jest.spyOn(pacman, "reset");
+    PelletManager.resetAfterLevelUp(assets, variables, playGame);
+    expect(pacman.reset).toHaveBeenCalledTimes(1);
   });
 
   it("resets the last key pressed", () => {
-    resetAfterLevelUp(
-      mockPacman,
-      mockVariables,
-      mockGhosts,
-      mockPellets,
-      mockEatenPowerUps,
-      mockCycleTimer,
-      mockScaredTimer,
-      mockAudioPlayer,
-      mockPlayGame
-    );
-    expect(mockVariables.lastKeyPressed).toBe("");
+    PelletManager.resetAfterLevelUp(assets, variables, playGame);
+    expect(variables.lastKeyPressed).toBe("");
   });
 
   it("resets the level up count back to 0", () => {
-    resetAfterLevelUp(
-      mockPacman,
-      mockVariables,
-      mockGhosts,
-      mockPellets,
-      mockEatenPowerUps,
-      mockCycleTimer,
-      mockScaredTimer,
-      mockAudioPlayer,
-      mockPlayGame
-    );
-    expect(mockVariables.levelUpCount).toBe(0);
+    PelletManager.resetAfterLevelUp(assets, variables, playGame);
+    expect(variables.levelUpCount).toBe(0);
   });
 
   it("calls reset on the cycle timer", () => {
-    jest.spyOn(mockCycleTimer, "reset");
-    resetAfterLevelUp(
-      mockPacman,
-      mockVariables,
-      mockGhosts,
-      mockPellets,
-      mockEatenPowerUps,
-      mockCycleTimer,
-      mockScaredTimer,
-      mockAudioPlayer,
-      mockPlayGame
-    );
-    expect(mockCycleTimer.reset).toHaveBeenCalledTimes(1);
+    jest.spyOn(cycleTimer, "reset");
+    PelletManager.resetAfterLevelUp(assets, variables, playGame);
+    expect(cycleTimer.reset).toHaveBeenCalledTimes(1);
   });
 
   it("calls reset on the scared timer", () => {
-    jest.spyOn(mockScaredTimer, "reset");
-    resetAfterLevelUp(
-      mockPacman,
-      mockVariables,
-      mockGhosts,
-      mockPellets,
-      mockEatenPowerUps,
-      mockCycleTimer,
-      mockScaredTimer,
-      mockAudioPlayer,
-      mockPlayGame
-    );
-    expect(mockScaredTimer.reset).toHaveBeenCalledTimes(1);
+    jest.spyOn(scaredTimer, "reset");
+    PelletManager.resetAfterLevelUp(assets, variables, playGame);
+    expect(scaredTimer.reset).toHaveBeenCalledTimes(1);
   });
 
   it("decreases the duration on the scared timer by 500 if it is greater than 0", () => {
-    resetAfterLevelUp(
-      mockPacman,
-      mockVariables,
-      mockGhosts,
-      mockPellets,
-      mockEatenPowerUps,
-      mockCycleTimer,
-      mockScaredTimer,
-      mockAudioPlayer,
-      mockPlayGame
-    );
-    expect(mockScaredTimer.duration).toBe(4500);
+    PelletManager.resetAfterLevelUp(assets, variables, playGame);
+    expect(scaredTimer.duration).toBe(4500);
   });
 
   it("leaves the duration on the scared timer the same if it is equal to 0", () => {
-    const mockScaredTimerZero = {
-      reset: () => undefined,
-      duration: 0,
-    };
-    resetAfterLevelUp(
-      mockPacman,
-      mockVariables,
-      mockGhosts,
-      mockPellets,
-      mockEatenPowerUps,
-      mockCycleTimer,
-      mockScaredTimerZero,
-      mockAudioPlayer,
-      mockPlayGame
-    );
-    expect(mockScaredTimerZero.duration).toBe(0);
+    const scaredTimerZero = { reset: () => undefined, duration: 0 };
+    assets["timers"]["scaredTimer"] = scaredTimerZero;
+    PelletManager.resetAfterLevelUp(assets, variables, playGame);
+    expect(scaredTimerZero.duration).toBe(0);
   });
 
   it("calls reset on each ghost", () => {
-    jest.spyOn(mockGhost, "reset");
-    resetAfterLevelUp(
-      mockPacman,
-      mockVariables,
-      mockGhosts,
-      mockPellets,
-      mockEatenPowerUps,
-      mockCycleTimer,
-      mockScaredTimer,
-      mockAudioPlayer,
-      mockPlayGame
-    );
-    expect(mockGhost.reset).toHaveBeenCalledTimes(3);
+    jest.spyOn(ghost, "reset");
+    PelletManager.resetAfterLevelUp(assets, variables, playGame);
+    expect(ghost.reset).toHaveBeenCalledTimes(4);
   });
 
   it("calls changeEatenState on each pellet", () => {
-    jest.spyOn(mockPellet, "changeEatenState");
-    resetAfterLevelUp(
-      mockPacman,
-      mockVariables,
-      mockGhosts,
-      mockPellets,
-      mockEatenPowerUps,
-      mockCycleTimer,
-      mockScaredTimer,
-      mockAudioPlayer,
-      mockPlayGame
-    );
-    expect(mockPellet.changeEatenState).toHaveBeenCalledTimes(2);
+    jest.spyOn(pellet, "changeEatenState");
+    PelletManager.resetAfterLevelUp(assets, variables, playGame);
+    expect(pellet.changeEatenState).toHaveBeenCalledTimes(2);
   });
 
   it("calls changeEatenState on each power up if they have been eaten", () => {
-    jest.spyOn(mockEatenPowerUp, "changeEatenState");
-    resetAfterLevelUp(
-      mockPacman,
-      mockVariables,
-      mockGhosts,
-      mockPellets,
-      mockEatenPowerUps,
-      mockCycleTimer,
-      mockScaredTimer,
-      mockAudioPlayer,
-      mockPlayGame
-    );
-    expect(mockEatenPowerUp.changeEatenState).toHaveBeenCalledTimes(1);
+    assets["props"]["powerUps"] = eatenPowerUps;
+    jest.spyOn(eatenPowerUp, "changeEatenState");
+    PelletManager.resetAfterLevelUp(assets, variables, playGame);
+    expect(eatenPowerUp.changeEatenState).toHaveBeenCalledTimes(1);
   });
 
   it("does not call changeEatenState on each power up if they have not been eaten", () => {
-    jest.spyOn(mockUneatenPowerUp, "changeEatenState");
-    resetAfterLevelUp(
-      mockPacman,
-      mockVariables,
-      mockGhosts,
-      mockPellets,
-      mockUneatenPowerUps,
-      mockCycleTimer,
-      mockScaredTimer,
-      mockAudioPlayer,
-      mockPlayGame
-    );
-    expect(mockUneatenPowerUp.changeEatenState).toHaveBeenCalledTimes(0);
+    jest.spyOn(powerUp, "changeEatenState");
+    PelletManager.resetAfterLevelUp(assets, variables, playGame);
+    expect(powerUp.changeEatenState).toHaveBeenCalledTimes(0);
   });
 
   it("sets ghostAudioWantsToPlay to true", () => {
-    resetAfterLevelUp(
-      mockPacman,
-      mockVariables,
-      mockGhosts,
-      mockPellets,
-      mockEatenPowerUps,
-      mockCycleTimer,
-      mockScaredTimer,
-      mockAudioPlayer,
-      mockPlayGame
-    );
-    expect(mockAudioPlayer.ghostAudioWantsToPlay).toBe(true);
+    PelletManager.resetAfterLevelUp(assets, variables, playGame);
+    expect(audioPlayer.ghostAudioWantsToPlay).toBe(true);
   });
 
   it("calls start on the cycle timer to restart it", () => {
-    jest.spyOn(mockCycleTimer, "start");
-    resetAfterLevelUp(
-      mockPacman,
-      mockVariables,
-      mockGhosts,
-      mockPellets,
-      mockEatenPowerUps,
-      mockCycleTimer,
-      mockScaredTimer,
-      mockAudioPlayer,
-      mockPlayGame
-    );
-    expect(mockCycleTimer.start).toHaveBeenCalledTimes(1);
+    jest.spyOn(cycleTimer, "start");
+    PelletManager.resetAfterLevelUp(assets, variables, playGame);
+    expect(cycleTimer.start).toHaveBeenCalledTimes(1);
   });
 
   it("calls playGame to restart the animation frames", () => {
-    resetAfterLevelUp(
-      mockPacman,
-      mockVariables,
-      mockGhosts,
-      mockPellets,
-      mockEatenPowerUps,
-      mockCycleTimer,
-      mockScaredTimer,
-      mockAudioPlayer,
-      mockPlayGame
-    );
-    expect(mockPlayGame).toHaveBeenCalledTimes(1);
+    PelletManager.resetAfterLevelUp(assets, variables, playGame);
+    expect(playGame).toHaveBeenCalledTimes(1);
   });
 });

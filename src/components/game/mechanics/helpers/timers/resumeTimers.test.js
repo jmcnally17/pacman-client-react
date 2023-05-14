@@ -1,54 +1,52 @@
-import resumeTimers from "./resumeTimers";
+import Timer from "./timer";
 
-let mockCycleTimer;
-let mockScaredTimer;
-let mockRetreatingTimer;
-let mockRetreatingTimers;
+let cycleTimer;
+let scaredTimer;
+let retreatingTimer;
+let retreatingTimers;
+let timers;
 
 describe("resumeTimers", () => {
   beforeEach(() => {
-    mockCycleTimer = {
-      resume: () => undefined,
-    };
-    mockScaredTimer = {
-      isRunning: false,
-      resume: () => undefined,
-    };
-    mockRetreatingTimer = {
-      isRunning: true,
-      resume: () => undefined,
-    };
-    mockRetreatingTimers = [
-      mockRetreatingTimer,
-      mockRetreatingTimer,
-      mockRetreatingTimer,
-      mockRetreatingTimer,
+    cycleTimer = { resume: () => undefined };
+    scaredTimer = { isRunning: false, resume: () => undefined };
+    retreatingTimer = { isRunning: true, resume: () => undefined };
+    retreatingTimers = [
+      retreatingTimer,
+      retreatingTimer,
+      retreatingTimer,
+      retreatingTimer,
     ];
-    jest.spyOn(mockCycleTimer, "resume");
-    jest.spyOn(mockScaredTimer, "resume");
-    jest.spyOn(mockRetreatingTimer, "resume");
+    timers = {
+      cycleTimer: cycleTimer,
+      scaredTimer: scaredTimer,
+      retreatingTimers: retreatingTimers,
+    };
+    jest.spyOn(cycleTimer, "resume");
+    jest.spyOn(scaredTimer, "resume");
+    jest.spyOn(retreatingTimer, "resume");
   });
 
   it("calls resume on the scared timer if it is running", () => {
-    mockScaredTimer.isRunning = true;
-    resumeTimers(mockCycleTimer, mockScaredTimer, mockRetreatingTimers);
-    expect(mockScaredTimer.resume).toHaveBeenCalledTimes(1);
-    expect(mockScaredTimer.resume).toHaveBeenCalledWith(mockCycleTimer);
+    scaredTimer.isRunning = true;
+    Timer.resumeTimers(timers);
+    expect(scaredTimer.resume).toHaveBeenCalledTimes(1);
+    expect(scaredTimer.resume).toHaveBeenCalledWith(cycleTimer);
   });
 
   it("calls resume on the cycle timer if the scared timer is not running", () => {
-    resumeTimers(mockCycleTimer, mockScaredTimer, mockRetreatingTimers);
-    expect(mockCycleTimer.resume).toHaveBeenCalledTimes(1);
+    Timer.resumeTimers(timers);
+    expect(cycleTimer.resume).toHaveBeenCalledTimes(1);
   });
 
   it("calls resume on each retreating timer if they are running", () => {
-    resumeTimers(mockCycleTimer, mockScaredTimer, mockRetreatingTimers);
-    expect(mockRetreatingTimer.resume).toHaveBeenCalledTimes(4);
+    Timer.resumeTimers(timers);
+    expect(retreatingTimer.resume).toHaveBeenCalledTimes(4);
   });
 
   it("does not call resume on each retreating timer if they are not running", () => {
-    mockRetreatingTimer.isRunning = false;
-    resumeTimers(mockCycleTimer, mockScaredTimer, mockRetreatingTimers);
-    expect(mockRetreatingTimer.resume).toHaveBeenCalledTimes(0);
+    retreatingTimer.isRunning = false;
+    Timer.resumeTimers(timers);
+    expect(retreatingTimer.resume).toHaveBeenCalledTimes(0);
   });
 });

@@ -1,36 +1,36 @@
-import displayLevel from "../../display/displayLevel";
+import Graphics from "./graphics";
 
-let mockCtx;
-let mockVariables;
+let ctx;
+let variables;
 
 describe("displayLevel", () => {
   beforeEach(() => {
-    mockCtx = {
+    ctx = {
       fillStyle: null,
       textAlign: null,
       fillText: () => undefined,
     };
-    mockVariables = {
+    variables = {
       level: 7,
     };
   });
 
   it("changes the ctx fillStyle to white", () => {
-    displayLevel(mockCtx, mockVariables);
-    expect(mockCtx.fillStyle).toBe("white");
+    Graphics.displayLevel(ctx, variables);
+    expect(ctx.fillStyle).toBe("white");
   });
 
   it("changes the ctx textAlign to center", () => {
-    displayLevel(mockCtx, mockVariables);
-    expect(mockCtx.textAlign).toBe("center");
+    Graphics.displayLevel(ctx, variables);
+    expect(ctx.textAlign).toBe("center");
   });
 
   it("calls fillText on ctx to render the score text", () => {
-    jest.spyOn(mockCtx, "fillText");
-    displayLevel(mockCtx, mockVariables);
-    expect(mockCtx.fillText).toHaveBeenCalledTimes(1);
-    expect(mockCtx.fillText).toHaveBeenCalledWith(
-      `Level ${mockVariables.level}`,
+    jest.spyOn(ctx, "fillText");
+    Graphics.displayLevel(ctx, variables);
+    expect(ctx.fillText).toHaveBeenCalledTimes(1);
+    expect(ctx.fillText).toHaveBeenCalledWith(
+      `Level ${variables.level}`,
       300,
       15
     );

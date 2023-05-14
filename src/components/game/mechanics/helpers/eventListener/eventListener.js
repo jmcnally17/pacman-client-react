@@ -1,6 +1,6 @@
 import AudioManager from "../audio/audioManager";
 import Timer from "../timers/timer";
-import Animator from "../graphics/Animator/animator";
+import Animator from "../graphics/animator/animator";
 
 export default class EventListener {
   static addDirectionDetection(variables) {

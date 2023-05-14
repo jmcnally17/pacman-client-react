@@ -54,8 +54,8 @@ export default class Animator {
     });
   }
 
-  static displayPleaseWait(ctx) {
-    Animator.loadTint(ctx);
+  static displayPleaseWait(ctx, loadTint = Animator.loadTint) {
+    loadTint(ctx);
     ctx.globalAlpha = 1;
     ctx.font = "100px Arial";
     ctx.fillStyle = "white";

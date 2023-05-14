@@ -1,136 +1,56 @@
-import resumeAnimation from "./resumeAnimation";
+import Animator from "./animator";
+import Graphics from "../graphics";
 
-let mockShrinkingPacman;
-let mockLevellingUpPacman;
-let mockPacman;
-let mockVariables;
-let mockCtx;
-let mockBoundaries;
-let mockPellets;
-let mockPowerUps;
-let mockGhosts;
-let mockCycleTimer;
-let mockScaredTimer;
-let mockAudioPlayer;
-let mockRunDeathAnimation;
-let mockRunLevelUpAnimation;
-let mockPlayGame;
+jest.mock("../graphics");
+
+let shrinkingPacman;
+let levellingUpPacman;
+let pacman;
+let variables;
+let ctx;
+let assets;
+let playGame;
 
 describe("resumeAnimation", () => {
   beforeEach(() => {
-    mockShrinkingPacman = {
-      isShrinking: true,
-      isLevellingUp: false,
-    };
-    mockLevellingUpPacman = {
-      isShrinking: false,
-      isLevellingUp: true,
-    };
-    mockPacman = {
-      isShrinking: false,
-      isLevellingUp: false,
-    };
-    mockVariables = {
-      player: {
-        username: "John",
-      },
-      reactRoot: "reactRoot",
-    };
-    mockCtx = "ctx";
-    mockBoundaries = "boundaries";
-    mockPellets = "pellets";
-    mockPowerUps = "powerUps";
-    mockGhosts = "ghosts";
-    mockCycleTimer = "cycleTimer";
-    mockScaredTimer = "scaredTimer";
-    mockAudioPlayer = "audioPlayer";
-    mockRunDeathAnimation = jest.fn();
-    mockRunLevelUpAnimation = jest.fn();
-    mockPlayGame = jest.fn();
+    Graphics.mockClear();
+    shrinkingPacman = { isShrinking: true, isLevellingUp: false };
+    levellingUpPacman = { isShrinking: false, isLevellingUp: true };
+    pacman = { isShrinking: false, isLevellingUp: false };
+    variables = { player: { username: "John" }, reactRoot: "reactRoot" };
+    ctx = "ctx";
+    assets = { characters: { pacman: pacman } };
+    playGame = jest.fn();
   });
 
   it("calls runDeathAnimation if isShrinking in PacMan is true", () => {
-    resumeAnimation(
-      mockVariables,
-      mockCtx,
-      mockBoundaries,
-      mockPellets,
-      mockPowerUps,
-      mockShrinkingPacman,
-      mockGhosts,
-      mockCycleTimer,
-      mockScaredTimer,
-      mockAudioPlayer,
-      mockRunDeathAnimation,
-      mockRunLevelUpAnimation,
-      mockPlayGame
-    );
-    expect(mockRunDeathAnimation).toHaveBeenCalledTimes(1);
-    expect(mockRunDeathAnimation).toHaveBeenCalledWith(
-      mockVariables,
-      mockCtx,
-      mockBoundaries,
-      mockPellets,
-      mockPowerUps,
-      mockShrinkingPacman,
-      mockGhosts,
-      mockCycleTimer,
-      mockScaredTimer,
-      mockAudioPlayer
+    assets["characters"]["pacman"] = shrinkingPacman;
+    Animator.resumeAnimation(variables, ctx, assets, playGame);
+    expect(Graphics.runDeathAnimation).toHaveBeenCalledTimes(1);
+    expect(Graphics.runDeathAnimation).toHaveBeenCalledWith(
+      variables,
+      ctx,
+      assets
     );
   });
 
   it("calls runLevelUpAnimation if isLevellingUp in PacMan is true", () => {
-    resumeAnimation(
-      mockVariables,
-      mockCtx,
-      mockBoundaries,
-      mockPellets,
-      mockPowerUps,
-      mockLevellingUpPacman,
-      mockGhosts,
-      mockCycleTimer,
-      mockScaredTimer,
-      mockAudioPlayer,
-      mockRunDeathAnimation,
-      mockRunLevelUpAnimation,
-      mockPlayGame
-    );
-    expect(mockRunLevelUpAnimation).toHaveBeenCalledTimes(1);
-    expect(mockRunLevelUpAnimation).toHaveBeenCalledWith(
-      mockVariables,
-      mockLevellingUpPacman,
-      mockGhosts,
-      mockPellets,
-      mockPowerUps,
-      mockCycleTimer,
-      mockScaredTimer,
-      mockCtx,
-      mockBoundaries,
-      mockAudioPlayer
+    assets["characters"]["pacman"] = levellingUpPacman;
+    Animator.resumeAnimation(variables, ctx, assets, playGame);
+    expect(Graphics.runLevelUpAnimation).toHaveBeenCalledTimes(1);
+    expect(Graphics.runLevelUpAnimation).toHaveBeenCalledWith(
+      variables,
+      assets,
+      ctx
     );
   });
 
   it("calls playGame if isShrinking and isLevellingUp in PacMan are both false", () => {
-    resumeAnimation(
-      mockVariables,
-      mockCtx,
-      mockBoundaries,
-      mockPellets,
-      mockPowerUps,
-      mockPacman,
-      mockGhosts,
-      mockCycleTimer,
-      mockScaredTimer,
-      mockAudioPlayer,
-      mockRunDeathAnimation,
-      mockRunLevelUpAnimation,
-      mockPlayGame
-    );
-    expect(mockPlayGame).toHaveBeenCalledTimes(1);
-    expect(mockPlayGame).toHaveBeenCalledWith(
-      mockVariables.player,
-      mockVariables.reactRoot
+    Animator.resumeAnimation(variables, ctx, assets, playGame);
+    expect(playGame).toHaveBeenCalledTimes(1);
+    expect(playGame).toHaveBeenCalledWith(
+      variables.player,
+      variables.reactRoot
     );
   });
 });

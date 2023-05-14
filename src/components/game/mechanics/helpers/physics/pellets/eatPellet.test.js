@@ -1,55 +1,40 @@
-import eatPellet from "./eatPellet";
+import PelletManager from "./pelletManager";
 
-let mockPellet;
-let mockPacmanOne;
-let mockPacmanTwo;
-let mockVariables;
+let pellet;
+let pacmanOne;
+let pacmanTwo;
+let variables;
 
 describe("eatPellet", () => {
   beforeEach(() => {
-    mockPellet = {
-      position: {
-        x: 200,
-        y: 200,
-      },
+    pellet = {
+      position: { x: 200, y: 200 },
       changeEatenState: () => undefined,
       hasBeenEaten: false,
     };
-    mockPacmanOne = {
-      position: {
-        x: 200,
-        y: 200,
-      },
-    };
-    mockPacmanTwo = {
-      position: {
-        x: 250,
-        y: 250,
-      },
-    };
-    jest.spyOn(mockPellet, "changeEatenState");
-    mockVariables = {
-      score: 0,
-    };
+    pacmanOne = { position: { x: 200, y: 200 } };
+    pacmanTwo = { position: { x: 250, y: 250 } };
+    jest.spyOn(pellet, "changeEatenState");
+    variables = { score: 0 };
   });
 
   it("calls changeEatenState when the pellet collides with Pac-Man", () => {
-    eatPellet(mockPellet, mockPacmanOne, mockVariables);
-    expect(mockPellet.changeEatenState).toHaveBeenCalledTimes(1);
+    PelletManager.eatPellet(pellet, pacmanOne, variables);
+    expect(pellet.changeEatenState).toHaveBeenCalledTimes(1);
   });
 
   it("increases the score when the pellet collides with Pac-Man", () => {
-    eatPellet(mockPellet, mockPacmanOne, mockVariables);
-    expect(mockVariables.score).toBe(10);
+    PelletManager.eatPellet(pellet, pacmanOne, variables);
+    expect(variables.score).toBe(10);
   });
 
   it("does not call changeEatenState if the pellet and pacman are not colliding", () => {
-    eatPellet(mockPellet, mockPacmanTwo, mockVariables);
-    expect(mockPellet.changeEatenState).toHaveBeenCalledTimes(0);
+    PelletManager.eatPellet(pellet, pacmanTwo, variables);
+    expect(pellet.changeEatenState).toHaveBeenCalledTimes(0);
   });
 
   it("does not increase the score if the pellet and pacman are not colliding", () => {
-    eatPellet(mockPellet, mockPacmanTwo, mockVariables);
-    expect(mockVariables.score).toBe(0);
+    PelletManager.eatPellet(pellet, pacmanTwo, variables);
+    expect(variables.score).toBe(0);
   });
 });

@@ -1,4 +1,4 @@
-import resumeAudio from "./resumeAudio";
+import AudioManager from "./audioManager";
 
 describe("resumeAudio", () => {
   it("calls playPacmanDeathAndLevelUpIfWantTo on the audioPlayer", () => {
@@ -6,7 +6,7 @@ describe("resumeAudio", () => {
       playPacmanDeathAndLevelUpIfWantTo: () => undefined,
     };
     jest.spyOn(mockAudioPlayer, "playPacmanDeathAndLevelUpIfWantTo");
-    resumeAudio(mockAudioPlayer);
+    AudioManager.resumeAudio(mockAudioPlayer);
     expect(
       mockAudioPlayer.playPacmanDeathAndLevelUpIfWantTo
     ).toHaveBeenCalledTimes(1);

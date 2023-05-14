@@ -1,109 +1,67 @@
-import checkPacmanGhostCollision from "./checkPacmanGhostCollision";
+import GhostManager from "./ghostManager";
 
-let mockGhost;
-let mockPacman;
-let mockVariables;
-let mockGhosts;
-let mockPellets;
-let mockPowerUps;
-let mockCycleTimer;
-let mockScaredTimer;
-let mockAudioPlayer;
-let mockCtx;
-let mockBoundaries;
-let mockCollisionConditional;
-let mockDealWithCollision;
+let ghost;
+let assets;
+let variables;
+let ctx;
+let collisionConditional;
+let dealWithCollision;
 
 describe("checkPacmanGhostCollision", () => {
   beforeEach(() => {
-    mockGhost = "ghost";
-    mockPacman = "pacman";
-    mockVariables = "variables";
-    mockGhosts = "ghosts";
-    mockPellets = "pellets";
-    mockPowerUps = "powerUps";
-    mockCycleTimer = "cycleTimer";
-    mockScaredTimer = "scaredTimer";
-    mockAudioPlayer = "audioPlayer";
-    mockCtx = "ctx";
-    mockBoundaries = "boundaries";
-    mockCollisionConditional = jest.fn();
-    mockDealWithCollision = jest.fn();
+    ghost = "ghost";
+    assets = { characters: { pacman: "pacman" } };
+    variables = "variables";
+    ctx = "ctx";
+    collisionConditional = jest.fn();
+    dealWithCollision = jest.fn();
   });
 
   it("calls collisionConditional to check if Pac-Man and the ghost are colliding", () => {
-    checkPacmanGhostCollision(
-      mockGhost,
-      mockPacman,
-      mockVariables,
-      mockGhosts,
-      mockPellets,
-      mockPowerUps,
-      mockCycleTimer,
-      mockScaredTimer,
-      mockAudioPlayer,
-      mockCtx,
-      mockBoundaries,
-      mockCollisionConditional,
-      mockDealWithCollision
+    GhostManager.checkPacmanGhostCollision(
+      ghost,
+      assets,
+      variables,
+      ctx,
+      collisionConditional,
+      dealWithCollision
     );
-    expect(mockCollisionConditional).toHaveBeenCalledTimes(1);
-    expect(mockCollisionConditional).toHaveBeenCalledWith(
-      mockGhost,
-      mockPacman
+    expect(collisionConditional).toHaveBeenCalledTimes(1);
+    expect(collisionConditional).toHaveBeenCalledWith(
+      ghost,
+      assets["characters"]["pacman"]
     );
   });
 
   it("calls dealWithCollision when the collisionConditional is true", () => {
-    mockCollisionConditional.mockReturnValue(true);
-    checkPacmanGhostCollision(
-      mockGhost,
-      mockPacman,
-      mockVariables,
-      mockGhosts,
-      mockPellets,
-      mockPowerUps,
-      mockCycleTimer,
-      mockScaredTimer,
-      mockAudioPlayer,
-      mockCtx,
-      mockBoundaries,
-      mockCollisionConditional,
-      mockDealWithCollision
+    collisionConditional.mockReturnValueOnce(true);
+    GhostManager.checkPacmanGhostCollision(
+      ghost,
+      assets,
+      variables,
+      ctx,
+      collisionConditional,
+      dealWithCollision
     );
-    expect(mockDealWithCollision).toHaveBeenCalledTimes(1);
-    expect(mockDealWithCollision).toHaveBeenCalledWith(
-      mockGhost,
-      mockPacman,
-      mockVariables,
-      mockGhosts,
-      mockPellets,
-      mockPowerUps,
-      mockCycleTimer,
-      mockScaredTimer,
-      mockAudioPlayer,
-      mockCtx,
-      mockBoundaries
+    expect(dealWithCollision).toHaveBeenCalledTimes(1);
+    expect(dealWithCollision).toHaveBeenCalledWith(
+      ghost,
+      assets,
+      variables,
+      ctx
     );
   });
 
   it("does not call dealWithCollision when the collisionConditional is false", () => {
-    mockCollisionConditional.mockReturnValue(false);
-    checkPacmanGhostCollision(
-      mockGhost,
-      mockPacman,
-      mockVariables,
-      mockGhosts,
-      mockPellets,
-      mockPowerUps,
-      mockCycleTimer,
-      mockScaredTimer,
-      mockAudioPlayer,
-      mockCtx,
-      mockBoundaries,
-      mockCollisionConditional,
-      mockDealWithCollision
+    collisionConditional.mockReturnValueOnce(false);
+    GhostManager.checkPacmanGhostCollision(
+      ghost,
+      assets,
+      variables,
+      ctx,
+      collisionConditional,
+      dealWithCollision
     );
-    expect(mockDealWithCollision).toHaveBeenCalledTimes(0);
+    expect(dealWithCollision).toHaveBeenCalledTimes(0);
   });
 });

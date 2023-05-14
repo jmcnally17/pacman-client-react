@@ -1,18 +1,16 @@
+import GhostCollision from "./ghostCollision";
 import mockAxios from "jest-mock-axios";
-import saveScore from "./pacmanDeath/gameOver/saveScore";
 
-let mockVariables;
-let mockGetBackendUrl;
+let variables;
+let getBackendUrl;
 
 describe("saveScore", () => {
   beforeEach(() => {
-    mockVariables = {
-      player: {
-        username: "person",
-      },
+    variables = {
+      player: { username: "person" },
       score: 0,
     };
-    mockGetBackendUrl = jest
+    getBackendUrl = jest
       .fn()
       .mockReturnValueOnce("https://livesite.com/backend");
   });
@@ -25,35 +23,27 @@ describe("saveScore", () => {
     mockAxios.post.mockResolvedValueOnce({
       data: { message: "your score has been saved" },
     });
-    const response = await saveScore(mockVariables, mockGetBackendUrl);
+    const response = await GhostCollision.saveScore(variables, getBackendUrl);
     expect(response).toBe("Success: your score has been saved");
     expect(mockAxios.post).toHaveBeenCalledTimes(1);
     expect(mockAxios.post).toHaveBeenCalledWith(
       "https://livesite.com/backend",
-      {
-        name: "person",
-        points: 0,
-      }
+      { name: "person", points: 0 }
     );
-    expect(mockGetBackendUrl).toHaveBeenCalledTimes(1);
+    expect(getBackendUrl).toHaveBeenCalledTimes(1);
   });
 
   it("returns an error when the axios post request fails", async () => {
     mockAxios.post.mockRejectedValueOnce({
-      response: {
-        statusText: "API is down",
-      },
+      response: { statusText: "API is down" },
     });
-    const response = await saveScore(mockVariables, mockGetBackendUrl);
+    const response = await GhostCollision.saveScore(variables, getBackendUrl);
     expect(response).toBe("Error: API is down");
     expect(mockAxios.post).toHaveBeenCalledTimes(1);
     expect(mockAxios.post).toHaveBeenCalledWith(
       "https://livesite.com/backend",
-      {
-        name: "person",
-        points: 0,
-      }
+      { name: "person", points: 0 }
     );
-    expect(mockGetBackendUrl).toHaveBeenCalledTimes(1);
+    expect(getBackendUrl).toHaveBeenCalledTimes(1);
   });
 });

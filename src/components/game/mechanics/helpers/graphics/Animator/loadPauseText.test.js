@@ -1,18 +1,18 @@
-import loadPauseText from "./loadPauseText";
+import Animator from "./animator";
 
 describe("loadPauseText", () => {
   it("adds the pause text image onto the screen", () => {
-    const mockCtx = {
+    const ctx = {
       globalAlpha: undefined,
       drawImage: () => undefined,
     };
-    const mockPauseTextImage = "pauseTextImage";
-    jest.spyOn(mockCtx, "drawImage");
-    loadPauseText(mockCtx, mockPauseTextImage);
-    expect(mockCtx.globalAlpha).toBe(1);
-    expect(mockCtx.drawImage).toHaveBeenCalledTimes(1);
-    expect(mockCtx.drawImage).toHaveBeenCalledWith(
-      mockPauseTextImage,
+    const pauseTextImage = "pauseTextImage";
+    jest.spyOn(ctx, "drawImage");
+    Animator.loadPauseText(ctx, pauseTextImage);
+    expect(ctx.globalAlpha).toBe(1);
+    expect(ctx.drawImage).toHaveBeenCalledTimes(1);
+    expect(ctx.drawImage).toHaveBeenCalledWith(
+      pauseTextImage,
       98,
       394,
       700,

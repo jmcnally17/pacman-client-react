@@ -1,166 +1,141 @@
-import chase from "./chaseAndScatter/chase/chase";
+import GhostMovement from "./ghostMovement";
 
-let mockPathway;
-let mockPacman;
-let mockVariables;
-let mockRedGhost;
-let mockIsOrangeFarFromPacman;
-let mockFindRedOrangeAimPath;
-let mockFindPinkAimPath;
-let mockFindCyanAimPath;
-let mockFindOrangeScatterPath;
+let pathway;
+let assets;
+let variables;
+let isOrangeFarFromPacman;
+let findRedOrangeAimPath;
+let findPinkAimPath;
+let findCyanAimPath;
+let findOrangeScatterPath;
 
 describe("chase", () => {
   beforeEach(() => {
-    mockPathway = "pathway";
-    mockPacman = "pacman";
-    mockVariables = "variables";
-    mockRedGhost = "redGhost";
-    mockIsOrangeFarFromPacman = jest.fn();
-    mockFindRedOrangeAimPath = jest.fn();
-    mockFindPinkAimPath = jest.fn();
-    mockFindCyanAimPath = jest.fn();
-    mockFindOrangeScatterPath = jest.fn();
+    pathway = "pathway";
+    assets = { characters: { pacman: "pacman" } };
+    variables = "variables";
+    isOrangeFarFromPacman = jest.fn();
+    findRedOrangeAimPath = jest.fn();
+    findPinkAimPath = jest.fn();
+    findCyanAimPath = jest.fn();
+    findOrangeScatterPath = jest.fn();
   });
 
   it("calls findRedOrangeAimPath if the ghost is red", () => {
-    const mockRedGhost = {
-      colour: "red",
-    };
-    chase(
-      mockRedGhost,
-      mockPathway,
-      mockPacman,
-      mockVariables,
-      mockRedGhost,
-      mockIsOrangeFarFromPacman,
-      mockFindRedOrangeAimPath,
-      mockFindPinkAimPath,
-      mockFindCyanAimPath,
-      mockFindOrangeScatterPath
+    const redGhost = { colour: "red" };
+    GhostMovement.chase(
+      redGhost,
+      pathway,
+      assets,
+      variables,
+      isOrangeFarFromPacman,
+      findRedOrangeAimPath,
+      findPinkAimPath,
+      findCyanAimPath,
+      findOrangeScatterPath
     );
-    expect(mockFindRedOrangeAimPath).toHaveBeenCalledTimes(1);
-    expect(mockFindRedOrangeAimPath).toHaveBeenCalledWith(
-      mockPacman,
-      mockPathway
+    expect(findRedOrangeAimPath).toHaveBeenCalledTimes(1);
+    expect(findRedOrangeAimPath).toHaveBeenCalledWith(
+      assets["characters"]["pacman"],
+      pathway
     );
   });
 
   it("calls findPinkAimPath if the ghost is pink", () => {
-    const mockPinkGhost = {
-      colour: "pink",
-    };
-    chase(
-      mockPinkGhost,
-      mockPathway,
-      mockPacman,
-      mockVariables,
-      mockRedGhost,
-      mockIsOrangeFarFromPacman,
-      mockFindRedOrangeAimPath,
-      mockFindPinkAimPath,
-      mockFindCyanAimPath,
-      mockFindOrangeScatterPath
+    const pinkGhost = { colour: "pink" };
+    GhostMovement.chase(
+      pinkGhost,
+      pathway,
+      assets,
+      variables,
+      isOrangeFarFromPacman,
+      findRedOrangeAimPath,
+      findPinkAimPath,
+      findCyanAimPath,
+      findOrangeScatterPath
     );
-    expect(mockFindPinkAimPath).toHaveBeenCalledTimes(1);
-    expect(mockFindPinkAimPath).toHaveBeenCalledWith(
-      mockPacman,
-      mockPathway,
-      mockVariables
+    expect(findPinkAimPath).toHaveBeenCalledTimes(1);
+    expect(findPinkAimPath).toHaveBeenCalledWith(
+      assets["characters"]["pacman"],
+      pathway,
+      variables
     );
   });
 
   it("calls findCyanAimPath if the ghost is cyan", () => {
-    const mockCyanGhost = {
-      colour: "cyan",
-    };
-    chase(
-      mockCyanGhost,
-      mockPathway,
-      mockPacman,
-      mockVariables,
-      mockRedGhost,
-      mockIsOrangeFarFromPacman,
-      mockFindRedOrangeAimPath,
-      mockFindPinkAimPath,
-      mockFindCyanAimPath,
-      mockFindOrangeScatterPath
+    const cyanGhost = { colour: "cyan" };
+    GhostMovement.chase(
+      cyanGhost,
+      pathway,
+      assets,
+      variables,
+      isOrangeFarFromPacman,
+      findRedOrangeAimPath,
+      findPinkAimPath,
+      findCyanAimPath,
+      findOrangeScatterPath
     );
-    expect(mockFindCyanAimPath).toHaveBeenCalledTimes(1);
-    expect(mockFindCyanAimPath).toHaveBeenCalledWith(
-      mockPacman,
-      mockVariables,
-      mockRedGhost,
-      mockPathway
-    );
+    expect(findCyanAimPath).toHaveBeenCalledTimes(1);
+    expect(findCyanAimPath).toHaveBeenCalledWith(assets, variables, pathway);
   });
 
   it("calls isOrangeFarFromPacman if the ghost is orange", () => {
-    const mockOrangeGhost = {
-      colour: "orange",
-    };
-    chase(
-      mockOrangeGhost,
-      mockPathway,
-      mockPacman,
-      mockVariables,
-      mockRedGhost,
-      mockIsOrangeFarFromPacman,
-      mockFindRedOrangeAimPath,
-      mockFindPinkAimPath,
-      mockFindCyanAimPath,
-      mockFindOrangeScatterPath
+    const orangeGhost = { colour: "orange" };
+    GhostMovement.chase(
+      orangeGhost,
+      pathway,
+      assets,
+      variables,
+      isOrangeFarFromPacman,
+      findRedOrangeAimPath,
+      findPinkAimPath,
+      findCyanAimPath,
+      findOrangeScatterPath
     );
-    expect(mockIsOrangeFarFromPacman).toHaveBeenCalledTimes(1);
-    expect(mockIsOrangeFarFromPacman).toHaveBeenCalledWith(
-      mockOrangeGhost,
-      mockPacman,
-      mockVariables
+    expect(isOrangeFarFromPacman).toHaveBeenCalledTimes(1);
+    expect(isOrangeFarFromPacman).toHaveBeenCalledWith(
+      orangeGhost,
+      assets["characters"]["pacman"],
+      variables
     );
   });
 
   it("calls findRedOrangeAimPath if the ghost is orange and is far away from Pac-Man", () => {
-    const mockOrangeGhost = {
-      colour: "orange",
-    };
-    mockIsOrangeFarFromPacman.mockReturnValue(true);
-    chase(
-      mockOrangeGhost,
-      mockPathway,
-      mockPacman,
-      mockVariables,
-      mockRedGhost,
-      mockIsOrangeFarFromPacman,
-      mockFindRedOrangeAimPath,
-      mockFindPinkAimPath,
-      mockFindCyanAimPath,
-      mockFindOrangeScatterPath
+    const orangeGhost = { colour: "orange" };
+    isOrangeFarFromPacman.mockReturnValue(true);
+    GhostMovement.chase(
+      orangeGhost,
+      pathway,
+      assets,
+      variables,
+      isOrangeFarFromPacman,
+      findRedOrangeAimPath,
+      findPinkAimPath,
+      findCyanAimPath,
+      findOrangeScatterPath
     );
-    expect(mockFindRedOrangeAimPath).toHaveBeenCalledTimes(1);
-    expect(mockFindRedOrangeAimPath).toHaveBeenCalledWith(
-      mockPacman,
-      mockPathway
+    expect(findRedOrangeAimPath).toHaveBeenCalledTimes(1);
+    expect(findRedOrangeAimPath).toHaveBeenCalledWith(
+      assets["characters"]["pacman"],
+      pathway
     );
   });
 
   it("calls findOrangeScatterPath if the ghost is orange and is close to Pac-Man", () => {
-    const mockOrangeGhost = {
-      colour: "orange",
-    };
-    mockIsOrangeFarFromPacman.mockReturnValue(false);
-    chase(
-      mockOrangeGhost,
-      mockPathway,
-      mockPacman,
-      mockVariables,
-      mockRedGhost,
-      mockIsOrangeFarFromPacman,
-      mockFindRedOrangeAimPath,
-      mockFindPinkAimPath,
-      mockFindCyanAimPath,
-      mockFindOrangeScatterPath
+    const orangeGhost = { colour: "orange" };
+    isOrangeFarFromPacman.mockReturnValue(false);
+    GhostMovement.chase(
+      orangeGhost,
+      pathway,
+      assets,
+      variables,
+      isOrangeFarFromPacman,
+      findRedOrangeAimPath,
+      findPinkAimPath,
+      findCyanAimPath,
+      findOrangeScatterPath
     );
-    expect(mockFindOrangeScatterPath).toHaveBeenCalledTimes(1);
-    expect(mockFindOrangeScatterPath).toHaveBeenCalledWith(mockPathway);
+    expect(findOrangeScatterPath).toHaveBeenCalledTimes(1);
+    expect(findOrangeScatterPath).toHaveBeenCalledWith(pathway);
   });
 });

@@ -1,152 +1,68 @@
-import eatPowerUp from "./eatPowerUp";
+import PowerUpManager from "./powerUpManager";
 
-let mockPowerUp;
-let mockPacmanOne;
-let mockPacmanTwo;
-let mockVariables;
-let mockGhosts;
-let mockScaredTimer;
-let mockCycleTimer;
-let mockScareGhosts;
+let powerUp;
+let pacmanOne;
+let pacmanTwo;
+let assets;
+let variables;
+let scareGhosts;
 
 describe("eatPowerUp", () => {
   beforeEach(() => {
-    mockPacmanOne = {
-      position: {
-        x: 200,
-        y: 200,
-      },
-    };
-    mockPacmanTwo = {
-      position: {
-        x: 250,
-        y: 250,
-      },
-    };
-    mockPowerUp = {
-      position: {
-        x: 200,
-        y: 200,
-      },
+    powerUp = {
+      position: { x: 200, y: 200 },
       changeEatenState: () => undefined,
     };
-    jest.spyOn(mockPowerUp, "changeEatenState");
-    mockVariables = {
-      score: 0,
-      killCount: 2,
-    };
-    mockGhosts = "ghosts";
-    mockScaredTimer = "scaredTimer";
-    mockCycleTimer = "cycleTimer";
-    mockScareGhosts = jest.fn();
+    pacmanOne = { position: { x: 200, y: 200 } };
+    pacmanTwo = { position: { x: 250, y: 250 } };
+    assets = { characters: { pacman: pacmanOne } };
+    variables = { score: 0, killCount: 2 };
+    scareGhosts = jest.fn();
+    jest.spyOn(powerUp, "changeEatenState");
   });
 
   it("calls changeEatenState when Pac-Man collides with the power up", () => {
-    eatPowerUp(
-      mockPowerUp,
-      mockPacmanOne,
-      mockVariables,
-      mockGhosts,
-      mockScaredTimer,
-      mockCycleTimer,
-      mockScareGhosts
-    );
-    expect(mockPowerUp.changeEatenState).toHaveBeenCalledTimes(1);
+    PowerUpManager.eatPowerUp(powerUp, assets, variables, scareGhosts);
+    expect(powerUp.changeEatenState).toHaveBeenCalledTimes(1);
   });
 
   it("increases the score when Pac-Man collides with the power up", () => {
-    eatPowerUp(
-      mockPowerUp,
-      mockPacmanOne,
-      mockVariables,
-      mockGhosts,
-      mockScaredTimer,
-      mockCycleTimer,
-      mockScareGhosts
-    );
-    expect(mockVariables.score).toBe(50);
+    PowerUpManager.eatPowerUp(powerUp, assets, variables, scareGhosts);
+    expect(variables.score).toBe(50);
   });
 
   it("resets the kill count to 0 when Pac-Man collides with the power up", () => {
-    eatPowerUp(
-      mockPowerUp,
-      mockPacmanOne,
-      mockVariables,
-      mockGhosts,
-      mockScaredTimer,
-      mockCycleTimer,
-      mockScareGhosts
-    );
-    expect(mockVariables.killCount).toBe(0);
+    PowerUpManager.eatPowerUp(powerUp, assets, variables, scareGhosts);
+    expect(variables.killCount).toBe(0);
   });
 
   it("calls scareGhosts when Pac-Man collides with the power up", () => {
-    eatPowerUp(
-      mockPowerUp,
-      mockPacmanOne,
-      mockVariables,
-      mockGhosts,
-      mockScaredTimer,
-      mockCycleTimer,
-      mockScareGhosts
-    );
-    expect(mockScareGhosts).toHaveBeenCalledTimes(1);
-    expect(mockScareGhosts).toHaveBeenCalledWith(
-      mockGhosts,
-      mockCycleTimer,
-      mockScaredTimer
-    );
+    PowerUpManager.eatPowerUp(powerUp, assets, variables, scareGhosts);
+    expect(scareGhosts).toHaveBeenCalledTimes(1);
+    expect(scareGhosts).toHaveBeenCalledWith(assets);
   });
 
   it("does not call changeEatenState if the power up and pacman are not colliding", () => {
-    eatPowerUp(
-      mockPowerUp,
-      mockPacmanTwo,
-      mockVariables,
-      mockGhosts,
-      mockScaredTimer,
-      mockCycleTimer,
-      mockScareGhosts
-    );
-    expect(mockPowerUp.changeEatenState).toHaveBeenCalledTimes(0);
+    assets["characters"]["pacman"] = pacmanTwo;
+    PowerUpManager.eatPowerUp(powerUp, assets, variables, scareGhosts);
+    expect(powerUp.changeEatenState).toHaveBeenCalledTimes(0);
   });
 
   it("does not increase the score if the power up and pacman are not colliding", () => {
-    eatPowerUp(
-      mockPowerUp,
-      mockPacmanTwo,
-      mockVariables,
-      mockGhosts,
-      mockScaredTimer,
-      mockCycleTimer,
-      mockScareGhosts
-    );
-    expect(mockVariables.score).toBe(0);
+    assets["characters"]["pacman"] = pacmanTwo;
+    PowerUpManager.eatPowerUp(powerUp, assets, variables, scareGhosts);
+    expect(variables.score).toBe(0);
   });
 
   it("does not reset the kill count if the power up and pacman are not colliding", () => {
-    eatPowerUp(
-      mockPowerUp,
-      mockPacmanTwo,
-      mockVariables,
-      mockGhosts,
-      mockScaredTimer,
-      mockCycleTimer,
-      mockScareGhosts
-    );
-    expect(mockVariables.killCount).toBe(2);
+    assets["characters"]["pacman"] = pacmanTwo;
+    PowerUpManager.eatPowerUp(powerUp, assets, variables, scareGhosts);
+    expect(variables.killCount).toBe(2);
   });
 
   it("does not call scareGhost if the power up and pacman are not colliding", () => {
-    eatPowerUp(
-      mockPowerUp,
-      mockPacmanTwo,
-      mockVariables,
-      mockGhosts,
-      mockScaredTimer,
-      mockCycleTimer,
-      mockScareGhosts
-    );
-    expect(mockScareGhosts).toHaveBeenCalledTimes(0);
+    assets["characters"]["pacman"] = pacmanTwo;
+    PowerUpManager.eatPowerUp(powerUp, assets, variables, scareGhosts);
+    expect(scareGhosts).toHaveBeenCalledTimes(0);
   });
 });

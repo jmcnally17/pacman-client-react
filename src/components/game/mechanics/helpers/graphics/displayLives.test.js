@@ -1,25 +1,25 @@
-import displayLives from "../../display/displayLives";
+import Graphics from "./graphics";
 
-let mockCtx;
-let mockDrawPacmanIcon;
+let ctx;
+let drawPacmanIcon;
 
 describe("displayLives", () => {
   beforeEach(() => {
-    mockCtx = "ctx";
-    mockDrawPacmanIcon = jest.fn();
+    ctx = "ctx";
+    drawPacmanIcon = jest.fn();
   });
 
   it("calls drawPacmanIcon for the first and second icon when the player has 2 extra lives left", () => {
     const mockPacman = {
       lives: 2,
     };
-    displayLives(mockCtx, mockPacman, mockDrawPacmanIcon);
-    expect(mockDrawPacmanIcon).toHaveBeenCalledTimes(2);
-    expect(mockDrawPacmanIcon).toHaveBeenNthCalledWith(1, mockCtx, {
+    Graphics.displayLives(ctx, mockPacman, drawPacmanIcon);
+    expect(drawPacmanIcon).toHaveBeenCalledTimes(2);
+    expect(drawPacmanIcon).toHaveBeenNthCalledWith(1, ctx, {
       x: 580,
       y: 15,
     });
-    expect(mockDrawPacmanIcon).toHaveBeenNthCalledWith(2, mockCtx, {
+    expect(drawPacmanIcon).toHaveBeenNthCalledWith(2, ctx, {
       x: 540,
       y: 15,
     });
@@ -29,9 +29,9 @@ describe("displayLives", () => {
     const mockPacman = {
       lives: 1,
     };
-    displayLives(mockCtx, mockPacman, mockDrawPacmanIcon);
-    expect(mockDrawPacmanIcon).toHaveBeenCalledTimes(1);
-    expect(mockDrawPacmanIcon).toHaveBeenCalledWith(mockCtx, {
+    Graphics.displayLives(ctx, mockPacman, drawPacmanIcon);
+    expect(drawPacmanIcon).toHaveBeenCalledTimes(1);
+    expect(drawPacmanIcon).toHaveBeenCalledWith(ctx, {
       x: 580,
       y: 15,
     });
@@ -41,7 +41,7 @@ describe("displayLives", () => {
     const mockPacman = {
       lives: 0,
     };
-    displayLives(mockCtx, mockPacman, mockDrawPacmanIcon);
-    expect(mockDrawPacmanIcon).toHaveBeenCalledTimes(0);
+    Graphics.displayLives(ctx, mockPacman, drawPacmanIcon);
+    expect(drawPacmanIcon).toHaveBeenCalledTimes(0);
   });
 });

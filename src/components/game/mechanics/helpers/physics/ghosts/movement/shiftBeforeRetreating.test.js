@@ -1,83 +1,67 @@
-import shiftBeforeRetreating from "./adjustPosition/shiftBeforeRetreating";
+import GhostMovement from "./ghostMovement";
 
-let mockShiftLeft;
-let mockShiftRight;
-let mockShiftUp;
-let mockShiftDown;
+let shiftLeft;
+let shiftRight;
+let shiftUp;
+let shiftDown;
 
 describe("shiftBeforeRetreating", () => {
   beforeEach(() => {
-    mockShiftLeft = jest.fn();
-    mockShiftRight = jest.fn();
-    mockShiftUp = jest.fn();
-    mockShiftDown = jest.fn();
+    shiftLeft = jest.fn();
+    shiftRight = jest.fn();
+    shiftUp = jest.fn();
+    shiftDown = jest.fn();
   });
 
   it("calls shiftLeft when the ghost is moving to the right", () => {
-    const mockGhost = {
-      velocity: {
-        x: 4,
-      },
-    };
-    shiftBeforeRetreating(
-      mockGhost,
-      mockShiftLeft,
-      mockShiftRight,
-      mockShiftUp,
-      mockShiftDown
+    const ghost = { velocity: { x: 4 } };
+    GhostMovement.shiftBeforeRetreating(
+      ghost,
+      shiftLeft,
+      shiftRight,
+      shiftUp,
+      shiftDown
     );
-    expect(mockShiftLeft).toHaveBeenCalledTimes(1);
-    expect(mockShiftLeft).toHaveBeenCalledWith(mockGhost);
+    expect(shiftLeft).toHaveBeenCalledTimes(1);
+    expect(shiftLeft).toHaveBeenCalledWith(ghost);
   });
 
   it("calls shiftRight when the ghost is moving to the left", () => {
-    const mockGhost = {
-      velocity: {
-        x: -4,
-      },
-    };
-    shiftBeforeRetreating(
-      mockGhost,
-      mockShiftLeft,
-      mockShiftRight,
-      mockShiftUp,
-      mockShiftDown
+    const ghost = { velocity: { x: -4 } };
+    GhostMovement.shiftBeforeRetreating(
+      ghost,
+      shiftLeft,
+      shiftRight,
+      shiftUp,
+      shiftDown
     );
-    expect(mockShiftRight).toHaveBeenCalledTimes(1);
-    expect(mockShiftRight).toHaveBeenCalledWith(mockGhost);
+    expect(shiftRight).toHaveBeenCalledTimes(1);
+    expect(shiftRight).toHaveBeenCalledWith(ghost);
   });
 
   it("calls shiftUp when the ghost is moving downwards", () => {
-    const mockGhost = {
-      velocity: {
-        y: 4,
-      },
-    };
-    shiftBeforeRetreating(
-      mockGhost,
-      mockShiftLeft,
-      mockShiftRight,
-      mockShiftUp,
-      mockShiftDown
+    const ghost = { velocity: { y: 4 } };
+    GhostMovement.shiftBeforeRetreating(
+      ghost,
+      shiftLeft,
+      shiftRight,
+      shiftUp,
+      shiftDown
     );
-    expect(mockShiftUp).toHaveBeenCalledTimes(1);
-    expect(mockShiftUp).toHaveBeenCalledWith(mockGhost);
+    expect(shiftUp).toHaveBeenCalledTimes(1);
+    expect(shiftUp).toHaveBeenCalledWith(ghost);
   });
 
   it("calls shiftDown when the ghost is moving upwards", () => {
-    const mockGhost = {
-      velocity: {
-        y: -4,
-      },
-    };
-    shiftBeforeRetreating(
-      mockGhost,
-      mockShiftLeft,
-      mockShiftRight,
-      mockShiftUp,
-      mockShiftDown
+    const ghost = { velocity: { y: -4 } };
+    GhostMovement.shiftBeforeRetreating(
+      ghost,
+      shiftLeft,
+      shiftRight,
+      shiftUp,
+      shiftDown
     );
-    expect(mockShiftDown).toHaveBeenCalledTimes(1);
-    expect(mockShiftDown).toHaveBeenCalledWith(mockGhost);
+    expect(shiftDown).toHaveBeenCalledTimes(1);
+    expect(shiftDown).toHaveBeenCalledWith(ghost);
   });
 });

@@ -1,88 +1,94 @@
-import drawBoard from "../../physics/ghosts/collisions/pacmanDeath/animation/drawBoard";
+import Animator from "./animator";
 
-let mockCtx;
-let mockBoundary;
-let mockBoundaries;
-let mockPellet;
-let mockPellets;
-let mockEatenPellet;
-let mockEatenPellets;
-let mockPowerUp;
-let mockPowerUps;
-let mockEatenPowerUp;
-let mockEatenPowerUps;
+let ctx;
+let boundary;
+let boundaries;
+let pellet;
+let pellets;
+let eatenPellet;
+let eatenPellets;
+let powerUp;
+let powerUps;
+let eatenPowerUp;
+let eatenPowerUps;
+let assets;
 
 describe("drawBoard", () => {
   beforeEach(() => {
-    mockCtx = {
+    ctx = {
       clearRect: () => undefined,
     };
-    mockBoundary = {
+    boundary = {
       draw: () => undefined,
     };
-    mockBoundaries = [mockBoundary, mockBoundary];
-    mockPellet = {
+    boundaries = [boundary, boundary];
+    pellet = {
       hasBeenEaten: false,
       draw: () => undefined,
     };
-    mockPellets = [mockPellet, mockPellet];
-    mockEatenPellet = {
+    pellets = [pellet, pellet];
+    eatenPellet = {
       hasBeenEaten: true,
       draw: () => undefined,
     };
-    mockEatenPellets = [mockEatenPellet, mockEatenPellet];
-    mockPowerUp = {
+    eatenPellets = [eatenPellet, eatenPellet];
+    powerUp = {
       hasBeenEaten: false,
       update: () => undefined,
     };
-    mockPowerUps = [mockPowerUp, mockPowerUp];
-    mockEatenPowerUp = {
+    powerUps = [powerUp, powerUp];
+    eatenPowerUp = {
       hasBeenEaten: true,
       update: () => undefined,
     };
-    mockEatenPowerUps = [mockEatenPowerUp, mockEatenPowerUp];
+    eatenPowerUps = [eatenPowerUp, eatenPowerUp];
+    assets = {
+      props: { boundaries: boundaries, pellets: pellets, powerUps: powerUps },
+    };
   });
 
   it("calls clearRect on ctx", () => {
-    jest.spyOn(mockCtx, "clearRect");
-    drawBoard(mockCtx, mockBoundaries, mockPellets, mockPowerUps);
-    expect(mockCtx.clearRect).toHaveBeenCalledTimes(1);
-    expect(mockCtx.clearRect).toHaveBeenCalledWith(0, 0, 896, 992);
+    jest.spyOn(ctx, "clearRect");
+    Animator.drawBoard(ctx, assets);
+    expect(ctx.clearRect).toHaveBeenCalledTimes(1);
+    expect(ctx.clearRect).toHaveBeenCalledWith(0, 0, 896, 992);
   });
 
   it("calls draw on each boundary", () => {
-    jest.spyOn(mockBoundary, "draw");
-    drawBoard(mockCtx, mockBoundaries, mockPellets, mockPowerUps);
-    expect(mockBoundary.draw).toHaveBeenCalledTimes(2);
-    expect(mockBoundary.draw).toHaveBeenNthCalledWith(1, mockCtx);
-    expect(mockBoundary.draw).toHaveBeenNthCalledWith(2, mockCtx);
+    jest.spyOn(boundary, "draw");
+    Animator.drawBoard(ctx, assets);
+    expect(boundary.draw).toHaveBeenCalledTimes(2);
+    expect(boundary.draw).toHaveBeenNthCalledWith(1, ctx);
+    expect(boundary.draw).toHaveBeenNthCalledWith(2, ctx);
   });
 
   it("calls draw on each pellet if they have not been eaten", () => {
-    jest.spyOn(mockPellet, "draw");
-    drawBoard(mockCtx, mockBoundaries, mockPellets, mockPowerUps);
-    expect(mockPellet.draw).toHaveBeenCalledTimes(2);
-    expect(mockPellet.draw).toHaveBeenNthCalledWith(1, mockCtx);
-    expect(mockPellet.draw).toHaveBeenNthCalledWith(2, mockCtx);
+    jest.spyOn(pellet, "draw");
+    Animator.drawBoard(ctx, assets);
+    expect(pellet.draw).toHaveBeenCalledTimes(2);
+    expect(pellet.draw).toHaveBeenNthCalledWith(1, ctx);
+    expect(pellet.draw).toHaveBeenNthCalledWith(2, ctx);
   });
 
   it("does not call draw on each pellet if they have been eaten", () => {
-    jest.spyOn(mockEatenPellet, "draw");
-    drawBoard(mockCtx, mockBoundaries, mockEatenPellets, mockPowerUps);
-    expect(mockEatenPellet.draw).toHaveBeenCalledTimes(0);
+    jest.spyOn(eatenPellet, "draw");
+    assets["props"]["pellets"] = eatenPellets;
+    Animator.drawBoard(ctx, assets);
+    expect(eatenPellet.draw).toHaveBeenCalledTimes(0);
   });
 
   it("calls update on each power up if they have not been eaten", () => {
-    jest.spyOn(mockPowerUp, "update");
-    drawBoard(mockCtx, mockBoundaries, mockPellets, mockPowerUps);
-    expect(mockPowerUp.update).toHaveBeenCalledTimes(2);
-    expect(mockPowerUp.update).toHaveBeenNthCalledWith(1, mockCtx);
-    expect(mockPowerUp.update).toHaveBeenNthCalledWith(2, mockCtx);
+    jest.spyOn(powerUp, "update");
+    Animator.drawBoard(ctx, assets);
+    expect(powerUp.update).toHaveBeenCalledTimes(2);
+    expect(powerUp.update).toHaveBeenNthCalledWith(1, ctx);
+    expect(powerUp.update).toHaveBeenNthCalledWith(2, ctx);
   });
 
   it("does not call update on each power up if they have been eaten", () => {
-    jest.spyOn(mockEatenPowerUp, "update");
-    drawBoard(mockCtx, mockBoundaries, mockPellets, mockEatenPowerUps);
-    expect(mockEatenPowerUp.update).toHaveBeenCalledTimes(0);
+    jest.spyOn(eatenPowerUp, "update");
+    assets["props"]["powerUps"] = eatenPowerUps;
+    Animator.drawBoard(ctx, assets);
+    expect(eatenPowerUp.update).toHaveBeenCalledTimes(0);
   });
 });

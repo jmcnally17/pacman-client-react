@@ -1,4 +1,4 @@
-import pauseAudio from "./pauseAudio";
+import AudioManager from "./audioManager";
 
 describe("pauseAudio", () => {
   it("calls pauseAll on the audioPlayer", () => {
@@ -6,7 +6,7 @@ describe("pauseAudio", () => {
       pauseAll: () => undefined,
     };
     jest.spyOn(mockAudioPlayer, "pauseAll");
-    pauseAudio(mockAudioPlayer);
+    AudioManager.pauseAudio(mockAudioPlayer);
     expect(mockAudioPlayer.pauseAll).toHaveBeenCalledTimes(1);
   });
 });

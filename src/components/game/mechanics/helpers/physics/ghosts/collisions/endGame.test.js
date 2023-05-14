@@ -1,163 +1,104 @@
-import endGame from "./pacmanDeath/gameOver/endGame";
+import GhostCollision from "./ghostCollision";
+import Animator from "../../../graphics/animator/animator";
 import Leaderboard from "../../../../../../leaderboard/leaderboard";
 
+jest.mock("../../../graphics/animator/animator");
 jest.mock("../../../../../../leaderboard/leaderboard");
 
-let mockVariables;
-let mockPellets;
-let mockPowerUps;
-let mockGhosts;
-let mockPacman;
-let mockCycleTimer;
-let mockScaredTimer;
-let mockCtx;
-let mockDisplayPleaseWait;
-let mockSaveScore;
-let mockResetAfterGameOver;
+let variables;
+let assets;
+let ctx;
+let saveScore;
+let resetAfterGameOver;
 
 describe("endGame", () => {
   beforeEach(() => {
+    Animator.mockClear();
     Leaderboard.mockClear();
-    mockVariables = {
-      player: {
-        username: "person",
-      },
+    variables = {
+      player: { username: "person" },
       animationId: "animationId",
-      reactRoot: {
-        render: () => undefined,
-      },
+      reactRoot: { render: () => undefined },
     };
-    mockPellets = "pellets";
-    mockPowerUps = "powerUps";
-    mockGhosts = "ghosts";
-    mockPacman = "pacman";
-    mockCycleTimer = "cycleTimer";
-    mockScaredTimer = "scaredTimer";
-    mockCtx = "ctx";
-    mockDisplayPleaseWait = jest.fn();
-    mockSaveScore = jest.fn();
-    mockResetAfterGameOver = jest.fn();
-    jest.spyOn(mockVariables.reactRoot, "render");
+    assets = "assets";
+    ctx = "ctx";
+    saveScore = jest.fn();
+    resetAfterGameOver = jest.fn();
+    jest.spyOn(variables.reactRoot, "render");
   });
 
   it("calls cancelAnimationFrame on the current animationId", () => {
     jest.spyOn(global, "cancelAnimationFrame");
-    endGame(
-      mockVariables,
-      mockPellets,
-      mockPowerUps,
-      mockGhosts,
-      mockPacman,
-      mockCycleTimer,
-      mockScaredTimer,
-      mockCtx,
-      mockDisplayPleaseWait,
-      mockSaveScore,
-      mockResetAfterGameOver
+    GhostCollision.endGame(
+      variables,
+      assets,
+      ctx,
+      saveScore,
+      resetAfterGameOver
     );
     expect(cancelAnimationFrame).toHaveBeenCalledTimes(1);
-    expect(cancelAnimationFrame).toHaveBeenCalledWith(
-      mockVariables.animationId
-    );
+    expect(cancelAnimationFrame).toHaveBeenCalledWith(variables.animationId);
   });
 
   it("calls displayPleaseWait", () => {
-    endGame(
-      mockVariables,
-      mockPellets,
-      mockPowerUps,
-      mockGhosts,
-      mockPacman,
-      mockCycleTimer,
-      mockScaredTimer,
-      mockCtx,
-      mockDisplayPleaseWait,
-      mockSaveScore,
-      mockResetAfterGameOver
+    GhostCollision.endGame(
+      variables,
+      assets,
+      ctx,
+      saveScore,
+      resetAfterGameOver
     );
-    expect(mockDisplayPleaseWait).toHaveBeenCalledTimes(1);
-    expect(mockDisplayPleaseWait).toHaveBeenCalledWith(mockCtx);
+    expect(Animator.displayPleaseWait).toHaveBeenCalledTimes(1);
+    expect(Animator.displayPleaseWait).toHaveBeenCalledWith(ctx);
   });
 
   it("calls saveScore when the player is not undefined", () => {
-    endGame(
-      mockVariables,
-      mockPellets,
-      mockPowerUps,
-      mockGhosts,
-      mockPacman,
-      mockCycleTimer,
-      mockScaredTimer,
-      mockCtx,
-      mockDisplayPleaseWait,
-      mockSaveScore,
-      mockResetAfterGameOver
+    GhostCollision.endGame(
+      variables,
+      assets,
+      ctx,
+      saveScore,
+      resetAfterGameOver
     );
-    expect(mockSaveScore).toHaveBeenCalledTimes(1);
-    expect(mockSaveScore).toHaveBeenCalledWith(mockVariables);
+    expect(saveScore).toHaveBeenCalledTimes(1);
+    expect(saveScore).toHaveBeenCalledWith(variables);
   });
 
   it("does not call saveScore when the player is undefined", () => {
-    mockVariables.player = undefined;
-    endGame(
-      mockVariables,
-      mockPellets,
-      mockPowerUps,
-      mockGhosts,
-      mockPacman,
-      mockCycleTimer,
-      mockScaredTimer,
-      mockCtx,
-      mockDisplayPleaseWait,
-      mockSaveScore,
-      mockResetAfterGameOver
+    variables.player = undefined;
+    GhostCollision.endGame(
+      variables,
+      assets,
+      ctx,
+      saveScore,
+      resetAfterGameOver
     );
-    expect(mockSaveScore).toHaveBeenCalledTimes(0);
+    expect(saveScore).toHaveBeenCalledTimes(0);
   });
 
   it("calls resetAfterGameOver", async () => {
-    await endGame(
-      mockVariables,
-      mockPellets,
-      mockPowerUps,
-      mockGhosts,
-      mockPacman,
-      mockCycleTimer,
-      mockScaredTimer,
-      mockCtx,
-      mockDisplayPleaseWait,
-      mockSaveScore,
-      mockResetAfterGameOver
+    await GhostCollision.endGame(
+      variables,
+      assets,
+      ctx,
+      saveScore,
+      resetAfterGameOver
     );
-    expect(mockResetAfterGameOver).toHaveBeenCalledTimes(1);
-    expect(mockResetAfterGameOver).toHaveBeenCalledWith(
-      mockPellets,
-      mockPowerUps,
-      mockGhosts,
-      mockPacman,
-      mockVariables,
-      mockCycleTimer,
-      mockScaredTimer
-    );
+    expect(resetAfterGameOver).toHaveBeenCalledTimes(1);
+    expect(resetAfterGameOver).toHaveBeenCalledWith(assets, variables);
   });
 
   it("renders the Leaderboard component", async () => {
-    await endGame(
-      mockVariables,
-      mockPellets,
-      mockPowerUps,
-      mockGhosts,
-      mockPacman,
-      mockCycleTimer,
-      mockScaredTimer,
-      mockCtx,
-      mockDisplayPleaseWait,
-      mockSaveScore,
-      mockResetAfterGameOver
+    await GhostCollision.endGame(
+      variables,
+      assets,
+      ctx,
+      saveScore,
+      resetAfterGameOver
     );
-    expect(mockVariables.reactRoot.render).toHaveBeenCalledTimes(1);
-    expect(mockVariables.reactRoot.render).toHaveBeenCalledWith(
-      <Leaderboard variables={mockVariables} />
+    expect(variables.reactRoot.render).toHaveBeenCalledTimes(1);
+    expect(variables.reactRoot.render).toHaveBeenCalledWith(
+      <Leaderboard variables={variables} />
     );
   });
 });

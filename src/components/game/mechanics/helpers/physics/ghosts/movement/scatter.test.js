@@ -1,81 +1,73 @@
-import scatter from "./chaseAndScatter/scatter/scatter";
+import GhostMovement from "./ghostMovement";
 
-let mockPathway;
-let mockFindRedScatterPath;
-let mockFindPinkScatterPath;
-let mockFindCyanScatterPath;
-let mockFindOrangeScatterPath;
+let pathway;
+let findRedScatterPath;
+let findPinkScatterPath;
+let findCyanScatterPath;
+let findOrangeScatterPath;
 
 describe("scatter", () => {
   beforeEach(() => {
-    mockPathway = "pathway";
-    mockFindRedScatterPath = jest.fn();
-    mockFindPinkScatterPath = jest.fn();
-    mockFindCyanScatterPath = jest.fn();
-    mockFindOrangeScatterPath = jest.fn();
+    pathway = "pathway";
+    findRedScatterPath = jest.fn();
+    findPinkScatterPath = jest.fn();
+    findCyanScatterPath = jest.fn();
+    findOrangeScatterPath = jest.fn();
   });
 
   it("calls findRedScatterPath if the ghost is red", () => {
-    const mockRedGhost = {
-      colour: "red",
-    };
-    scatter(
-      mockRedGhost,
-      mockPathway,
-      mockFindRedScatterPath,
-      mockFindPinkScatterPath,
-      mockFindCyanScatterPath,
-      mockFindOrangeScatterPath
+    const redGhost = { colour: "red" };
+    GhostMovement.scatter(
+      redGhost,
+      pathway,
+      findRedScatterPath,
+      findPinkScatterPath,
+      findCyanScatterPath,
+      findOrangeScatterPath
     );
-    expect(mockFindRedScatterPath).toHaveBeenCalledTimes(1);
-    expect(mockFindRedScatterPath).toHaveBeenCalledWith(mockPathway);
+    expect(findRedScatterPath).toHaveBeenCalledTimes(1);
+    expect(findRedScatterPath).toHaveBeenCalledWith(pathway);
   });
 
   it("calls findPinkScatterPath if the ghost is pink", () => {
-    const mockPinkGhost = {
-      colour: "pink",
-    };
-    scatter(
-      mockPinkGhost,
-      mockPathway,
-      mockFindRedScatterPath,
-      mockFindPinkScatterPath,
-      mockFindCyanScatterPath,
-      mockFindOrangeScatterPath
+    const pinkGhost = { colour: "pink" };
+    GhostMovement.scatter(
+      pinkGhost,
+      pathway,
+      findRedScatterPath,
+      findPinkScatterPath,
+      findCyanScatterPath,
+      findOrangeScatterPath
     );
-    expect(mockFindPinkScatterPath).toHaveBeenCalledTimes(1);
-    expect(mockFindPinkScatterPath).toHaveBeenCalledWith(mockPathway);
+    expect(findPinkScatterPath).toHaveBeenCalledTimes(1);
+    expect(findPinkScatterPath).toHaveBeenCalledWith(pathway);
   });
 
   it("calls findCyanScatterPath if the ghost is cyan", () => {
-    const mockCyanGhost = {
-      colour: "cyan",
-    };
-    scatter(
-      mockCyanGhost,
-      mockPathway,
-      mockFindRedScatterPath,
-      mockFindPinkScatterPath,
-      mockFindCyanScatterPath,
-      mockFindOrangeScatterPath
+    const cyanGhost = { colour: "cyan" };
+    GhostMovement.scatter(
+      cyanGhost,
+      pathway,
+      findRedScatterPath,
+      findPinkScatterPath,
+      findCyanScatterPath,
+      findOrangeScatterPath
     );
-    expect(mockFindCyanScatterPath).toHaveBeenCalledTimes(1);
-    expect(mockFindCyanScatterPath).toHaveBeenCalledWith(mockPathway);
+    expect(findCyanScatterPath).toHaveBeenCalledTimes(1);
+    expect(findCyanScatterPath).toHaveBeenCalledWith(pathway);
   });
 
   it("calls findOrangeScatterPath if the ghost is orange", () => {
-    const mockOrangeGhost = {
-      colour: "orange",
-    };
-    scatter(
-      mockOrangeGhost,
-      mockPathway,
-      mockFindRedScatterPath,
-      mockFindPinkScatterPath,
-      mockFindCyanScatterPath,
-      mockFindOrangeScatterPath
+    const orangeGhost = { colour: "orange" };
+    GhostMovement.scatter(
+      orangeGhost,
+      pathway,
+      findRedScatterPath,
+      findPinkScatterPath,
+      findCyanScatterPath,
+      findOrangeScatterPath
     );
-    expect(mockFindOrangeScatterPath).toHaveBeenCalledTimes(1);
-    expect(mockFindOrangeScatterPath).toHaveBeenCalledWith(mockPathway);
+    expect(findOrangeScatterPath).toHaveBeenCalledTimes(1);
+    expect(findOrangeScatterPath).toHaveBeenCalledWith(pathway);
   });
 });

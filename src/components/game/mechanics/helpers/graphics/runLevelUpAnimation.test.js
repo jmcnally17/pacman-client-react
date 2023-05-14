@@ -1,260 +1,108 @@
-import runLevelUpAnimation from "./runLevelUpAnimation";
+import Graphics from "./graphics";
+import Animator from "./animator/animator";
+import PelletManager from "../physics/pellets/pelletManager";
+
+jest.mock("./animator/animator");
+jest.mock("../physics/pellets/pelletManager");
 
 jest.useFakeTimers();
 
-let mockVariables;
-let mockPacman;
-let mockGhosts;
-let mockPellets;
-let mockPowerUps;
-let mockCycleTimer;
-let mockScaredTimer;
-let mockCtx;
-let mockBoundary;
-let mockBoundaries;
-let mockAudioPlayer;
-let mockRunLevelUpAnimation;
-let mockDrawLevelUpBoard;
-let mockResetAfterLevelUp;
+let variables;
+let assets;
+let ctx;
+let boundary;
+let runLevelUpAnimation;
 
 describe("runLevelUpAnimation", () => {
   beforeEach(() => {
-    mockVariables = {
+    Animator.mockClear();
+    PelletManager.mockClear();
+    variables = {
       animationId: 54,
       levelUpCount: 0,
       level: 4,
     };
-    mockPacman = {
-      isLevellingUp: true,
+    boundary = {
+      flash: () => undefined,
     };
-    mockGhosts = "ghosts";
-    mockPellets = "pellets";
-    mockPowerUps = "powerUps";
-    mockCycleTimer = "cycleTimer";
-    mockScaredTimer = "scaredTimer";
-    mockCtx = {
+    assets = {
+      props: { boundaries: [boundary, boundary] },
+      characters: { pacman: { isLevellingUp: true } },
+    };
+    ctx = {
       font: undefined,
       fillStyle: undefined,
       textAlign: undefined,
       fillText: () => undefined,
     };
-    mockBoundary = {
-      flash: () => undefined,
-    };
-    mockBoundaries = [mockBoundary, mockBoundary];
-    mockAudioPlayer = "audioPlayer";
-    mockRunLevelUpAnimation = jest.fn();
-    mockDrawLevelUpBoard = jest.fn();
-    mockResetAfterLevelUp = jest.fn();
+    runLevelUpAnimation = jest.fn();
   });
 
   it("calls requestAnimationFrame on itself to begin the level up animation", () => {
     jest.spyOn(global, "requestAnimationFrame");
-    runLevelUpAnimation(
-      mockVariables,
-      mockPacman,
-      mockGhosts,
-      mockPellets,
-      mockPowerUps,
-      mockCycleTimer,
-      mockScaredTimer,
-      mockCtx,
-      mockBoundaries,
-      mockAudioPlayer,
-      mockRunLevelUpAnimation,
-      mockDrawLevelUpBoard,
-      mockResetAfterLevelUp
-    );
+    Graphics.runLevelUpAnimation(variables, assets, ctx, runLevelUpAnimation);
     expect(requestAnimationFrame).toHaveBeenCalledTimes(1);
     expect(requestAnimationFrame).toHaveBeenCalledWith(expect.any(Function));
     jest.runOnlyPendingTimers();
-    expect(mockRunLevelUpAnimation).toHaveBeenCalledTimes(1);
-    expect(mockRunLevelUpAnimation).toHaveBeenCalledWith(
-      mockVariables,
-      mockPacman,
-      mockGhosts,
-      mockPellets,
-      mockPowerUps,
-      mockCycleTimer,
-      mockScaredTimer,
-      mockCtx,
-      mockBoundaries,
-      mockAudioPlayer
-    );
+    expect(runLevelUpAnimation).toHaveBeenCalledTimes(1);
+    expect(runLevelUpAnimation).toHaveBeenCalledWith(variables, assets, ctx);
   });
 
   it("calls drawLevelUpBoard", () => {
-    runLevelUpAnimation(
-      mockVariables,
-      mockPacman,
-      mockGhosts,
-      mockPellets,
-      mockPowerUps,
-      mockCycleTimer,
-      mockScaredTimer,
-      mockCtx,
-      mockBoundaries,
-      mockAudioPlayer,
-      mockRunLevelUpAnimation,
-      mockDrawLevelUpBoard,
-      mockResetAfterLevelUp
+    Graphics.runLevelUpAnimation(variables, assets, ctx, runLevelUpAnimation);
+    expect(Animator.drawLevelUpBoard).toHaveBeenCalledTimes(1);
+    expect(Animator.drawLevelUpBoard).toHaveBeenCalledWith(
+      ctx,
+      assets["props"]["boundaries"]
     );
-    expect(mockDrawLevelUpBoard).toHaveBeenCalledTimes(1);
-    expect(mockDrawLevelUpBoard).toHaveBeenCalledWith(mockCtx, mockBoundaries);
   });
 
   it("calls flash on each boundary if levelUpCount is a multiple of 10", () => {
-    mockVariables.levelUpCount = 150;
-    jest.spyOn(mockBoundary, "flash");
-    runLevelUpAnimation(
-      mockVariables,
-      mockPacman,
-      mockGhosts,
-      mockPellets,
-      mockPowerUps,
-      mockCycleTimer,
-      mockScaredTimer,
-      mockCtx,
-      mockBoundaries,
-      mockAudioPlayer,
-      mockRunLevelUpAnimation,
-      mockDrawLevelUpBoard,
-      mockResetAfterLevelUp
-    );
-    expect(mockBoundary.flash).toHaveBeenCalledTimes(2);
+    variables.levelUpCount = 150;
+    jest.spyOn(boundary, "flash");
+    Graphics.runLevelUpAnimation(variables, assets, ctx, runLevelUpAnimation);
+    expect(boundary.flash).toHaveBeenCalledTimes(2);
   });
 
   it("does not call flash on each boundary if levelUpCount is not a multiple of 10", () => {
-    mockVariables.levelUpCount = 286;
-    jest.spyOn(mockBoundary, "flash");
-    runLevelUpAnimation(
-      mockVariables,
-      mockPacman,
-      mockGhosts,
-      mockPellets,
-      mockPowerUps,
-      mockCycleTimer,
-      mockScaredTimer,
-      mockCtx,
-      mockBoundaries,
-      mockAudioPlayer,
-      mockRunLevelUpAnimation,
-      mockDrawLevelUpBoard,
-      mockResetAfterLevelUp
-    );
-    expect(mockBoundary.flash).toHaveBeenCalledTimes(0);
+    variables.levelUpCount = 286;
+    jest.spyOn(boundary, "flash");
+    Graphics.runLevelUpAnimation(variables, assets, ctx, runLevelUpAnimation);
+    expect(boundary.flash).toHaveBeenCalledTimes(0);
   });
 
   it("increases levelUpCount by 1", () => {
-    runLevelUpAnimation(
-      mockVariables,
-      mockPacman,
-      mockGhosts,
-      mockPellets,
-      mockPowerUps,
-      mockCycleTimer,
-      mockScaredTimer,
-      mockCtx,
-      mockBoundaries,
-      mockAudioPlayer,
-      mockRunLevelUpAnimation,
-      mockDrawLevelUpBoard,
-      mockResetAfterLevelUp
-    );
-    expect(mockVariables.levelUpCount).toBe(1);
+    Graphics.runLevelUpAnimation(variables, assets, ctx, runLevelUpAnimation);
+    expect(variables.levelUpCount).toBe(1);
   });
 
   it("changes isLevellingUp in Pac-Man back to false when the level up count reaches 350", () => {
-    mockVariables.levelUpCount = 350;
-    runLevelUpAnimation(
-      mockVariables,
-      mockPacman,
-      mockGhosts,
-      mockPellets,
-      mockPowerUps,
-      mockCycleTimer,
-      mockScaredTimer,
-      mockCtx,
-      mockBoundaries,
-      mockAudioPlayer,
-      mockRunLevelUpAnimation,
-      mockDrawLevelUpBoard,
-      mockResetAfterLevelUp
-    );
-    expect(mockPacman.isLevellingUp).toBeFalsy();
+    variables.levelUpCount = 350;
+    Graphics.runLevelUpAnimation(variables, assets, ctx, runLevelUpAnimation);
+    expect(assets["characters"]["pacman"].isLevellingUp).toBeFalsy();
   });
 
   it("calls cancelAnimationFrame when the level up count reaches 350", () => {
-    mockVariables.levelUpCount = 350;
+    variables.levelUpCount = 350;
     jest.spyOn(global, "cancelAnimationFrame");
-    runLevelUpAnimation(
-      mockVariables,
-      mockPacman,
-      mockGhosts,
-      mockPellets,
-      mockPowerUps,
-      mockCycleTimer,
-      mockScaredTimer,
-      mockCtx,
-      mockBoundaries,
-      mockAudioPlayer,
-      mockRunLevelUpAnimation,
-      mockDrawLevelUpBoard,
-      mockResetAfterLevelUp
-    );
+    Graphics.runLevelUpAnimation(variables, assets, ctx, runLevelUpAnimation);
     expect(cancelAnimationFrame).toHaveBeenCalledTimes(1);
-    expect(cancelAnimationFrame).toHaveBeenCalledWith(
-      mockVariables.animationId
-    );
+    expect(cancelAnimationFrame).toHaveBeenCalledWith(variables.animationId);
   });
 
   it("increases the level by 1 when the level up count reaches 350", () => {
-    mockVariables.levelUpCount = 350;
-    runLevelUpAnimation(
-      mockVariables,
-      mockPacman,
-      mockGhosts,
-      mockPellets,
-      mockPowerUps,
-      mockCycleTimer,
-      mockScaredTimer,
-      mockCtx,
-      mockBoundaries,
-      mockAudioPlayer,
-      mockRunLevelUpAnimation,
-      mockDrawLevelUpBoard,
-      mockResetAfterLevelUp
-    );
-    expect(mockVariables.level).toBe(5);
+    variables.levelUpCount = 350;
+    Graphics.runLevelUpAnimation(variables, assets, ctx, runLevelUpAnimation);
+    expect(variables.level).toBe(5);
   });
 
   it("calls resetAfterLevelUp when the level up count reaches 350", () => {
-    mockVariables.levelUpCount = 350;
-    runLevelUpAnimation(
-      mockVariables,
-      mockPacman,
-      mockGhosts,
-      mockPellets,
-      mockPowerUps,
-      mockCycleTimer,
-      mockScaredTimer,
-      mockCtx,
-      mockBoundaries,
-      mockAudioPlayer,
-      mockRunLevelUpAnimation,
-      mockDrawLevelUpBoard,
-      mockResetAfterLevelUp
-    );
-    expect(mockResetAfterLevelUp).toHaveBeenCalledTimes(1);
-    expect(mockResetAfterLevelUp).toHaveBeenCalledWith(
-      mockPacman,
-      mockVariables,
-      mockGhosts,
-      mockPellets,
-      mockPowerUps,
-      mockCycleTimer,
-      mockScaredTimer,
-      mockAudioPlayer
+    variables.levelUpCount = 350;
+    Graphics.runLevelUpAnimation(variables, assets, ctx, runLevelUpAnimation);
+    expect(PelletManager.resetAfterLevelUp).toHaveBeenCalledTimes(1);
+    expect(PelletManager.resetAfterLevelUp).toHaveBeenCalledWith(
+      assets,
+      variables
     );
   });
 });

@@ -1,37 +1,27 @@
-import loadPauseOverlay from "./loadPauseOverlay";
+import Animator from "./animator";
 
-let mockCtx;
-let mockPauseTextImage;
-let mockLoadTint;
-let mockLoadPauseText;
+let ctx;
+let pauseTextImage;
+let loadTint;
+let loadPauseText;
 
 describe("loadPauseOverlay", () => {
   beforeEach(() => {
-    mockCtx = "ctx";
-    mockPauseTextImage = "pauseTextImage";
-    mockLoadTint = jest.fn();
-    mockLoadPauseText = jest.fn();
+    ctx = "ctx";
+    pauseTextImage = "pauseTextImage";
+    loadTint = jest.fn();
+    loadPauseText = jest.fn();
   });
 
   it("calls loadPauseTint to add the black tint onto the screen", () => {
-    loadPauseOverlay(
-      mockCtx,
-      mockPauseTextImage,
-      mockLoadTint,
-      mockLoadPauseText
-    );
-    expect(mockLoadTint).toHaveBeenCalledTimes(1);
-    expect(mockLoadTint).toHaveBeenCalledWith(mockCtx);
+    Animator.loadPauseOverlay(ctx, pauseTextImage, loadTint, loadPauseText);
+    expect(loadTint).toHaveBeenCalledTimes(1);
+    expect(loadTint).toHaveBeenCalledWith(ctx);
   });
 
   it("calls loadPauseText to add the pause text onto the screen", () => {
-    loadPauseOverlay(
-      mockCtx,
-      mockPauseTextImage,
-      mockLoadTint,
-      mockLoadPauseText
-    );
-    expect(mockLoadPauseText).toHaveBeenCalledTimes(1);
-    expect(mockLoadPauseText).toHaveBeenCalledWith(mockCtx, mockPauseTextImage);
+    Animator.loadPauseOverlay(ctx, pauseTextImage, loadTint, loadPauseText);
+    expect(loadPauseText).toHaveBeenCalledTimes(1);
+    expect(loadPauseText).toHaveBeenCalledWith(ctx, pauseTextImage);
   });
 });

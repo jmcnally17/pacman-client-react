@@ -1,120 +1,60 @@
-import changeDirection from "./movement/changeDirection";
+import PacmanManager from "./pacmanManager";
 
-let mockPacman;
-let mockBoundaries;
-let mockCheckDirectionChange;
+let pacman;
+let boundaries;
+let assets;
+let checkDirectionChange;
 
 describe("changeDirection", () => {
   beforeEach(() => {
-    mockPacman = {
-      speed: 5,
+    pacman = { speed: 5 };
+    boundaries = "boundaries";
+    assets = {
+      props: { boundaries: boundaries },
+      characters: { pacman: pacman },
     };
-    mockBoundaries = "boundaries";
-    mockCheckDirectionChange = jest.fn();
+    checkDirectionChange = jest.fn();
   });
 
   it("calls checkDirectionChange if the last key pressed is up", () => {
-    const mockVariables = {
-      lastKeyPressed: "up",
-    };
-    changeDirection(
-      mockVariables,
-      mockPacman,
-      mockBoundaries,
-      mockCheckDirectionChange
-    );
-    expect(mockCheckDirectionChange).toHaveBeenCalledTimes(1);
-    expect(mockCheckDirectionChange).toHaveBeenCalledWith(
-      mockPacman,
-      mockBoundaries,
-      {
-        velocity: {
-          x: 0,
-          y: -5,
-        },
-      }
-    );
+    const variables = { lastKeyPressed: "up" };
+    PacmanManager.changeDirection(variables, assets, checkDirectionChange);
+    expect(checkDirectionChange).toHaveBeenCalledTimes(1);
+    expect(checkDirectionChange).toHaveBeenCalledWith(pacman, boundaries, {
+      velocity: { x: 0, y: -5 },
+    });
   });
 
   it("calls checkDirectionChange if the last key pressed is down", () => {
-    const mockVariables = {
-      lastKeyPressed: "down",
-    };
-    changeDirection(
-      mockVariables,
-      mockPacman,
-      mockBoundaries,
-      mockCheckDirectionChange
-    );
-    expect(mockCheckDirectionChange).toHaveBeenCalledTimes(1);
-    expect(mockCheckDirectionChange).toHaveBeenCalledWith(
-      mockPacman,
-      mockBoundaries,
-      {
-        velocity: {
-          x: 0,
-          y: 5,
-        },
-      }
-    );
+    const variables = { lastKeyPressed: "down" };
+    PacmanManager.changeDirection(variables, assets, checkDirectionChange);
+    expect(checkDirectionChange).toHaveBeenCalledTimes(1);
+    expect(checkDirectionChange).toHaveBeenCalledWith(pacman, boundaries, {
+      velocity: { x: 0, y: 5 },
+    });
   });
 
   it("calls checkDirectionChange if the last key pressed is right", () => {
-    const mockVariables = {
-      lastKeyPressed: "right",
-    };
-    changeDirection(
-      mockVariables,
-      mockPacman,
-      mockBoundaries,
-      mockCheckDirectionChange
-    );
-    expect(mockCheckDirectionChange).toHaveBeenCalledTimes(1);
-    expect(mockCheckDirectionChange).toHaveBeenCalledWith(
-      mockPacman,
-      mockBoundaries,
-      {
-        velocity: {
-          x: 5,
-          y: 0,
-        },
-      }
-    );
+    const variables = { lastKeyPressed: "right" };
+    PacmanManager.changeDirection(variables, assets, checkDirectionChange);
+    expect(checkDirectionChange).toHaveBeenCalledTimes(1);
+    expect(checkDirectionChange).toHaveBeenCalledWith(pacman, boundaries, {
+      velocity: { x: 5, y: 0 },
+    });
   });
 
   it("calls checkDirectionChange if the last key pressed is left", () => {
-    const mockVariables = {
-      lastKeyPressed: "left",
-    };
-    changeDirection(
-      mockVariables,
-      mockPacman,
-      mockBoundaries,
-      mockCheckDirectionChange
-    );
-    expect(mockCheckDirectionChange).toHaveBeenCalledTimes(1);
-    expect(mockCheckDirectionChange).toHaveBeenCalledWith(
-      mockPacman,
-      mockBoundaries,
-      {
-        velocity: {
-          x: -5,
-          y: 0,
-        },
-      }
-    );
+    const variables = { lastKeyPressed: "left" };
+    PacmanManager.changeDirection(variables, assets, checkDirectionChange);
+    expect(checkDirectionChange).toHaveBeenCalledTimes(1);
+    expect(checkDirectionChange).toHaveBeenCalledWith(pacman, boundaries, {
+      velocity: { x: -5, y: 0 },
+    });
   });
 
   it("does not call checkDirectionChange if the last key pressed is empty", () => {
-    const mockVariables = {
-      lastKeyPressed: "",
-    };
-    changeDirection(
-      mockVariables,
-      mockPacman,
-      mockBoundaries,
-      mockCheckDirectionChange
-    );
-    expect(mockCheckDirectionChange).toHaveBeenCalledTimes(0);
+    const variables = { lastKeyPressed: "" };
+    PacmanManager.changeDirection(variables, assets, checkDirectionChange);
+    expect(checkDirectionChange).toHaveBeenCalledTimes(0);
   });
 });

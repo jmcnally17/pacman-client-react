@@ -1,153 +1,82 @@
-import resetAfterDeath from "./pacmanDeath/resetAfterDeath";
+import GhostCollision from "./ghostCollision";
 
-let mockPacman;
-let mockVariables;
-let mockCycleTimer;
-let mockScaredTimer;
-let mockGhost;
-let mockGhosts;
-let mockAudioPlayer;
+let pacman;
+let cycleTimer;
+let scaredTimer;
+let ghost;
+let ghosts;
+let audioPlayer;
+let assets;
+let variables;
 let mockPlayGame;
 
 describe("resetAfterDeath", () => {
   beforeEach(() => {
-    mockPacman = {
-      reset: () => undefined,
+    pacman = { reset: () => undefined };
+    ghost = { reset: () => undefined };
+    ghosts = { red: ghost, pink: ghost, cyan: ghost, orange: ghost };
+    cycleTimer = { reset: () => undefined, start: () => undefined };
+    scaredTimer = { reset: () => undefined };
+    audioPlayer = { ghostAudioWantsToPlay: false };
+    assets = {
+      characters: { ghosts: ghosts, pacman: pacman },
+      timers: { cycleTimer: cycleTimer, scaredTimer: scaredTimer },
+      audioPlayer: audioPlayer,
     };
-    mockVariables = {
+    variables = {
       lastKeyPressed: "up",
-      player: {
-        username: "John",
-      },
+      player: { username: "John" },
       reactRoot: "reactRoot",
-    };
-    mockCycleTimer = {
-      reset: () => undefined,
-      start: () => undefined,
-    };
-    mockScaredTimer = {
-      reset: () => undefined,
-    };
-    mockGhost = {
-      reset: () => undefined,
-    };
-    mockGhosts = [mockGhost, mockGhost, mockGhost];
-    mockAudioPlayer = {
-      ghostAudioWantsToPlay: false,
     };
     mockPlayGame = jest.fn();
   });
 
   it("resets Pac-Man", () => {
-    jest.spyOn(mockPacman, "reset");
-    resetAfterDeath(
-      mockPacman,
-      mockVariables,
-      mockGhosts,
-      mockCycleTimer,
-      mockScaredTimer,
-      mockAudioPlayer,
-      mockPlayGame
-    );
-    expect(mockPacman.reset).toHaveBeenCalledTimes(1);
+    jest.spyOn(pacman, "reset");
+    GhostCollision.resetAfterDeath(assets, variables, mockPlayGame);
+    expect(pacman.reset).toHaveBeenCalledTimes(1);
   });
 
   it("resets the last key pressed", () => {
-    resetAfterDeath(
-      mockPacman,
-      mockVariables,
-      mockGhosts,
-      mockCycleTimer,
-      mockScaredTimer,
-      mockAudioPlayer,
-      mockPlayGame
-    );
-    expect(mockVariables.lastKeyPressed).toBe("");
+    GhostCollision.resetAfterDeath(assets, variables, mockPlayGame);
+    expect(variables.lastKeyPressed).toBe("");
   });
 
   it("resets the cycle timer", () => {
-    jest.spyOn(mockCycleTimer, "reset");
-    resetAfterDeath(
-      mockPacman,
-      mockVariables,
-      mockGhosts,
-      mockCycleTimer,
-      mockScaredTimer,
-      mockAudioPlayer,
-      mockPlayGame
-    );
-    expect(mockCycleTimer.reset).toHaveBeenCalledTimes(1);
+    jest.spyOn(cycleTimer, "reset");
+    GhostCollision.resetAfterDeath(assets, variables, mockPlayGame);
+    expect(cycleTimer.reset).toHaveBeenCalledTimes(1);
   });
 
   it("resets the scared timer", () => {
-    jest.spyOn(mockScaredTimer, "reset");
-    resetAfterDeath(
-      mockPacman,
-      mockVariables,
-      mockGhosts,
-      mockCycleTimer,
-      mockScaredTimer,
-      mockAudioPlayer,
-      mockPlayGame
-    );
-    expect(mockScaredTimer.reset).toHaveBeenCalledTimes(1);
+    jest.spyOn(scaredTimer, "reset");
+    GhostCollision.resetAfterDeath(assets, variables, mockPlayGame);
+    expect(scaredTimer.reset).toHaveBeenCalledTimes(1);
   });
 
   it("resets the ghosts", () => {
-    jest.spyOn(mockGhost, "reset");
-    resetAfterDeath(
-      mockPacman,
-      mockVariables,
-      mockGhosts,
-      mockCycleTimer,
-      mockScaredTimer,
-      mockAudioPlayer,
-      mockPlayGame
-    );
-    expect(mockGhost.reset).toHaveBeenCalledTimes(3);
+    jest.spyOn(ghost, "reset");
+    GhostCollision.resetAfterDeath(assets, variables, mockPlayGame);
+    expect(ghost.reset).toHaveBeenCalledTimes(4);
   });
 
   it("starts the cycle timer again", () => {
-    jest.spyOn(mockCycleTimer, "start");
-    resetAfterDeath(
-      mockPacman,
-      mockVariables,
-      mockGhosts,
-      mockCycleTimer,
-      mockScaredTimer,
-      mockAudioPlayer,
-      mockPlayGame
-    );
-    expect(mockCycleTimer.start).toHaveBeenCalledTimes(1);
+    jest.spyOn(cycleTimer, "start");
+    GhostCollision.resetAfterDeath(assets, variables, mockPlayGame);
+    expect(cycleTimer.start).toHaveBeenCalledTimes(1);
   });
 
   it("sets ghostAudioWantsToPlay in the audioPlayer to true", () => {
-    resetAfterDeath(
-      mockPacman,
-      mockVariables,
-      mockGhosts,
-      mockCycleTimer,
-      mockScaredTimer,
-      mockAudioPlayer,
-      mockPlayGame
-    );
-    expect(mockAudioPlayer.ghostAudioWantsToPlay).toBe(true);
+    GhostCollision.resetAfterDeath(assets, variables, mockPlayGame);
+    expect(audioPlayer.ghostAudioWantsToPlay).toBe(true);
   });
 
   it("calls playGame", () => {
-    resetAfterDeath(
-      mockPacman,
-      mockVariables,
-      mockGhosts,
-      mockCycleTimer,
-      mockScaredTimer,
-      mockAudioPlayer,
-      mockPlayGame
-    );
+    GhostCollision.resetAfterDeath(assets, variables, mockPlayGame);
     expect(mockPlayGame).toHaveBeenCalledTimes(1);
     expect(mockPlayGame).toHaveBeenCalledWith(
-      mockVariables.player,
-      mockVariables.reactRoot
+      variables.player,
+      variables.reactRoot
     );
   });
 });

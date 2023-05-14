@@ -1,93 +1,52 @@
-import implementPacman from "./pacman/implementPacman";
+import Physics from "./physics";
+import PacmanManager from "./pacman/pacmanManager";
+import BoundaryManager from "./boundaries/boundaryManager";
 
-let mockVariables;
-let mockPacman;
-let mockBoundaries;
-let mockCtx;
-let mockPellets;
-let mockChangeDirection;
-let mockCheckIfPacmanIsEating;
-let mockImplementTunnel;
+jest.mock("./pacman/pacmanManager");
+jest.mock("./boundaries/boundaryManager");
+
+let variables;
+let assets;
+let ctx;
 
 describe("implementPacman", () => {
   beforeEach(() => {
-    mockVariables = {};
-    mockPacman = {
-      update: () => undefined,
-    };
-    mockBoundaries = "boundaries";
-    mockCtx = "ctx";
-    mockPellets = "pellets";
-    mockChangeDirection = jest.fn();
-    mockCheckIfPacmanIsEating = jest.fn();
-    mockImplementTunnel = jest.fn();
+    PacmanManager.mockClear();
+    BoundaryManager.mockClear();
+    variables = {};
+    assets = { characters: { pacman: { update: () => undefined } } };
+    ctx = "ctx";
   });
 
   it("calls changeDirection", () => {
-    implementPacman(
-      mockVariables,
-      mockPacman,
-      mockBoundaries,
-      mockCtx,
-      mockPellets,
-      mockChangeDirection,
-      mockCheckIfPacmanIsEating,
-      mockImplementTunnel
-    );
-    expect(mockChangeDirection).toHaveBeenCalledTimes(1);
-    expect(mockChangeDirection).toHaveBeenCalledWith(
-      mockVariables,
-      mockPacman,
-      mockBoundaries
+    Physics.implementPacman(variables, assets, ctx);
+    expect(PacmanManager.changeDirection).toHaveBeenCalledTimes(1);
+    expect(PacmanManager.changeDirection).toHaveBeenCalledWith(
+      variables,
+      assets
     );
   });
 
   it("calls checkIfPacmanIsEating", () => {
-    implementPacman(
-      mockVariables,
-      mockPacman,
-      mockBoundaries,
-      mockCtx,
-      mockPellets,
-      mockChangeDirection,
-      mockCheckIfPacmanIsEating,
-      mockImplementTunnel
-    );
-    expect(mockCheckIfPacmanIsEating).toHaveBeenCalledTimes(1);
-    expect(mockCheckIfPacmanIsEating).toHaveBeenCalledWith(
-      mockPellets,
-      mockPacman
-    );
+    Physics.implementPacman(variables, assets, ctx);
+    expect(PacmanManager.checkIfPacmanIsEating).toHaveBeenCalledTimes(1);
+    expect(PacmanManager.checkIfPacmanIsEating).toHaveBeenCalledWith(assets);
   });
 
   it("calls update on Pac-Man", () => {
-    jest.spyOn(mockPacman, "update");
-    implementPacman(
-      mockVariables,
-      mockPacman,
-      mockBoundaries,
-      mockCtx,
-      mockPellets,
-      mockChangeDirection,
-      mockCheckIfPacmanIsEating,
-      mockImplementTunnel
-    );
-    expect(mockPacman.update).toHaveBeenCalledTimes(1);
-    expect(mockPacman.update).toHaveBeenCalledWith(mockCtx);
+    const pacman = assets["characters"]["pacman"];
+    jest.spyOn(pacman, "update");
+    Physics.implementPacman(variables, assets, ctx);
+    expect(pacman.update).toHaveBeenCalledTimes(1);
+    expect(pacman.update).toHaveBeenCalledWith(ctx);
   });
 
   it("calls implementTunnel", () => {
-    implementPacman(
-      mockVariables,
-      mockPacman,
-      mockBoundaries,
-      mockCtx,
-      mockPellets,
-      mockChangeDirection,
-      mockCheckIfPacmanIsEating,
-      mockImplementTunnel
+    Physics.implementPacman(variables, assets, ctx);
+    expect(BoundaryManager.implementTunnel).toHaveBeenCalledTimes(1);
+    expect(BoundaryManager.implementTunnel).toHaveBeenCalledWith(
+      assets["characters"]["pacman"],
+      variables
     );
-    expect(mockImplementTunnel).toHaveBeenCalledTimes(1);
-    expect(mockImplementTunnel).toHaveBeenCalledWith(mockPacman, mockVariables);
   });
 });
