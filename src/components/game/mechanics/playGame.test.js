@@ -1,120 +1,69 @@
 import playGame from "./playGame";
+import Game from "./game/game";
 
-let mockPlayer;
-let mockReactRoot;
-let mockFinishSetup;
-let mockImplementObjects;
-let mockUpdateDisplay;
-let mockManageGhostAudio;
-let mockCtx;
-let mockBoard;
+jest.mock("./game/game");
+
+let player;
+let reactRoot;
+let ctx;
+let board;
 
 describe("playGame", () => {
   beforeEach(() => {
-    mockPlayer = {
+    Game.mockClear();
+    player = {
       username: "John",
     };
-    mockReactRoot = "reactRoot";
-    mockFinishSetup = jest.fn();
-    mockImplementObjects = jest.fn();
-    mockUpdateDisplay = jest.fn();
-    mockManageGhostAudio = jest.fn();
+    reactRoot = "reactRoot";
     jest.spyOn(global, "requestAnimationFrame");
-    mockCtx = {
+    ctx = {
       clearRect: () => undefined,
     };
-    jest.spyOn(mockCtx, "clearRect");
-    mockBoard = {
+    jest.spyOn(ctx, "clearRect");
+    board = {
       getContext: () => undefined,
       width: 896,
       height: 992,
     };
-    jest.spyOn(mockBoard, "getContext");
+    jest.spyOn(board, "getContext");
     jest.spyOn(document, "querySelector");
-    document.querySelector.mockReturnValue(mockBoard);
-    mockBoard.getContext.mockReturnValue(mockCtx);
+    document.querySelector.mockReturnValue(board);
+    board.getContext.mockReturnValue(ctx);
   });
 
   it("calls finishSetup", () => {
-    playGame(
-      mockPlayer,
-      mockReactRoot,
-      mockFinishSetup,
-      mockImplementObjects,
-      mockUpdateDisplay,
-      mockManageGhostAudio
-    );
-    expect(mockFinishSetup).toHaveBeenCalledTimes(1);
+    playGame(player, reactRoot);
+    expect(Game.finishSetup).toHaveBeenCalledTimes(1);
   });
 
   it("calls requestAnimationFrame", () => {
-    playGame(
-      mockPlayer,
-      mockReactRoot,
-      mockFinishSetup,
-      mockImplementObjects,
-      mockUpdateDisplay,
-      mockManageGhostAudio
-    );
+    playGame(player, reactRoot);
     expect(requestAnimationFrame).toHaveBeenCalledTimes(1);
     expect(requestAnimationFrame).toHaveBeenCalledWith(playGame);
   });
 
   it("finds the board element and calls getContext and clearRect on it", () => {
-    playGame(
-      mockPlayer,
-      mockReactRoot,
-      mockFinishSetup,
-      mockImplementObjects,
-      mockUpdateDisplay,
-      mockManageGhostAudio
-    );
+    playGame(player, reactRoot);
     expect(document.querySelector).toHaveBeenCalledTimes(1);
     expect(document.querySelector).toHaveBeenCalledWith("#board");
-    expect(mockBoard.getContext).toHaveBeenCalledTimes(1);
-    expect(mockBoard.getContext).toHaveBeenCalledWith("2d");
-    expect(mockCtx.clearRect).toHaveBeenCalledTimes(1);
-    expect(mockCtx.clearRect).toHaveBeenCalledWith(
-      0,
-      0,
-      mockBoard.width,
-      mockBoard.height
-    );
+    expect(board.getContext).toHaveBeenCalledTimes(1);
+    expect(board.getContext).toHaveBeenCalledWith("2d");
+    expect(ctx.clearRect).toHaveBeenCalledTimes(1);
+    expect(ctx.clearRect).toHaveBeenCalledWith(0, 0, board.width, board.height);
   });
 
   it("calls implementObjects", () => {
-    playGame(
-      mockPlayer,
-      mockReactRoot,
-      mockFinishSetup,
-      mockImplementObjects,
-      mockUpdateDisplay,
-      mockManageGhostAudio
-    );
-    expect(mockImplementObjects).toHaveBeenCalledTimes(1);
+    playGame(player, reactRoot);
+    expect(Game.implementPhysics).toHaveBeenCalledTimes(1);
   });
 
   it("calls updateDisplay", () => {
-    playGame(
-      mockPlayer,
-      mockReactRoot,
-      mockFinishSetup,
-      mockImplementObjects,
-      mockUpdateDisplay,
-      mockManageGhostAudio
-    );
-    expect(mockUpdateDisplay).toHaveBeenCalledTimes(1);
+    playGame(player, reactRoot);
+    expect(Game.implementGraphics).toHaveBeenCalledTimes(1);
   });
 
   it("calls manageGhostAudio", () => {
-    playGame(
-      mockPlayer,
-      mockReactRoot,
-      mockFinishSetup,
-      mockImplementObjects,
-      mockUpdateDisplay,
-      mockManageGhostAudio
-    );
-    expect(mockManageGhostAudio).toHaveBeenCalledTimes(1);
+    playGame(player, reactRoot);
+    expect(Game.manageGhostAudio).toHaveBeenCalledTimes(1);
   });
 });
