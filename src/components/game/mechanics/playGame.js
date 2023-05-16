@@ -1,7 +1,7 @@
 import Factory from "./factory/factory";
 import Game from "./game/game";
 
-
+// prettier-ignore
 const map = [
   ["1", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "2", "1", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "2"],
   ["|", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", "|", "|", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", "|"],
@@ -36,7 +36,7 @@ const map = [
   ["4", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "3"],
 ];
 
-const variables = {
+export const variables = {
   tileLength: 32,
   isWindowVisible: true,
   isGamePaused: false,
@@ -53,10 +53,10 @@ const variables = {
   pauseEventListener: null,
   levelUpCount: 0,
   frameLifetime: 10,
-  startTime: null,
-}
+  startTime: 0,
+};
 
-const assets = Factory.makeAssets(map, variables);
+export const assets = Factory.makeAssets(map, variables);
 
 export default function playGame(player, reactRoot) {
   variables.animationId = requestAnimationFrame(playGame);
@@ -64,7 +64,6 @@ export default function playGame(player, reactRoot) {
   const ctx = board.getContext("2d");
   if (variables.start === true) {
     Game.finishSetup(variables, player, reactRoot, assets, ctx);
-    variables.startTime = performance.now();
   }
   if (performance.now() - variables.startTime >= variables.frameLifetime) {
     ctx.clearRect(0, 0, board.width, board.height);
@@ -73,4 +72,4 @@ export default function playGame(player, reactRoot) {
     Game.manageGhostAudio(assets);
     variables.startTime = performance.now();
   }
-};
+}

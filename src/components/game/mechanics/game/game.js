@@ -13,6 +13,7 @@ export default class Game {
     EventListener.addPauseDetection(variables, assets, ctx);
     variables.start = false;
     assets["audioPlayer"].ghostAudioWantsToPlay = true;
+    variables.startTime = performance.now();
   }
 
   static implementPhysics(assets, ctx, variables) {

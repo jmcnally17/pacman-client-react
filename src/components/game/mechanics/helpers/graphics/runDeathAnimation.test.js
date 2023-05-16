@@ -17,9 +17,7 @@ describe("runDeathAnimation", () => {
   beforeEach(() => {
     Animator.mockClear();
     GhostCollision.mockClear();
-    variables = {
-      animationId: 98,
-    };
+    variables = { animationId: 98, frameLifetime: 10, startTime: 100 };
     ctx = "ctx";
     assets = {
       characters: { pacman: { radians: 0, shrink: () => undefined } },
@@ -30,6 +28,7 @@ describe("runDeathAnimation", () => {
       shrink: () => undefined,
     };
     runDeathAnimation = jest.fn();
+    jest.spyOn(performance, "now");
   });
 
   it("calls requestAnimationFrame on itself to begin the death animation", () => {
@@ -43,12 +42,14 @@ describe("runDeathAnimation", () => {
   });
 
   it("calls drawBoard", () => {
+    performance.now.mockReturnValue(110);
     Graphics.runDeathAnimation(variables, ctx, assets, runDeathAnimation);
     expect(Animator.drawBoard).toHaveBeenCalledTimes(1);
     expect(Animator.drawBoard).toHaveBeenCalledWith(ctx, assets);
   });
 
   it("calls shrink on Pac-Man if its radians is less than PI", () => {
+    performance.now.mockReturnValue(110);
     const pacman = assets["characters"]["pacman"];
     jest.spyOn(pacman, "shrink");
     Graphics.runDeathAnimation(variables, ctx, assets, runDeathAnimation);
@@ -57,12 +58,14 @@ describe("runDeathAnimation", () => {
   });
 
   it("changes isShrinking in Pac-Man to false when the death animation has finished", () => {
+    performance.now.mockReturnValue(110);
     assets.characters.pacman = shrunkPacman;
     Graphics.runDeathAnimation(variables, ctx, assets, runDeathAnimation);
     expect(shrunkPacman.isShrinking).toBeFalsy();
   });
 
   it("calls cancelAnimationFrame when Pac-Man's death animation has finished", () => {
+    performance.now.mockReturnValue(110);
     jest.spyOn(global, "cancelAnimationFrame");
     assets.characters.pacman = shrunkPacman;
     Graphics.runDeathAnimation(variables, ctx, assets, runDeathAnimation);
@@ -71,6 +74,7 @@ describe("runDeathAnimation", () => {
   });
 
   it("calls checkPacmanLives when Pac-Man's death animation has finished", () => {
+    performance.now.mockReturnValue(110);
     assets.characters.pacman = shrunkPacman;
     Graphics.runDeathAnimation(variables, ctx, assets, runDeathAnimation);
     expect(GhostCollision.checkPacmanLives).toHaveBeenCalledTimes(1);
@@ -79,5 +83,11 @@ describe("runDeathAnimation", () => {
       variables,
       ctx
     );
+  });
+
+  it("sets the startTime to the updated time from performance.now()", () => {
+    performance.now.mockReturnValue(110);
+    Graphics.runDeathAnimation(variables, ctx, assets, runDeathAnimation);
+    expect(variables.startTime).toBe(110);
   });
 });

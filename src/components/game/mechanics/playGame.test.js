@@ -1,4 +1,4 @@
-import playGame from "./playGame";
+import playGame, { variables, assets } from "./playGame";
 import Game from "./game/game";
 
 jest.mock("./game/game");
@@ -11,29 +11,30 @@ let board;
 describe("playGame", () => {
   beforeEach(() => {
     Game.mockClear();
-    player = {
-      username: "John",
-    };
+    player = { username: "John" };
     reactRoot = "reactRoot";
     jest.spyOn(global, "requestAnimationFrame");
-    ctx = {
-      clearRect: () => undefined,
-    };
+    ctx = { clearRect: () => undefined };
     jest.spyOn(ctx, "clearRect");
-    board = {
-      getContext: () => undefined,
-      width: 896,
-      height: 992,
-    };
+    board = { getContext: () => undefined, width: 896, height: 992 };
     jest.spyOn(board, "getContext");
     jest.spyOn(document, "querySelector");
     document.querySelector.mockReturnValue(board);
     board.getContext.mockReturnValue(ctx);
+    variables.startTime = 0;
+    jest.spyOn(performance, "now");
   });
 
   it("calls finishSetup", () => {
     playGame(player, reactRoot);
     expect(Game.finishSetup).toHaveBeenCalledTimes(1);
+    expect(Game.finishSetup).toHaveBeenCalledWith(
+      variables,
+      player,
+      reactRoot,
+      assets,
+      ctx
+    );
   });
 
   it("calls requestAnimationFrame", () => {
@@ -43,6 +44,7 @@ describe("playGame", () => {
   });
 
   it("finds the board element and calls getContext and clearRect on it", () => {
+    performance.now.mockReturnValue(110);
     playGame(player, reactRoot);
     expect(document.querySelector).toHaveBeenCalledTimes(1);
     expect(document.querySelector).toHaveBeenCalledWith("#board");
@@ -53,17 +55,26 @@ describe("playGame", () => {
   });
 
   it("calls implementObjects", () => {
+    performance.now.mockReturnValue(110);
     playGame(player, reactRoot);
     expect(Game.implementPhysics).toHaveBeenCalledTimes(1);
+    expect(Game.implementPhysics).toHaveBeenCalledWith(assets, ctx, variables);
   });
 
-  it("calls updateDisplay", () => {
+  it("calls implementGraphics", () => {
+    performance.now.mockReturnValue(110);
     playGame(player, reactRoot);
     expect(Game.implementGraphics).toHaveBeenCalledTimes(1);
+    expect(Game.implementGraphics).toHaveBeenCalledWith(
+      variables,
+      assets["characters"]["pacman"]
+    );
   });
 
   it("calls manageGhostAudio", () => {
+    performance.now.mockReturnValue(110);
     playGame(player, reactRoot);
     expect(Game.manageGhostAudio).toHaveBeenCalledTimes(1);
+    expect(Game.manageGhostAudio).toHaveBeenCalledWith(assets);
   });
 });

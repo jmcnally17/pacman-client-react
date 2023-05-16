@@ -18,6 +18,7 @@ describe("finishSetup", () => {
       start: true,
       directionEventListener: null,
       visibilityEventListener: null,
+      startTime: null,
     };
     player = { username: "John" };
     reactRoot = "reactRoot";
@@ -27,6 +28,7 @@ describe("finishSetup", () => {
     };
     jest.spyOn(assets["timers"]["cycleTimer"], "start");
     ctx = "ctx";
+    jest.spyOn(performance, "now");
   });
 
   it("sets the player and reactRoot", () => {
@@ -75,5 +77,12 @@ describe("finishSetup", () => {
     const audioPlayer = assets["audioPlayer"];
     Game.finishSetup(variables, player, reactRoot, assets, ctx);
     expect(audioPlayer.ghostAudioWantsToPlay).toBe(true);
+  });
+
+  it("sets the startTime to current time from performance.now()", () => {
+    performance.now.mockReturnValue(110);
+    Game.finishSetup(variables, player, reactRoot, assets, ctx);
+    expect(performance.now).toHaveBeenCalledTimes(1);
+    expect(variables.startTime).toBe(110);
   });
 });
