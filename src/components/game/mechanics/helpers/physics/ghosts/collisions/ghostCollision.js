@@ -74,7 +74,12 @@ export default class GhostCollision {
     try {
       const res = await axios.post(
         getBackendUrl(process.env.REACT_APP_BACKEND_URL),
-        data
+        data,
+        {
+          headers: {
+            authorisation: localStorage.getItem("token"),
+          },
+        }
       );
       return `Success: ${res.data.message}`;
     } catch (err) {

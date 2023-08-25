@@ -5,6 +5,14 @@ let variables;
 let getBackendUrl;
 
 describe("saveScore", () => {
+  beforeAll(() => {
+    localStorage.setItem("token", "2ak3j38h2232hd7hd9");
+  });
+
+  afterAll(() => {
+    localStorage.removeItem("token");
+  });
+
   beforeEach(() => {
     variables = {
       player: { username: "person" },
@@ -28,7 +36,8 @@ describe("saveScore", () => {
     expect(mockAxios.post).toHaveBeenCalledTimes(1);
     expect(mockAxios.post).toHaveBeenCalledWith(
       "https://livesite.com/backend",
-      { name: "person", points: 0 }
+      { name: "person", points: 0 },
+      { headers: { authorisation: localStorage.getItem("token") } }
     );
     expect(getBackendUrl).toHaveBeenCalledTimes(1);
   });
@@ -42,7 +51,8 @@ describe("saveScore", () => {
     expect(mockAxios.post).toHaveBeenCalledTimes(1);
     expect(mockAxios.post).toHaveBeenCalledWith(
       "https://livesite.com/backend",
-      { name: "person", points: 0 }
+      { name: "person", points: 0 },
+      { headers: { authorisation: localStorage.getItem("token") } }
     );
     expect(getBackendUrl).toHaveBeenCalledTimes(1);
   });
