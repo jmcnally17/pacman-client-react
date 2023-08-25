@@ -15,16 +15,18 @@ export default function App() {
   const [user, setUser] = useState();
 
   useEffect(() => {
-    axios
-      .get(sessionsUrl, {
-        withCredentials: true,
-        headers: {
-          authorisation: localStorage.getItem("token"),
-        },
-      })
-      .then((res) => {
-        setUser(res.data.user);
-      });
+    if (localStorage.getItem("token")) {
+      axios
+        .get(sessionsUrl, {
+          withCredentials: true,
+          headers: {
+            authorisation: localStorage.getItem("token"),
+          },
+        })
+        .then((res) => {
+          setUser(res.data.user);
+        });
+    }
   }, []);
 
   return (
