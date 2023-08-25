@@ -60,7 +60,7 @@ export default function Signup() {
             throw res;
           }
         })
-        .catch((err) => setError(err.response.statusText));
+        .catch((err) => setError(err.response.data.message));
     }
   };
 
@@ -84,7 +84,7 @@ export default function Signup() {
           throw res;
         }
       })
-      .catch((err) => setError(err.response.statusText));
+      .catch((err) => setError(err.response.data.message));
   };
 
   return (

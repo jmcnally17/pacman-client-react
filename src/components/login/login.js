@@ -49,8 +49,7 @@ export default function Login() {
         }
       })
       .catch((err) => {
-        console.log(err);
-        setError(err.response.statusText);
+        setError(err.response.data.message);
       });
   };
 

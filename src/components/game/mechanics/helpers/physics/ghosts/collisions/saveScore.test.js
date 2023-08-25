@@ -44,7 +44,7 @@ describe("saveScore", () => {
 
   it("returns an error when the axios post request fails", async () => {
     mockAxios.post.mockRejectedValueOnce({
-      response: { statusText: "API is down" },
+      response: { data: { message: "API is down" } },
     });
     const response = await GhostCollision.saveScore(variables, getBackendUrl);
     expect(response).toBe("Error: API is down");

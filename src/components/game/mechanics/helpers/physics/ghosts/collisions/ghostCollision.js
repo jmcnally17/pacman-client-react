@@ -83,7 +83,7 @@ export default class GhostCollision {
       );
       return `Success: ${res.data.message}`;
     } catch (err) {
-      return `Error: ${err.response.statusText}`;
+      return `Error: ${err.response.data.message}`;
     }
   }
 
