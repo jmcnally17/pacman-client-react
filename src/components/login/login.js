@@ -42,6 +42,7 @@ export default function Login() {
       )
       .then((res) => {
         if (res.status === 200) {
+          localStorage.setItem("token", res.data);
           window.location.href = redirectUrl;
         } else {
           throw res;

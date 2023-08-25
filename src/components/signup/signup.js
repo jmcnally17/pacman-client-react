@@ -3,10 +3,6 @@ import axios from "axios";
 import "./signup.css";
 import { Profanity, ProfanityOptions } from "@2toad/profanity";
 
-const options = new ProfanityOptions();
-options.wholeWord = false;
-const profanity = new Profanity(options);
-
 const usersUrl = process.env.REACT_APP_BACKEND_URL
   ? `${process.env.REACT_APP_BACKEND_URL}/users`
   : "http://localhost:9000/users";
@@ -23,6 +19,10 @@ export default function Signup() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+
+  const options = new ProfanityOptions();
+  options.wholeWord = false;
+  const profanity = new Profanity(options);
 
   const handleUsername = ({ target }) => {
     setUsername(target.value);
@@ -78,6 +78,7 @@ export default function Signup() {
       )
       .then((res) => {
         if (res.status === 200) {
+          localStorage.setItem("token", res.data);
           window.location.href = redirectUrl;
         } else {
           throw res;

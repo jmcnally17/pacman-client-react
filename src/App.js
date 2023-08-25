@@ -18,6 +18,9 @@ export default function App() {
     axios
       .get(sessionsUrl, {
         withCredentials: true,
+        headers: {
+          authorisation: localStorage.getItem("token"),
+        },
       })
       .then((res) => {
         setUser(res.data.user);

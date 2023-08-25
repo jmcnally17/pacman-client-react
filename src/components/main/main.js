@@ -1,13 +1,8 @@
 import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom/client";
-import axios from "axios";
 import "./main.css";
 import Game from "../game/game";
 import { Howl } from "howler";
-
-const logoutUrl = process.env.REACT_APP_BACKEND_URL
-  ? `${process.env.REACT_APP_BACKEND_URL}/sessions`
-  : "http://localhost:9000/sessions";
 
 export default function Main({ reactRoot, user }) {
   const [theme] = useState(
@@ -28,9 +23,7 @@ export default function Main({ reactRoot, user }) {
   }, [theme]);
 
   const handleLogout = () => {
-    axios.delete(logoutUrl, {
-      withCredentials: true,
-    });
+    localStorage.removeItem("token");
     window.location.reload();
   };
 
