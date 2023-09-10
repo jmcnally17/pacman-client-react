@@ -24,7 +24,7 @@ describe("resumeAnimation", () => {
   });
 
   it("calls runDeathAnimation if isShrinking in PacMan is true", () => {
-    assets["characters"]["pacman"] = shrinkingPacman;
+    assets.characters.pacman = shrinkingPacman;
     Animator.resumeAnimation(variables, ctx, assets, playGame);
     expect(Graphics.runDeathAnimation).toHaveBeenCalledTimes(1);
     expect(Graphics.runDeathAnimation).toHaveBeenCalledWith(
@@ -35,7 +35,7 @@ describe("resumeAnimation", () => {
   });
 
   it("calls runLevelUpAnimation if isLevellingUp in PacMan is true", () => {
-    assets["characters"]["pacman"] = levellingUpPacman;
+    assets.characters.pacman = levellingUpPacman;
     Animator.resumeAnimation(variables, ctx, assets, playGame);
     expect(Graphics.runLevelUpAnimation).toHaveBeenCalledTimes(1);
     expect(Graphics.runLevelUpAnimation).toHaveBeenCalledWith(

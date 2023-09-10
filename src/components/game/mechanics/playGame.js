@@ -68,7 +68,7 @@ export default function playGame(player, reactRoot) {
   if (performance.now() - variables.startTime >= variables.frameLifetime) {
     ctx.clearRect(0, 0, board.width, board.height);
     Game.implementPhysics(assets, ctx, variables);
-    Game.implementGraphics(variables, assets["characters"]["pacman"]);
+    Game.implementGraphics(variables, assets.characters.pacman);
     Game.manageGhostAudio(assets);
     variables.startTime = performance.now();
   }

@@ -53,7 +53,7 @@ describe("scareGhosts", () => {
       isRetreating: false,
       changeScaredState: () => undefined,
     };
-    assets["characters"]["ghosts"] = [
+    assets.characters.ghosts = [
       scaredGhost,
       scaredGhost,
       scaredGhost,
@@ -70,7 +70,7 @@ describe("scareGhosts", () => {
       isRetreating: true,
       changeScaredState: () => undefined,
     };
-    assets["characters"]["ghosts"] = [
+    assets.characters.ghosts = [
       mockRetreatingGhost,
       mockRetreatingGhost,
       mockRetreatingGhost,

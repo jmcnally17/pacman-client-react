@@ -19,11 +19,11 @@ export default class GhostCollision {
 
   static dealWithCollision(ghost, assets, variables, ctx) {
     if (!ghost.isScared && !ghost.isRetreating) {
-      assets["characters"]["pacman"].radians = Math.PI / 4;
+      assets.characters.pacman.radians = Math.PI / 4;
       cancelAnimationFrame(variables.animationId);
-      assets["audioPlayer"].stopGhostAudio();
-      assets["audioPlayer"].playPacmanDeath();
-      assets["characters"]["pacman"].isShrinking = true;
+      assets.audioPlayer.stopGhostAudio();
+      assets.audioPlayer.playPacmanDeath();
+      assets.characters.pacman.isShrinking = true;
       Graphics.runDeathAnimation(variables, ctx, assets);
     } else if (ghost.isScared) {
       variables.score += 200 * Math.pow(2, variables.killCount);
@@ -41,10 +41,10 @@ export default class GhostCollision {
     endGame = GhostCollision.endGame,
     resetAfterDeath = GhostCollision.resetAfterDeath
   ) {
-    if (assets["characters"]["pacman"].lives <= 0) {
+    if (assets.characters.pacman.lives <= 0) {
       endGame(variables, assets, ctx);
     } else {
-      assets["characters"]["pacman"].lives--;
+      assets.characters.pacman.lives--;
       resetAfterDeath(assets, variables);
     }
   }
@@ -98,20 +98,20 @@ export default class GhostCollision {
   }
 
   static resetAfterGameOver(assets, variables) {
-    assets["props"]["pellets"].forEach((pellet) => {
+    assets.props.pellets.forEach((pellet) => {
       if (pellet.hasBeenEaten) pellet.changeEatenState();
     });
-    assets["props"]["powerUps"].forEach((powerUp) => {
+    assets.props.powerUps.forEach((powerUp) => {
       if (powerUp.hasBeenEaten) powerUp.changeEatenState();
     });
-    assets["timers"]["cycleTimer"].reset();
-    assets["timers"]["scaredTimer"].reset();
-    assets["timers"]["scaredTimer"].duration = 7000;
-    Object.values(assets["characters"]["ghosts"]).forEach((ghost) => {
+    assets.timers.cycleTimer.reset();
+    assets.timers.scaredTimer.reset();
+    assets.timers.scaredTimer.duration = 7000;
+    Object.values(assets.characters.ghosts).forEach((ghost) => {
       ghost.reset();
     });
-    assets["characters"]["pacman"].reset();
-    assets["characters"]["pacman"].lives = 2;
+    assets.characters.pacman.reset();
+    assets.characters.pacman.lives = 2;
     variables.lastKeyPressed = "";
     variables.level = 1;
     window.removeEventListener("keydown", variables.directionEventListener);
@@ -123,15 +123,15 @@ export default class GhostCollision {
   }
 
   static resetAfterDeath(assets, variables, callbackOne = playGame) {
-    assets["characters"]["pacman"].reset();
+    assets.characters.pacman.reset();
     variables.lastKeyPressed = "";
-    assets["timers"]["cycleTimer"].reset();
-    assets["timers"]["scaredTimer"].reset();
-    Object.values(assets["characters"]["ghosts"]).forEach((ghost) => {
+    assets.timers.cycleTimer.reset();
+    assets.timers.scaredTimer.reset();
+    Object.values(assets.characters.ghosts).forEach((ghost) => {
       ghost.reset();
     });
-    assets["timers"]["cycleTimer"].start();
-    assets["audioPlayer"].ghostAudioWantsToPlay = true;
+    assets.timers.cycleTimer.start();
+    assets.audioPlayer.ghostAudioWantsToPlay = true;
     callbackOne(variables.player, variables.reactRoot);
   }
 }

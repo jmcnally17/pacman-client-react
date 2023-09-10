@@ -32,7 +32,7 @@ describe("implementBoundaries", () => {
     expect(BoundaryManager.stopPacmanCollision).toHaveBeenCalledTimes(3);
     expect(BoundaryManager.stopPacmanCollision).toHaveBeenCalledWith(
       boundary,
-      assets["characters"]["pacman"]
+      assets.characters.pacman
     );
   });
 });

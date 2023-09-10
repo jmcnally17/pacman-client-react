@@ -66,7 +66,7 @@ describe("playGhostAudio", () => {
   });
 
   it("calls playGhostRetreating on the audioPlayer if the retreating audio is not playing and any of the retreating timers are running", () => {
-    assets["timers"]["retreatingTimers"] = runningRetreatingTimers;
+    assets.timers.retreatingTimers = runningRetreatingTimers;
     AudioManager.playGhostAudio(assets);
     expect(retreating.playing).toHaveBeenCalledTimes(1);
     expect(audioPlayer.playGhostRetreating).toHaveBeenCalledTimes(1);
@@ -74,7 +74,7 @@ describe("playGhostAudio", () => {
 
   it("leaves the retreating audio playing if any of the retreating timers are running", () => {
     audioPlayer.ghostRetreating = playingRetreating;
-    assets["timers"]["retreatingTimers"] = runningRetreatingTimers;
+    assets.timers.retreatingTimers = runningRetreatingTimers;
     AudioManager.playGhostAudio(assets);
     expect(playingRetreating.playing).toHaveBeenCalledTimes(1);
     expect(audioPlayer.playGhostSiren).toHaveBeenCalledTimes(0);
@@ -83,7 +83,7 @@ describe("playGhostAudio", () => {
   });
 
   it("calls playGhostScared on the audioPlayer if the scared audio is not playing and the scared timer is running", () => {
-    assets["timers"]["scaredTimer"] = runningScaredTimer;
+    assets.timers.scaredTimer = runningScaredTimer;
     AudioManager.playGhostAudio(assets);
     expect(scared.playing).toHaveBeenCalledTimes(1);
     expect(audioPlayer.playGhostScared).toHaveBeenCalledTimes(1);
@@ -91,7 +91,7 @@ describe("playGhostAudio", () => {
 
   it("leaves the scared audio playing if the scared timer is running", () => {
     audioPlayer.ghostScared = playingScared;
-    assets["timers"]["scaredTimer"] = runningScaredTimer;
+    assets.timers.scaredTimer = runningScaredTimer;
     AudioManager.playGhostAudio(assets);
     expect(playingScared.playing).toHaveBeenCalledTimes(1);
     expect(audioPlayer.playGhostSiren).toHaveBeenCalledTimes(0);

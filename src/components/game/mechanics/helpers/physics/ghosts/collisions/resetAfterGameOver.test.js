@@ -51,7 +51,7 @@ describe("resetAfterGameOver", () => {
   });
 
   it("calls changeEatenState on the pellets if they have been eaten", () => {
-    assets["props"]["pellets"] = eatenPellets;
+    assets.props.pellets = eatenPellets;
     jest.spyOn(eatenPellet, "changeEatenState");
     GhostCollision.resetAfterGameOver(assets, variables);
     expect(eatenPellet.changeEatenState).toHaveBeenCalledTimes(3);
@@ -64,7 +64,7 @@ describe("resetAfterGameOver", () => {
   });
 
   it("calls changeEatenState on the power ups if they have been eaten", () => {
-    assets["props"]["powerUps"] = eatenPowerUps;
+    assets.props.powerUps = eatenPowerUps;
     jest.spyOn(eatenPowerUp, "changeEatenState");
     GhostCollision.resetAfterGameOver(assets, variables);
     expect(eatenPowerUp.changeEatenState).toHaveBeenCalledTimes(2);

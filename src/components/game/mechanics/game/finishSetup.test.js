@@ -26,7 +26,7 @@ describe("finishSetup", () => {
       timers: { cycleTimer: { start: () => undefined } },
       audioPlayer: { ghostAudioWantsToPlay: false },
     };
-    jest.spyOn(assets["timers"]["cycleTimer"], "start");
+    jest.spyOn(assets.timers.cycleTimer, "start");
     ctx = "ctx";
     jest.spyOn(performance, "now");
   });
@@ -38,7 +38,7 @@ describe("finishSetup", () => {
   });
 
   it("starts the cycle timer", () => {
-    const cycleTimer = assets["timers"]["cycleTimer"];
+    const cycleTimer = assets.timers.cycleTimer;
     Game.finishSetup(variables, player, reactRoot, assets, ctx);
     expect(cycleTimer.start).toHaveBeenCalledTimes(1);
   });
@@ -74,7 +74,7 @@ describe("finishSetup", () => {
   });
 
   it("sets ghostAudioWantsToPlay in the audioPlayer to true", () => {
-    const audioPlayer = assets["audioPlayer"];
+    const audioPlayer = assets.audioPlayer;
     Game.finishSetup(variables, player, reactRoot, assets, ctx);
     expect(audioPlayer.ghostAudioWantsToPlay).toBe(true);
   });

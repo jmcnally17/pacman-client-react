@@ -14,39 +14,39 @@ export default class PelletManager {
 
   static checkLevelUpCondition(assets, variables, ctx) {
     let eatenPellets = 0;
-    assets["props"]["pellets"].forEach((pellet) => {
+    assets.props.pellets.forEach((pellet) => {
       if (pellet.hasBeenEaten) {
         eatenPellets++;
       }
-      if (eatenPellets === assets["props"]["pellets"].length) {
+      if (eatenPellets === assets.props.pellets.length) {
         cancelAnimationFrame(variables.animationId);
-        assets["audioPlayer"].stopGhostAudio();
-        assets["audioPlayer"].playLevelUp();
-        assets["characters"]["pacman"].isLevellingUp = true;
+        assets.audioPlayer.stopGhostAudio();
+        assets.audioPlayer.playLevelUp();
+        assets.characters.pacman.isLevellingUp = true;
         Graphics.runLevelUpAnimation(variables, assets, ctx);
       }
     });
   }
 
   static resetAfterLevelUp(assets, variables, callback = playGame) {
-    assets["characters"]["pacman"].reset();
+    assets.characters.pacman.reset();
     variables.lastKeyPressed = "";
     variables.levelUpCount = 0;
-    assets["timers"]["cycleTimer"].reset();
-    assets["timers"]["scaredTimer"].reset();
-    if (assets["timers"]["scaredTimer"].duration > 0)
-      assets["timers"]["scaredTimer"].duration -= 500;
-    Object.values(assets["characters"]["ghosts"]).forEach((ghost) => {
+    assets.timers.cycleTimer.reset();
+    assets.timers.scaredTimer.reset();
+    if (assets.timers.scaredTimer.duration > 0)
+      assets.timers.scaredTimer.duration -= 500;
+    Object.values(assets.characters.ghosts).forEach((ghost) => {
       ghost.reset();
     });
-    assets["props"]["pellets"].forEach((pellet) => {
+    assets.props.pellets.forEach((pellet) => {
       pellet.changeEatenState();
     });
-    assets["props"]["powerUps"].forEach((powerUp) => {
+    assets.props.powerUps.forEach((powerUp) => {
       if (powerUp.hasBeenEaten) powerUp.changeEatenState();
     });
-    assets["audioPlayer"].ghostAudioWantsToPlay = true;
-    assets["timers"]["cycleTimer"].start();
+    assets.audioPlayer.ghostAudioWantsToPlay = true;
+    assets.timers.cycleTimer.start();
     callback();
   }
 }

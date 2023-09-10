@@ -34,7 +34,7 @@ describe("implementPellets", () => {
   });
 
   it("does not call draw on each pellet if they have been eaten", () => {
-    assets["props"]["pellets"] = eatenPellets;
+    assets.props.pellets = eatenPellets;
     Physics.implementPellets(assets, ctx, variables);
     expect(pellet.draw).toHaveBeenCalledTimes(0);
   });
@@ -45,25 +45,25 @@ describe("implementPellets", () => {
     expect(PelletManager.eatPellet).toHaveBeenNthCalledWith(
       1,
       pellet,
-      assets["characters"]["pacman"],
+      assets.characters.pacman,
       variables
     );
     expect(PelletManager.eatPellet).toHaveBeenNthCalledWith(
       1,
       pellet,
-      assets["characters"]["pacman"],
+      assets.characters.pacman,
       variables
     );
     expect(PelletManager.eatPellet).toHaveBeenNthCalledWith(
       1,
       pellet,
-      assets["characters"]["pacman"],
+      assets.characters.pacman,
       variables
     );
   });
 
   it("does not call eatPellet on each pellet if they have been eaten", () => {
-    assets["props"]["pellets"] = eatenPellets;
+    assets.props.pellets = eatenPellets;
     Physics.implementPellets(assets, ctx, variables);
     expect(PelletManager.eatPellet).toHaveBeenCalledTimes(0);
   });

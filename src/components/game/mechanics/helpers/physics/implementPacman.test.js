@@ -34,7 +34,7 @@ describe("implementPacman", () => {
   });
 
   it("calls update on Pac-Man", () => {
-    const pacman = assets["characters"]["pacman"];
+    const pacman = assets.characters.pacman;
     jest.spyOn(pacman, "update");
     Physics.implementPacman(variables, assets, ctx);
     expect(pacman.update).toHaveBeenCalledTimes(1);
@@ -45,7 +45,7 @@ describe("implementPacman", () => {
     Physics.implementPacman(variables, assets, ctx);
     expect(BoundaryManager.implementTunnel).toHaveBeenCalledTimes(1);
     expect(BoundaryManager.implementTunnel).toHaveBeenCalledWith(
-      assets["characters"]["pacman"],
+      assets.characters.pacman,
       variables
     );
   });

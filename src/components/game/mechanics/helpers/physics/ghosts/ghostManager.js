@@ -87,7 +87,7 @@ export default class GhostManager {
     collisionConditional = GhostCollision.collisionConditional,
     dealWithCollision = GhostCollision.dealWithCollision
   ) {
-    if (collisionConditional(ghost, assets["characters"]["pacman"])) {
+    if (collisionConditional(ghost, assets.characters.pacman)) {
       dealWithCollision(ghost, assets, variables, ctx);
     }
   }

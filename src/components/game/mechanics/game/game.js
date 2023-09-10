@@ -7,12 +7,12 @@ export default class Game {
   static finishSetup(variables, player, reactRoot, assets, ctx) {
     variables.player = player;
     variables.reactRoot = reactRoot;
-    assets["timers"]["cycleTimer"].start();
+    assets.timers.cycleTimer.start();
     EventListener.addDirectionDetection(variables);
     EventListener.addVisibilityDetection(variables, assets);
     EventListener.addPauseDetection(variables, assets, ctx);
     variables.start = false;
-    assets["audioPlayer"].ghostAudioWantsToPlay = true;
+    assets.audioPlayer.ghostAudioWantsToPlay = true;
     variables.startTime = performance.now();
   }
 
@@ -36,7 +36,7 @@ export default class Game {
   }
 
   static manageGhostAudio(assets) {
-    if (assets["audioPlayer"].ghostAudioWantsToPlay)
+    if (assets.audioPlayer.ghostAudioWantsToPlay)
       AudioManager.playGhostAudio(assets);
   }
 }

@@ -36,7 +36,7 @@ describe("chase", () => {
     );
     expect(findRedOrangeAimPath).toHaveBeenCalledTimes(1);
     expect(findRedOrangeAimPath).toHaveBeenCalledWith(
-      assets["characters"]["pacman"],
+      assets.characters.pacman,
       pathway
     );
   });
@@ -56,7 +56,7 @@ describe("chase", () => {
     );
     expect(findPinkAimPath).toHaveBeenCalledTimes(1);
     expect(findPinkAimPath).toHaveBeenCalledWith(
-      assets["characters"]["pacman"],
+      assets.characters.pacman,
       pathway,
       variables
     );
@@ -95,7 +95,7 @@ describe("chase", () => {
     expect(isOrangeFarFromPacman).toHaveBeenCalledTimes(1);
     expect(isOrangeFarFromPacman).toHaveBeenCalledWith(
       orangeGhost,
-      assets["characters"]["pacman"],
+      assets.characters.pacman,
       variables
     );
   });
@@ -116,7 +116,7 @@ describe("chase", () => {
     );
     expect(findRedOrangeAimPath).toHaveBeenCalledTimes(1);
     expect(findRedOrangeAimPath).toHaveBeenCalledWith(
-      assets["characters"]["pacman"],
+      assets.characters.pacman,
       pathway
     );
   });

@@ -43,25 +43,25 @@ describe("eatPowerUp", () => {
   });
 
   it("does not call changeEatenState if the power up and pacman are not colliding", () => {
-    assets["characters"]["pacman"] = pacmanTwo;
+    assets.characters.pacman = pacmanTwo;
     PowerUpManager.eatPowerUp(powerUp, assets, variables, scareGhosts);
     expect(powerUp.changeEatenState).toHaveBeenCalledTimes(0);
   });
 
   it("does not increase the score if the power up and pacman are not colliding", () => {
-    assets["characters"]["pacman"] = pacmanTwo;
+    assets.characters.pacman = pacmanTwo;
     PowerUpManager.eatPowerUp(powerUp, assets, variables, scareGhosts);
     expect(variables.score).toBe(0);
   });
 
   it("does not reset the kill count if the power up and pacman are not colliding", () => {
-    assets["characters"]["pacman"] = pacmanTwo;
+    assets.characters.pacman = pacmanTwo;
     PowerUpManager.eatPowerUp(powerUp, assets, variables, scareGhosts);
     expect(variables.killCount).toBe(2);
   });
 
   it("does not call scareGhost if the power up and pacman are not colliding", () => {
-    assets["characters"]["pacman"] = pacmanTwo;
+    assets.characters.pacman = pacmanTwo;
     PowerUpManager.eatPowerUp(powerUp, assets, variables, scareGhosts);
     expect(scareGhosts).toHaveBeenCalledTimes(0);
   });

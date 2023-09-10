@@ -6,8 +6,8 @@ export default class PowerUpManager {
     scareGhosts = PowerUpManager.scareGhosts
   ) {
     if (
-      powerUp.position.x === assets["characters"]["pacman"].position.x &&
-      powerUp.position.y === assets["characters"]["pacman"].position.y
+      powerUp.position.x === assets.characters.pacman.position.x &&
+      powerUp.position.y === assets.characters.pacman.position.y
     ) {
       powerUp.changeEatenState();
       variables.score += 50;
@@ -17,13 +17,13 @@ export default class PowerUpManager {
   }
 
   static scareGhosts(assets) {
-    if (assets["timers"]["cycleTimer"].isRunning) {
-      assets["timers"]["cycleTimer"].pause();
+    if (assets.timers.cycleTimer.isRunning) {
+      assets.timers.cycleTimer.pause();
     }
-    assets["timers"]["scaredTimer"].reset();
-    Object.values(assets["characters"]["ghosts"]).forEach((ghost) => {
+    assets.timers.scaredTimer.reset();
+    Object.values(assets.characters.ghosts).forEach((ghost) => {
       if (!ghost.isScared && !ghost.isRetreating) ghost.changeScaredState();
     });
-    assets["timers"]["scaredTimer"].start(assets["timers"]["cycleTimer"]);
+    assets.timers.scaredTimer.start(assets.timers.cycleTimer);
   }
 }

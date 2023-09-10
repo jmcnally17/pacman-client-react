@@ -25,7 +25,7 @@ describe("addVisibilityDetection", () => {
   afterEach(() => {
     window.removeEventListener(
       "visibilitychange",
-      variables["visibilityEventListener"]
+      variables.visibilityEventListener
     );
   });
 
@@ -53,7 +53,7 @@ describe("addVisibilityDetection", () => {
       window.dispatchEvent(visibilityChange);
       expect(AudioManager.pauseAudio).toHaveBeenCalledTimes(1);
       expect(AudioManager.pauseAudio).toHaveBeenCalledWith(
-        assets["audioPlayer"]
+        assets.audioPlayer
       );
     });
 
@@ -61,7 +61,7 @@ describe("addVisibilityDetection", () => {
       EventListener.addVisibilityDetection(variables, assets);
       window.dispatchEvent(visibilityChange);
       expect(Timer.pauseTimers).toHaveBeenCalledTimes(1);
-      expect(Timer.pauseTimers).toHaveBeenCalledWith(assets["timers"]);
+      expect(Timer.pauseTimers).toHaveBeenCalledWith(assets.timers);
     });
 
     it("call resumeAudio if isWindowVisible is intially false and isGamePaused is false", () => {
@@ -70,7 +70,7 @@ describe("addVisibilityDetection", () => {
       window.dispatchEvent(visibilityChange);
       expect(AudioManager.resumeAudio).toHaveBeenCalledTimes(1);
       expect(AudioManager.resumeAudio).toHaveBeenCalledWith(
-        assets["audioPlayer"]
+        assets.audioPlayer
       );
     });
 
@@ -79,7 +79,7 @@ describe("addVisibilityDetection", () => {
       variables.isWindowVisible = false;
       window.dispatchEvent(visibilityChange);
       expect(Timer.resumeTimers).toHaveBeenCalledTimes(1);
-      expect(Timer.resumeTimers).toHaveBeenCalledWith(assets["timers"]);
+      expect(Timer.resumeTimers).toHaveBeenCalledWith(assets.timers);
     });
   });
 });

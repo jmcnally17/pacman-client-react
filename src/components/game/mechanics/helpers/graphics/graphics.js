@@ -47,12 +47,12 @@ export default class Graphics {
       runLevelUpAnimation(variables, assets, ctx)
     );
     if (performance.now() - variables.startTime >= variables.frameLifetime) {
-      Animator.drawLevelUpBoard(ctx, assets["props"]["boundaries"]);
+      Animator.drawLevelUpBoard(ctx, assets.props.boundaries);
       if (variables.levelUpCount % 10 === 0 && variables.levelUpCount !== 0)
-        assets["props"]["boundaries"].forEach((boundary) => boundary.flash());
+        assets.props.boundaries.forEach((boundary) => boundary.flash());
       variables.levelUpCount++;
       if (variables.levelUpCount >= 350) {
-        assets["characters"]["pacman"].isLevellingUp = false;
+        assets.characters.pacman.isLevellingUp = false;
         cancelAnimationFrame(variables.animationId);
         variables.level++;
         PelletManager.resetAfterLevelUp(assets, variables);
@@ -72,7 +72,7 @@ export default class Graphics {
     );
     if (performance.now() - variables.startTime >= variables.frameLifetime) {
       Animator.drawBoard(ctx, assets);
-      const pacman = assets["characters"]["pacman"];
+      const pacman = assets.characters.pacman;
       if (pacman.radians < Math.PI) {
         pacman.shrink(ctx);
       } else {

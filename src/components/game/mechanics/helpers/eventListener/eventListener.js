@@ -26,12 +26,12 @@ export default class EventListener {
       (variables.visibilityEventListener = () => {
         if (!variables.isGamePaused && variables.isWindowVisible) {
           variables.isWindowVisible = false;
-          AudioManager.pauseAudio(assets["audioPlayer"]);
-          Timer.pauseTimers(assets["timers"]);
+          AudioManager.pauseAudio(assets.audioPlayer);
+          Timer.pauseTimers(assets.timers);
         } else if (!variables.isGamePaused && !variables.isWindowVisible) {
           variables.isWindowVisible = true;
-          AudioManager.resumeAudio(assets["audioPlayer"]);
-          Timer.resumeTimers(assets["timers"]);
+          AudioManager.resumeAudio(assets.audioPlayer);
+          Timer.resumeTimers(assets.timers);
         }
       })
     );
@@ -45,13 +45,13 @@ export default class EventListener {
           if (!variables.isGamePaused) {
             variables.isGamePaused = true;
             cancelAnimationFrame(variables.animationId);
-            AudioManager.pauseAudio(assets["audioPlayer"]);
-            Timer.pauseTimers(assets["timers"]);
-            Animator.loadPauseOverlay(ctx, assets["pauseTextImage"]);
+            AudioManager.pauseAudio(assets.audioPlayer);
+            Timer.pauseTimers(assets.timers);
+            Animator.loadPauseOverlay(ctx, assets.pauseTextImage);
           } else {
             variables.isGamePaused = false;
-            AudioManager.resumeAudio(assets["audioPlayer"]);
-            Timer.resumeTimers(assets["timers"]);
+            AudioManager.resumeAudio(assets.audioPlayer);
+            Timer.resumeTimers(assets.timers);
             Animator.resumeAnimation(variables, ctx, assets);
           }
         }

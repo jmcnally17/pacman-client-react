@@ -20,7 +20,7 @@ describe("checkPacmanLives", () => {
   });
 
   it("calls endGame when Pac-Man has no lives left", () => {
-    assets["characters"]["pacman"] = noLivesPacman;
+    assets.characters.pacman = noLivesPacman;
     GhostCollision.checkPacmanLives(
       assets,
       variables,

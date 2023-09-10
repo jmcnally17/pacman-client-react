@@ -32,7 +32,7 @@ describe("addPauseDetection", () => {
   });
 
   afterEach(() => {
-    window.removeEventListener("keydown", variables["pauseEventListener"]);
+    window.removeEventListener("keydown", variables.pauseEventListener);
   });
 
   it("adds an event listener to call cancelAnimationFrame when isGamePaused is initially false", () => {
@@ -67,7 +67,7 @@ describe("addPauseDetection", () => {
       window.dispatchEvent(escKeyEvent);
       expect(AudioManager.pauseAudio).toHaveBeenCalledTimes(1);
       expect(AudioManager.pauseAudio).toHaveBeenCalledWith(
-        assets["audioPlayer"]
+        assets.audioPlayer
       );
     });
 
@@ -75,7 +75,7 @@ describe("addPauseDetection", () => {
       EventListener.addPauseDetection(variables, assets, ctx);
       window.dispatchEvent(escKeyEvent);
       expect(Timer.pauseTimers).toHaveBeenCalledTimes(1);
-      expect(Timer.pauseTimers).toHaveBeenCalledWith(assets["timers"]);
+      expect(Timer.pauseTimers).toHaveBeenCalledWith(assets.timers);
     });
 
     it("calls loadPauseOverlay if isGamePaused is initially false", () => {
@@ -84,7 +84,7 @@ describe("addPauseDetection", () => {
       expect(Animator.loadPauseOverlay).toHaveBeenCalledTimes(1);
       expect(Animator.loadPauseOverlay).toHaveBeenCalledWith(
         ctx,
-        assets["pauseTextImage"]
+        assets.pauseTextImage
       );
     });
 
@@ -94,7 +94,7 @@ describe("addPauseDetection", () => {
       window.dispatchEvent(escKeyEvent);
       expect(AudioManager.resumeAudio).toHaveBeenCalledTimes(1);
       expect(AudioManager.resumeAudio).toHaveBeenCalledWith(
-        assets["audioPlayer"]
+        assets.audioPlayer
       );
     });
 
@@ -103,7 +103,7 @@ describe("addPauseDetection", () => {
       variables.isGamePaused = true;
       window.dispatchEvent(escKeyEvent);
       expect(Timer.resumeTimers).toHaveBeenCalledTimes(1);
-      expect(Timer.resumeTimers).toHaveBeenCalledWith(assets["timers"]);
+      expect(Timer.resumeTimers).toHaveBeenCalledWith(assets.timers);
     });
 
     it("calls resumeAnimation if isGamePaused is initially true", () => {

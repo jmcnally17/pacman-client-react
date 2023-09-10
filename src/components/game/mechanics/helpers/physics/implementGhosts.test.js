@@ -68,7 +68,7 @@ describe("implementGhosts", () => {
     Physics.implementGhosts(assets, ctx, variables);
     expect(GhostManager.updateCollisions).toHaveBeenCalledTimes(4);
     expect(GhostManager.updateCollisions).toHaveBeenCalledWith(
-      assets["props"]["boundaries"],
+      assets.props.boundaries,
       [],
       ghostOne
     );
@@ -86,7 +86,7 @@ describe("implementGhosts", () => {
   });
 
   it("does not call chooseMovement on each ghost when the collisions array is equal to the prevCollisions array", () => {
-    assets["characters"]["ghosts"] = ghostsTwo;
+    assets.characters.ghosts = ghostsTwo;
     Physics.implementGhosts(assets, ctx, variables);
     expect(GhostManager.chooseMovement).toHaveBeenCalledTimes(0);
   });

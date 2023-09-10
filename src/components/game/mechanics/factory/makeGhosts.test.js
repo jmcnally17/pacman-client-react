@@ -10,9 +10,9 @@ describe("makeGhosts", () => {
     };
     const ghosts = Factory.makeGhosts(mockVariables);
     expect(Object.entries(ghosts).length).toBe(4);
-    expect(ghosts["red"]).toBeInstanceOf(Ghost);
-    expect(ghosts["pink"]).toBeInstanceOf(Ghost);
-    expect(ghosts["cyan"]).toBeInstanceOf(Ghost);
-    expect(ghosts["orange"]).toBeInstanceOf(Ghost);
+    expect(ghosts.red).toBeInstanceOf(Ghost);
+    expect(ghosts.pink).toBeInstanceOf(Ghost);
+    expect(ghosts.cyan).toBeInstanceOf(Ghost);
+    expect(ghosts.orange).toBeInstanceOf(Ghost);
   });
 });

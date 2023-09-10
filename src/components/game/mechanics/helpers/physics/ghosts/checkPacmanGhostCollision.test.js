@@ -29,7 +29,7 @@ describe("checkPacmanGhostCollision", () => {
     expect(collisionConditional).toHaveBeenCalledTimes(1);
     expect(collisionConditional).toHaveBeenCalledWith(
       ghost,
-      assets["characters"]["pacman"]
+      assets.characters.pacman
     );
   });
 

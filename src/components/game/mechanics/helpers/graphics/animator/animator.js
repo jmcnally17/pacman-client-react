@@ -24,9 +24,9 @@ export default class Animator {
   }
 
   static resumeAnimation(variables, ctx, assets, callback = playGame) {
-    if (assets["characters"]["pacman"].isShrinking) {
+    if (assets.characters.pacman.isShrinking) {
       Graphics.runDeathAnimation(variables, ctx, assets);
-    } else if (assets["characters"]["pacman"].isLevellingUp) {
+    } else if (assets.characters.pacman.isLevellingUp) {
       Graphics.runLevelUpAnimation(variables, assets, ctx);
     } else {
       callback(variables.player, variables.reactRoot);
@@ -45,11 +45,11 @@ export default class Animator {
 
   static drawBoard(ctx, assets) {
     ctx.clearRect(0, 0, 896, 992);
-    assets["props"]["boundaries"].forEach((boundary) => boundary.draw(ctx));
-    assets["props"]["pellets"].forEach((pellet) => {
+    assets.props.boundaries.forEach((boundary) => boundary.draw(ctx));
+    assets.props.pellets.forEach((pellet) => {
       if (!pellet.hasBeenEaten) pellet.draw(ctx);
     });
-    assets["props"]["powerUps"].forEach((powerUp) => {
+    assets.props.powerUps.forEach((powerUp) => {
       if (!powerUp.hasBeenEaten) powerUp.update(ctx);
     });
   }

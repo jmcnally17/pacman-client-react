@@ -67,7 +67,7 @@ describe("playGame", () => {
     expect(Game.implementGraphics).toHaveBeenCalledTimes(1);
     expect(Game.implementGraphics).toHaveBeenCalledWith(
       variables,
-      assets["characters"]["pacman"]
+      assets.characters.pacman
     );
   });
 

@@ -55,7 +55,7 @@ describe("runLevelUpAnimation", () => {
     expect(Animator.drawLevelUpBoard).toHaveBeenCalledTimes(1);
     expect(Animator.drawLevelUpBoard).toHaveBeenCalledWith(
       ctx,
-      assets["props"]["boundaries"]
+      assets.props.boundaries
     );
   });
 
@@ -85,7 +85,7 @@ describe("runLevelUpAnimation", () => {
     performance.now.mockReturnValue(110);
     variables.levelUpCount = 350;
     Graphics.runLevelUpAnimation(variables, assets, ctx, runLevelUpAnimation);
-    expect(assets["characters"]["pacman"].isLevellingUp).toBeFalsy();
+    expect(assets.characters.pacman.isLevellingUp).toBeFalsy();
   });
 
   it("calls cancelAnimationFrame when the level up count reaches 350", () => {

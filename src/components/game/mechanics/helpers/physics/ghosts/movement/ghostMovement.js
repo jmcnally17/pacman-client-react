@@ -141,12 +141,12 @@ export default class GhostMovement {
     if (
       ghost.colour === "red" ||
       (ghost.colour === "orange" &&
-        isOrangeFarFromPacman(ghost, assets["characters"]["pacman"], variables))
+        isOrangeFarFromPacman(ghost, assets.characters.pacman, variables))
     )
-      return findRedOrangeAimPath(assets["characters"]["pacman"], pathway);
+      return findRedOrangeAimPath(assets.characters.pacman, pathway);
     else if (ghost.colour === "pink")
       return findPinkAimPath(
-        assets["characters"]["pacman"],
+        assets.characters.pacman,
         pathway,
         variables
       );
@@ -185,8 +185,8 @@ export default class GhostMovement {
   }
 
   static findCyanAimPath(assets, variables, pathway) {
-    const pacman = assets["characters"]["pacman"];
-    const redGhost = assets["characters"]["ghosts"]["red"];
+    const pacman = assets.characters.pacman;
+    const redGhost = assets.characters.ghosts.red;
     let x = pacman.position.x * 2 - redGhost.position.x;
     let y = pacman.position.y * 2 - redGhost.position.y;
     if (pacman.rotation === 0) x += variables.tileLength * 2;

@@ -72,7 +72,7 @@ describe("drawBoard", () => {
 
   it("does not call draw on each pellet if they have been eaten", () => {
     jest.spyOn(eatenPellet, "draw");
-    assets["props"]["pellets"] = eatenPellets;
+    assets.props.pellets = eatenPellets;
     Animator.drawBoard(ctx, assets);
     expect(eatenPellet.draw).toHaveBeenCalledTimes(0);
   });
@@ -87,7 +87,7 @@ describe("drawBoard", () => {
 
   it("does not call update on each power up if they have been eaten", () => {
     jest.spyOn(eatenPowerUp, "update");
-    assets["props"]["powerUps"] = eatenPowerUps;
+    assets.props.powerUps = eatenPowerUps;
     Animator.drawBoard(ctx, assets);
     expect(eatenPowerUp.update).toHaveBeenCalledTimes(0);
   });

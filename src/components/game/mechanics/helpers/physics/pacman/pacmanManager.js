@@ -6,8 +6,8 @@ export default class PacmanManager {
     assets,
     checkDirectionChange = PacmanManager.checkDirectionChange
   ) {
-    const pacman = assets["characters"]["pacman"];
-    const boundaries = assets["props"]["boundaries"];
+    const pacman = assets.characters.pacman;
+    const boundaries = assets.props.boundaries;
     if (variables.lastKeyPressed === "up") {
       checkDirectionChange(pacman, boundaries, {
         velocity: { x: 0, y: -pacman.speed },
@@ -45,8 +45,8 @@ export default class PacmanManager {
 
   static checkIfPacmanIsEating(assets) {
     let count = 0;
-    const pacman = assets["characters"]["pacman"];
-    assets["props"]["pellets"].forEach((pellet) => {
+    const pacman = assets.characters.pacman;
+    assets.props.pellets.forEach((pellet) => {
       if (
         pellet.position.y - pellet.radius <=
           pacman.position.y + pacman.radius * 2 + pacman.velocity.y * 2 &&

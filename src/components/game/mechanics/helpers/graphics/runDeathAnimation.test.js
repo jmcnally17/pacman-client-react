@@ -50,7 +50,7 @@ describe("runDeathAnimation", () => {
 
   it("calls shrink on Pac-Man if its radians is less than PI", () => {
     performance.now.mockReturnValue(110);
-    const pacman = assets["characters"]["pacman"];
+    const pacman = assets.characters.pacman;
     jest.spyOn(pacman, "shrink");
     Graphics.runDeathAnimation(variables, ctx, assets, runDeathAnimation);
     expect(pacman.shrink).toHaveBeenCalledTimes(1);

@@ -69,7 +69,7 @@ describe("checkLevelUpCondition", () => {
   });
 
   it("does not call runLevelUpAnimation if all pellets have not been eaten", () => {
-    assets["props"]["pellets"] = pellets;
+    assets.props.pellets = pellets;
     PelletManager.checkLevelUpCondition(assets, variables, ctx);
     expect(Graphics.runLevelUpAnimation).toHaveBeenCalledTimes(0);
   });

@@ -6,22 +6,22 @@ import PacmanManager from "./pacman/pacmanManager";
 
 export default class Physics {
   static implementBoundaries(assets, ctx) {
-    assets["props"]["boundaries"].forEach((boundary) => {
+    assets.props.boundaries.forEach((boundary) => {
       boundary.draw(ctx);
       BoundaryManager.stopPacmanCollision(
         boundary,
-        assets["characters"]["pacman"]
+        assets.characters.pacman
       );
     });
   }
 
   static implementPellets(assets, ctx, variables) {
-    assets["props"]["pellets"].forEach((pellet) => {
+    assets.props.pellets.forEach((pellet) => {
       if (!pellet.hasBeenEaten) {
         pellet.draw(ctx);
         PelletManager.eatPellet(
           pellet,
-          assets["characters"]["pacman"],
+          assets.characters.pacman,
           variables
         );
       }
@@ -30,7 +30,7 @@ export default class Physics {
   }
 
   static implementPowerUps(assets, ctx, variables) {
-    assets["props"]["powerUps"].forEach((powerUp) => {
+    assets.props.powerUps.forEach((powerUp) => {
       if (!powerUp.hasBeenEaten) {
         powerUp.update(ctx);
         PowerUpManager.eatPowerUp(powerUp, assets, variables);
@@ -39,13 +39,13 @@ export default class Physics {
   }
 
   static implementGhosts(assets, ctx, variables) {
-    Object.values(assets["characters"]["ghosts"]).forEach((ghost) => {
+    Object.values(assets.characters.ghosts).forEach((ghost) => {
       GhostManager.checkSpeedMatchesState(ghost, variables);
       const collisions = [];
       ghost.update(ctx);
       BoundaryManager.implementTunnel(ghost, variables);
       GhostManager.updateCollisions(
-        assets["props"]["boundaries"],
+        assets.props.boundaries,
         collisions,
         ghost
       );
@@ -59,7 +59,7 @@ export default class Physics {
   static implementPacman(variables, assets, ctx) {
     PacmanManager.changeDirection(variables, assets);
     PacmanManager.checkIfPacmanIsEating(assets);
-    assets["characters"]["pacman"].update(ctx);
-    BoundaryManager.implementTunnel(assets["characters"]["pacman"], variables);
+    assets.characters.pacman.update(ctx);
+    BoundaryManager.implementTunnel(assets.characters.pacman, variables);
   }
 }

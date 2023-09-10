@@ -75,7 +75,7 @@ describe("resetAfterLevelUp", () => {
 
   it("leaves the duration on the scared timer the same if it is equal to 0", () => {
     const scaredTimerZero = { reset: () => undefined, duration: 0 };
-    assets["timers"]["scaredTimer"] = scaredTimerZero;
+    assets.timers.scaredTimer = scaredTimerZero;
     PelletManager.resetAfterLevelUp(assets, variables, playGame);
     expect(scaredTimerZero.duration).toBe(0);
   });
@@ -93,7 +93,7 @@ describe("resetAfterLevelUp", () => {
   });
 
   it("calls changeEatenState on each power up if they have been eaten", () => {
-    assets["props"]["powerUps"] = eatenPowerUps;
+    assets.props.powerUps = eatenPowerUps;
     jest.spyOn(eatenPowerUp, "changeEatenState");
     PelletManager.resetAfterLevelUp(assets, variables, playGame);
     expect(eatenPowerUp.changeEatenState).toHaveBeenCalledTimes(1);
