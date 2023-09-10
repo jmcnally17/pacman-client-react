@@ -43,6 +43,14 @@ The player can use the directional keys to move Pac-Man within the boundaries ar
 - Colliding with a ghost that is not scared decreases Pac-Man's lives by 1 and resets character positions on the board
 - Colliding with a ghost that is not scared when Pac-Man has no extra lives left ends the game
 
+<p align="center">
+  <img src="./images/gameplay.png" width="55%">
+</p>
+
+<p align="center">
+  <b>Fig.1 -</b> A screenshot of some gameplay with Pac-Man collecting pellets while avoiding the ghosts. The game stats can be seen at the top
+</p>
+
 ## Running Locally
 
 This app can be run on your localhost. However, a number of frameworks need to be installed which requires some setup to do.
