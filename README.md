@@ -2,9 +2,11 @@
 
 This repository is the client application for my solo Pac-Man project. Players can visit the live site and click play. Upon which the game will load with similar rules to the original Pac-Man where the player has to score as many points as they can while avoiding the ghosts that roam the board. This client connects to a backend server to display high scores made by other players on a leaderboard when all their lives run out and the game is over. The player can sign up and make an account themselves for their score to also be saved in the database.
 
-The backend API that pairs with this repo can be found at [https://github.com/jmcnally17/pacman-API](https://github.com/jmcnally17/pacman-API).
+This app pairs with an API that has multiple versions: <br>
+JS API (deployed version): https://github.com/jmcnally17/pacman-api-js <br>
+Java API (in progress): https://github.com/jmcnally17/pacman-api-java
 
-For a full comprehensive commit history, see the old project repo found at [https://github.com/jmcnally17/pacman-old](https://github.com/jmcnally17/pacman-old).
+The original project monolith (with a full comprehensive commit history) can be found at https://github.com/jmcnally17/pacman-old
 
 [<img src="./images/pacman-play-button.png">](https://pacman-js92.onrender.com)
 
