@@ -88,7 +88,7 @@ git clone https://github.com/jmcnally17/pacman-client
 
 The dependencies must be installed by running `npm install` while in the [main](https://github.com/jmcnally17/pacman-client) directory.
 
-Now you can run this app by entering `npm start` while in the main directory and then visit [http://localhost:3000](http://localhost:3000) in your browser to play the game.
+Now you can run this app by entering `npm start` while in the main directory and then visit http://localhost:8000 in your browser to play the game.
 
 In order to play with full functionality, you must also be running the backend server alongside this client (link to that repo found at the top of this README).
 

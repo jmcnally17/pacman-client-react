@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 
 const scoresUrl = process.env.REACT_APP_BACKEND_URL
   ? `${process.env.REACT_APP_BACKEND_URL}/scores`
-  : "http://localhost:9000/scores";
+  : "http://localhost:8080/scores";
 
 export default function Leaderboard({ variables }) {
   const [scores, setScores] = useState([]);

@@ -9,7 +9,7 @@ import Login from "./components/login/login";
 
 const sessionsUrl = process.env.REACT_APP_BACKEND_URL
   ? `${process.env.REACT_APP_BACKEND_URL}/sessions`
-  : "http://localhost:9000/sessions";
+  : "http://localhost:8080/sessions";
 
 export default function App() {
   const [user, setUser] = useState();

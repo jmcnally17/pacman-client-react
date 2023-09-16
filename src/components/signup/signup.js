@@ -5,15 +5,15 @@ import { Profanity, ProfanityOptions } from "@2toad/profanity";
 
 const usersUrl = process.env.REACT_APP_BACKEND_URL
   ? `${process.env.REACT_APP_BACKEND_URL}/users`
-  : "http://localhost:9000/users";
+  : "http://localhost:8080/users";
 
 const sessionsUrl = process.env.REACT_APP_BACKEND_URL
   ? `${process.env.REACT_APP_BACKEND_URL}/sessions`
-  : "http://localhost:9000/sessions";
+  : "http://localhost:8080/sessions";
 
 const redirectUrl = process.env.REACT_APP_URL
   ? process.env.REACT_APP_URL
-  : "http://localhost:3000";
+  : "http://localhost:8000";
 
 export default function Signup() {
   const [username, setUsername] = useState("");

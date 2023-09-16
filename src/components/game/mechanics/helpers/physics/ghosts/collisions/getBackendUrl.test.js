@@ -11,7 +11,7 @@ describe("getBackendUrl", () => {
   it("returns the localhost url backend if the live site url does not exist", () => {
     const mockReactAppUrl = undefined;
     expect(GhostCollision.getBackendUrl(mockReactAppUrl)).toBe(
-      "http://localhost:9000/scores"
+      "http://localhost:8080/scores"
     );
   });
 });

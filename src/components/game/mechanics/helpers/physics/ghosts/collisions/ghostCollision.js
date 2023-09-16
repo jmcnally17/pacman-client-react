@@ -92,7 +92,7 @@ export default class GhostCollision {
     if (reactAppUrl) {
       url = `${reactAppUrl}/scores`;
     } else {
-      url = "http://localhost:9000/scores";
+      url = "http://localhost:8080/scores";
     }
     return url;
   }
