@@ -11,9 +11,9 @@ describe("Leaderboard", () => {
       score: 2000,
     };
     mockScores = [
-      { value: "Molly", score: 11390 },
-      { value: "Bob", score: 9830 },
-      { value: "Andrew", score: 4620 },
+      { name: "Molly", points: 11390 },
+      { name: "Bob", points: 9830 },
+      { name: "Andrew", points: 4620 },
     ];
   });
 
