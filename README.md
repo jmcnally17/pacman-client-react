@@ -12,14 +12,12 @@ The original project monolith (with a full comprehensive commit history) can be 
 
 ### Technologies Used
 
-- [Miro](https://miro.com/index/) for planning the layout (Board can be found [here](https://miro.com/app/board/uXjVOo0XLMk=/?share_link_id=344912241548))
-- [Trello](https://trello.com/) for monitoring feature progress
 - [React](https://reactjs.org/) as a web framework
 - [Node.js](https://nodejs.org/en/) for the server runtime environment
-- [Render](https://render.com/) for deployment
+- [HTML5 Canvas](https://www.w3schools.com/html/html5_canvas.asp) as a container for the graphics
 - [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/) for testing
 - [Pexels Draw](https://apps.apple.com/us/app/pexels-draw/id1320744895?mt=12) for creating the boundary images and ghost sprites
-- [HTML5 Canvas](https://www.w3schools.com/html/html5_canvas.asp) as a container for the graphics
+- [Render](https://render.com/) for hosting
 - [GitHub](https://github.com/) for version control
 
 A huge thank you to [Chris Courses](https://www.youtube.com/c/ChrisCourses) YouTube channel for his tutorial which helped with some of the basic game mechanics. Link to the tutorial video can be found [here](https://youtu.be/5IMXpp3rohQ).
