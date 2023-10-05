@@ -7,9 +7,9 @@ const usersUrl = process.env.REACT_APP_BACKEND_URL
   ? `${process.env.REACT_APP_BACKEND_URL}/users`
   : "http://localhost:8080/users";
 
-const sessionsUrl = process.env.REACT_APP_BACKEND_URL
-  ? `${process.env.REACT_APP_BACKEND_URL}/sessions`
-  : "http://localhost:8080/sessions";
+const authUrl = process.env.REACT_APP_BACKEND_URL
+  ? `${process.env.REACT_APP_BACKEND_URL}/auth`
+  : "http://localhost:8080/auth";
 
 const redirectUrl = process.env.REACT_APP_URL
   ? process.env.REACT_APP_URL
@@ -67,7 +67,7 @@ export default function Signup() {
   const login = () => {
     axios
       .post(
-        sessionsUrl,
+        authUrl,
         {
           username: username,
           password: password,

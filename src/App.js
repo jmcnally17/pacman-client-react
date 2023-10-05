@@ -7,9 +7,9 @@ import Signup from "./components/signup/signup";
 import Footer from "./components/footer/footer";
 import Login from "./components/login/login";
 
-const sessionsUrl = process.env.REACT_APP_BACKEND_URL
-  ? `${process.env.REACT_APP_BACKEND_URL}/sessions`
-  : "http://localhost:8080/sessions";
+const authUrl = process.env.REACT_APP_BACKEND_URL
+  ? `${process.env.REACT_APP_BACKEND_URL}/auth`
+  : "http://localhost:8080/auth";
 
 export default function App() {
   const [user, setUser] = useState();
@@ -17,10 +17,10 @@ export default function App() {
   useEffect(() => {
     if (localStorage.getItem("token")) {
       axios
-        .get(sessionsUrl, {
+        .get(authUrl, {
           withCredentials: true,
           headers: {
-            authorisation: localStorage.getItem("token"),
+            authorization: localStorage.getItem("token"),
           },
         })
         .then((res) => {

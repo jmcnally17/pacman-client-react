@@ -77,7 +77,7 @@ export default class GhostCollision {
         data,
         {
           headers: {
-            authorisation: localStorage.getItem("token"),
+            authorization: localStorage.getItem("token"),
           },
         }
       );

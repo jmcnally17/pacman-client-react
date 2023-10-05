@@ -2,9 +2,9 @@ import { React, useState } from "react";
 import axios from "axios";
 import "./login.css";
 
-const sessionsUrl = process.env.REACT_APP_BACKEND_URL
-  ? `${process.env.REACT_APP_BACKEND_URL}/sessions`
-  : "http://localhost:8080/sessions";
+const authUrl = process.env.REACT_APP_BACKEND_URL
+  ? `${process.env.REACT_APP_BACKEND_URL}/auth`
+  : "http://localhost:8080/auth";
 
 const redirectUrl = process.env.REACT_APP_URL
   ? process.env.REACT_APP_URL
@@ -31,7 +31,7 @@ export default function Login() {
   const handleSubmit = () => {
     axios
       .post(
-        sessionsUrl,
+        authUrl,
         {
           username: username,
           password: password,
