@@ -20,7 +20,7 @@ export default function App() {
         .get(authUrl, {
           withCredentials: true,
           headers: {
-            authorization: localStorage.getItem("token"),
+            Authorization: localStorage.getItem("token"),
           },
         })
         .then((res) => {
