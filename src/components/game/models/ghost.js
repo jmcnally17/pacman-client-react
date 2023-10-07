@@ -73,7 +73,6 @@ export default class Ghost {
     if (this.isRetreating) this.#assignRetreatingSprite();
     else if (this.isScared) this.#assignScaredSprite();
     else this.#assignRegularSprite();
-    console.log("called now");
   }
 
   // private

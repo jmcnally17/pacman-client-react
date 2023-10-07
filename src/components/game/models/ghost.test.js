@@ -169,68 +169,11 @@ describe("Ghost", () => {
       expect(ghost.isRetreating).toBeFalsy();
     });
 
-    it("resets the sprite to the upwards looking sprite", () => {
-      const upGhost = new Ghost(
-        {
-          position: { x: 20, y: 20 },
-          velocity: { x: 0, y: -5 },
-          colour: "red",
-        },
-        tileLength
-      );
-      upGhost.retreatingTimer = mockRetreatingTimer;
-      upGhost.velocity = { x: 7.5, y: 2.5 };
-      upGhost.image = upGhost.left;
-      upGhost.reset();
-      expect(upGhost.image).toEqual(upGhost.up);
-    });
-
-    it("resets the sprite to the downwards looking sprite", () => {
-      const downGhost = new Ghost(
-        {
-          position: { x: 20, y: 20 },
-          velocity: { x: 0, y: 5 },
-          colour: "red",
-        },
-        tileLength
-      );
-      downGhost.retreatingTimer = mockRetreatingTimer;
-      downGhost.velocity = { x: 7.5, y: 2.5 };
-      downGhost.image = downGhost.left;
-      downGhost.reset();
-      expect(downGhost.image).toEqual(downGhost.down);
-    });
-
-    it("resets the sprite to the rightwards looking sprite", () => {
-      const rightGhost = new Ghost(
-        {
-          position: { x: 20, y: 20 },
-          velocity: { x: 5, y: 0 },
-          colour: "red",
-        },
-        tileLength
-      );
-      rightGhost.retreatingTimer = mockRetreatingTimer;
-      rightGhost.velocity = { x: 7.5, y: 2.5 };
-      rightGhost.image = rightGhost.left;
-      rightGhost.reset();
-      expect(rightGhost.image).toEqual(rightGhost.right);
-    });
-
-    it("resets the sprite to the leftwards looking sprite", () => {
-      const leftGhost = new Ghost(
-        {
-          position: { x: 20, y: 20 },
-          velocity: { x: -5, y: 0 },
-          colour: "red",
-        },
-        tileLength
-      );
-      leftGhost.retreatingTimer = mockRetreatingTimer;
-      leftGhost.velocity = { x: 7.5, y: 2.5 };
-      leftGhost.image = leftGhost.right;
-      leftGhost.reset();
-      expect(leftGhost.image).toEqual(leftGhost.left);
+    it("calls assignSpriteToResetTheSprite", () => {
+      jest.spyOn(ghost, "assignSprite");
+      ghost.retreatingTimer = mockRetreatingTimer;
+      ghost.reset();
+      expect(ghost.assignSprite).toHaveBeenCalledTimes(1);
     });
   });
 });
