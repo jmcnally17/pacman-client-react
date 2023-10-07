@@ -68,7 +68,7 @@ export default class GhostCollision {
     getBackendUrl = GhostCollision.getBackendUrl
   ) {
     const data = {
-      name: variables.player.username,
+      username: variables.player.username,
       points: variables.score,
     };
     try {

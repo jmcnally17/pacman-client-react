@@ -19,7 +19,7 @@ export default function Leaderboard({ variables }) {
       const scores = res.data.scores;
       while (scores.length < 10) {
         scores.push({
-          name: "--",
+          username: "--",
           points: "--",
         });
       }
@@ -81,7 +81,7 @@ export default function Leaderboard({ variables }) {
                 return (
                   <tr className="entry" key={index} aria-label={index}>
                     <td className="rank">{index + 1}</td>
-                    <td className="name">{score.name}</td>
+                    <td className="name">{score.username}</td>
                     <td className="points">{score.points}</td>
                   </tr>
                 );

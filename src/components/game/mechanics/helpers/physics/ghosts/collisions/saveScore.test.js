@@ -36,7 +36,7 @@ describe("saveScore", () => {
     expect(mockAxios.post).toHaveBeenCalledTimes(1);
     expect(mockAxios.post).toHaveBeenCalledWith(
       "https://livesite.com/backend",
-      { name: "person", points: 0 },
+      { username: "person", points: 0 },
       { headers: { Authorization: localStorage.getItem("token") } }
     );
     expect(getBackendUrl).toHaveBeenCalledTimes(1);
@@ -51,7 +51,7 @@ describe("saveScore", () => {
     expect(mockAxios.post).toHaveBeenCalledTimes(1);
     expect(mockAxios.post).toHaveBeenCalledWith(
       "https://livesite.com/backend",
-      { name: "person", points: 0 },
+      { username: "person", points: 0 },
       { headers: { Authorization: localStorage.getItem("token") } }
     );
     expect(getBackendUrl).toHaveBeenCalledTimes(1);
