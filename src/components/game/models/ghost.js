@@ -43,7 +43,6 @@ export default class Ghost {
   }
 
   update(ctx) {
-    this.assignSprite();
     this.draw(ctx);
     this.position.x += this.velocity.x;
     this.position.y += this.velocity.y;
@@ -67,12 +66,14 @@ export default class Ghost {
     this.speed = this.tileLength / 8;
     this.prevCollisions = [];
     this.#resetStates();
+    this.assignSprite();
   }
 
   assignSprite() {
     if (this.isRetreating) this.#assignRetreatingSprite();
     else if (this.isScared) this.#assignScaredSprite();
     else this.#assignRegularSprite();
+    console.log("called now");
   }
 
   // private

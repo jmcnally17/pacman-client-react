@@ -6,71 +6,45 @@ let mockRetreatingTimer;
 let mockCtx;
 
 describe("Ghost", () => {
+  const tileLength = 20;
+
   beforeEach(() => {
     ghost = new Ghost(
       {
-        position: {
-          x: 20,
-          y: 20,
-        },
-        velocity: {
-          x: 7.5,
-          y: 2.5,
-        },
+        position: { x: 20, y: 20 },
+        velocity: { x: 7.5, y: 2.5 },
         colour: "red",
       },
-      20
+      tileLength
     );
     scaredChasingRetreatingGhost = new Ghost(
       {
-        position: {
-          x: 20,
-          y: 20,
-        },
-        velocity: {
-          x: 7.5,
-          y: 2.5,
-        },
+        position: { x: 20, y: 20 },
+        velocity: { x: 7.5, y: 2.5 },
         colour: "red",
       },
-      20
+      tileLength
     );
     scaredChasingRetreatingGhost.isScared = true;
     scaredChasingRetreatingGhost.isChasing = true;
     scaredChasingRetreatingGhost.isRetreating = true;
-    mockRetreatingTimer = {
-      reset: () => undefined,
-    };
+    mockRetreatingTimer = { reset: () => undefined };
     scaredChasingRetreatingGhost.retreatingTimer = mockRetreatingTimer;
     jest.spyOn(mockRetreatingTimer, "reset");
-    mockCtx = {
-      drawImage: () => undefined,
-    };
+    mockCtx = { drawImage: () => undefined };
   });
 
   describe("upon instantiation", () => {
     it("has a number of instance variables", () => {
-      expect(ghost.originalPosition).toEqual({
-        x: 20,
-        y: 20,
-      });
-      expect(ghost.position).toEqual({
-        x: 20,
-        y: 20,
-      });
-      expect(ghost.originalVelocity).toEqual({
-        x: 7.5,
-        y: 2.5,
-      });
-      expect(ghost.velocity).toEqual({
-        x: 7.5,
-        y: 2.5,
-      });
-      expect(ghost.tileLength).toBe(20);
-      expect(ghost.radius).toBe(7.5);
+      expect(ghost.originalPosition).toEqual({ x: 20, y: 20 });
+      expect(ghost.position).toEqual({ x: 20, y: 20 });
+      expect(ghost.originalVelocity).toEqual({ x: 7.5, y: 2.5 });
+      expect(ghost.velocity).toEqual({ x: 7.5, y: 2.5 });
+      expect(ghost.tileLength).toBe(tileLength);
+      expect(ghost.radius).toBe((tileLength * 3) / 8);
       expect(ghost.colour).toBe("red");
       expect(ghost.prevCollisions).toEqual([]);
-      expect(ghost.speed).toBe(2.5);
+      expect(ghost.speed).toBe(tileLength / 8);
       expect(ghost.isScared).toBeFalsy();
       expect(ghost.isChasing).toBeFalsy();
       expect(ghost.isRetreating).toBeFalsy();
@@ -113,17 +87,12 @@ describe("Ghost", () => {
   });
 
   describe("update", () => {
-    it("calls assignSprite and draw and updates the position", () => {
-      jest.spyOn(ghost, "assignSprite");
+    it("calls draw and updates the position", () => {
       jest.spyOn(ghost, "draw");
       ghost.update(mockCtx);
-      expect(ghost.assignSprite).toHaveBeenCalledTimes(1);
       expect(ghost.draw).toHaveBeenCalledTimes(1);
       expect(ghost.draw).toHaveBeenCalledWith(mockCtx);
-      expect(ghost.position).toEqual({
-        x: 27.5,
-        y: 22.5,
-      });
+      expect(ghost.position).toEqual({ x: 27.5, y: 22.5 });
     });
   });
 
@@ -172,14 +141,8 @@ describe("Ghost", () => {
       scaredChasingRetreatingGhost.speed = 16;
       scaredChasingRetreatingGhost.prevCollisions.push("up");
       scaredChasingRetreatingGhost.reset();
-      expect(scaredChasingRetreatingGhost.position).toEqual({
-        x: 20,
-        y: 20,
-      });
-      expect(scaredChasingRetreatingGhost.velocity).toEqual({
-        x: 7.5,
-        y: 2.5,
-      });
+      expect(scaredChasingRetreatingGhost.position).toEqual({ x: 20, y: 20 });
+      expect(scaredChasingRetreatingGhost.velocity).toEqual({ x: 7.5, y: 2.5 });
       expect(scaredChasingRetreatingGhost.speed).toBe(2.5);
       expect(scaredChasingRetreatingGhost.prevCollisions).toEqual([]);
       expect(scaredChasingRetreatingGhost.isScared).toBeFalsy();
@@ -204,6 +167,70 @@ describe("Ghost", () => {
       ghost.retreatingTimer = mockRetreatingTimer;
       ghost.reset();
       expect(ghost.isRetreating).toBeFalsy();
+    });
+
+    it("resets the sprite to the upwards looking sprite", () => {
+      const upGhost = new Ghost(
+        {
+          position: { x: 20, y: 20 },
+          velocity: { x: 0, y: -5 },
+          colour: "red",
+        },
+        tileLength
+      );
+      upGhost.retreatingTimer = mockRetreatingTimer;
+      upGhost.velocity = { x: 7.5, y: 2.5 };
+      upGhost.image = upGhost.left;
+      upGhost.reset();
+      expect(upGhost.image).toEqual(upGhost.up);
+    });
+
+    it("resets the sprite to the downwards looking sprite", () => {
+      const downGhost = new Ghost(
+        {
+          position: { x: 20, y: 20 },
+          velocity: { x: 0, y: 5 },
+          colour: "red",
+        },
+        tileLength
+      );
+      downGhost.retreatingTimer = mockRetreatingTimer;
+      downGhost.velocity = { x: 7.5, y: 2.5 };
+      downGhost.image = downGhost.left;
+      downGhost.reset();
+      expect(downGhost.image).toEqual(downGhost.down);
+    });
+
+    it("resets the sprite to the rightwards looking sprite", () => {
+      const rightGhost = new Ghost(
+        {
+          position: { x: 20, y: 20 },
+          velocity: { x: 5, y: 0 },
+          colour: "red",
+        },
+        tileLength
+      );
+      rightGhost.retreatingTimer = mockRetreatingTimer;
+      rightGhost.velocity = { x: 7.5, y: 2.5 };
+      rightGhost.image = rightGhost.left;
+      rightGhost.reset();
+      expect(rightGhost.image).toEqual(rightGhost.right);
+    });
+
+    it("resets the sprite to the leftwards looking sprite", () => {
+      const leftGhost = new Ghost(
+        {
+          position: { x: 20, y: 20 },
+          velocity: { x: -5, y: 0 },
+          colour: "red",
+        },
+        tileLength
+      );
+      leftGhost.retreatingTimer = mockRetreatingTimer;
+      leftGhost.velocity = { x: 7.5, y: 2.5 };
+      leftGhost.image = leftGhost.right;
+      leftGhost.reset();
+      expect(leftGhost.image).toEqual(leftGhost.left);
     });
   });
 });

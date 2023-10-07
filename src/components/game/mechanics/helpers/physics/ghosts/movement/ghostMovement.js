@@ -145,11 +145,7 @@ export default class GhostMovement {
     )
       return findRedOrangeAimPath(assets.characters.pacman, pathway);
     else if (ghost.colour === "pink")
-      return findPinkAimPath(
-        assets.characters.pacman,
-        pathway,
-        variables
-      );
+      return findPinkAimPath(assets.characters.pacman, pathway, variables);
     else if (ghost.colour === "cyan")
       return findCyanAimPath(assets, variables, pathway);
     else if (ghost.colour === "orange") return findOrangeScatterPath(pathway);

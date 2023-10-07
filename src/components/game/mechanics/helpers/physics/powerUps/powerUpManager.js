@@ -22,7 +22,10 @@ export default class PowerUpManager {
     }
     assets.timers.scaredTimer.reset();
     Object.values(assets.characters.ghosts).forEach((ghost) => {
-      if (!ghost.isScared && !ghost.isRetreating) ghost.changeScaredState();
+      if (!ghost.isScared && !ghost.isRetreating) {
+        ghost.changeScaredState();
+        ghost.assignSprite();
+      }
     });
     assets.timers.scaredTimer.start(assets.timers.cycleTimer);
   }

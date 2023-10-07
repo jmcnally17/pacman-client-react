@@ -77,6 +77,7 @@ export default class GhostManager {
       GhostMovement.moveRandomly(ghost, collisions);
     }
     GhostMovement.emptyPrevCollisions(ghost);
+    ghost.assignSprite();
   }
 
   static checkPacmanGhostCollision(

@@ -31,6 +31,7 @@ export default class GhostCollision {
       ghost.changeRetreatingState();
       ghost.retreatingTimer.start();
       ghost.changeScaredState();
+      ghost.assignSprite();
     }
   }
 

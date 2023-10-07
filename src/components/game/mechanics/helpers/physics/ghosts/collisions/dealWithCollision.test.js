@@ -25,6 +25,7 @@ describe("GhostCollision.dealWithCollision", () => {
       isRetreating: false,
       changeRetreatingState: () => undefined,
       retreatingTimer: { start: () => undefined },
+      assignSprite: () => undefined,
     };
     pacman = { radians: Math.PI / 24, isShrinking: false };
     audioPlayer = {
@@ -37,6 +38,7 @@ describe("GhostCollision.dealWithCollision", () => {
     jest.spyOn(scaredGhost, "changeRetreatingState");
     jest.spyOn(scaredGhost.retreatingTimer, "start");
     jest.spyOn(scaredGhost, "changeScaredState");
+    jest.spyOn(scaredGhost, "assignSprite");
   });
 
   it("sets the radians in Pac-Man to PI / 4 if the ghost is not scared or retreating", () => {
@@ -89,6 +91,7 @@ describe("GhostCollision.dealWithCollision", () => {
     expect(scaredGhost.changeRetreatingState).toHaveBeenCalledTimes(1);
     expect(scaredGhost.retreatingTimer.start).toHaveBeenCalledTimes(1);
     expect(scaredGhost.changeScaredState).toHaveBeenCalledTimes(1);
+    expect(scaredGhost.assignSprite).toHaveBeenCalledTimes(1);
   });
 
   it("has no effect when the ghost is retreating", () => {
@@ -105,5 +108,6 @@ describe("GhostCollision.dealWithCollision", () => {
     expect(scaredGhost.changeRetreatingState).toHaveBeenCalledTimes(0);
     expect(scaredGhost.retreatingTimer.start).toHaveBeenCalledTimes(0);
     expect(scaredGhost.changeScaredState).toHaveBeenCalledTimes(0);
+    expect(scaredGhost.assignSprite).toHaveBeenCalledTimes(0);
   });
 });

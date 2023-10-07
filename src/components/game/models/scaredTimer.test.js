@@ -12,6 +12,7 @@ describe("ScaredTimer", () => {
     mockGhost = {
       isScared: true,
       changeScaredState: () => undefined,
+      assignSprite: () => undefined,
     };
     mockGhosts = [mockGhost, mockGhost, mockGhost, mockGhost];
     scaredTimer = new ScaredTimer(mockGhosts);
@@ -36,6 +37,7 @@ describe("ScaredTimer", () => {
       const mockDateNow = 173620;
       jest.spyOn(global, "setTimeout");
       jest.spyOn(mockGhost, "changeScaredState");
+      jest.spyOn(mockGhost, "assignSprite");
       jest.spyOn(mockCycleTimer, "resume");
       scaredTimer.start(mockCycleTimer, mockDateNow);
       expect(setTimeout).toHaveBeenCalledTimes(1);
@@ -46,6 +48,7 @@ describe("ScaredTimer", () => {
       expect(scaredTimer.isRunning).toBeTruthy();
       jest.runOnlyPendingTimers();
       expect(mockGhost.changeScaredState).toHaveBeenCalledTimes(4);
+      expect(mockGhost.assignSprite).toHaveBeenCalledTimes(4);
       expect(mockCycleTimer.resume).toHaveBeenCalledTimes(1);
       expect(scaredTimer.isRunning).toBeFalsy();
     });

@@ -195,6 +195,7 @@ export default class Factory {
         },
         variables.tileLength
       );
+      ghost.assignSprite();
       ghosts[data.colour] = ghost;
     });
     return ghosts;

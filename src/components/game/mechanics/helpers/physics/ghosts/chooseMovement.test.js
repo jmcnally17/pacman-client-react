@@ -11,7 +11,11 @@ let variables;
 describe("chooseMovement", () => {
   beforeEach(() => {
     GhostMovement.mockClear();
-    ghost = { isScared: false, isRetreating: false };
+    ghost = {
+      isScared: false,
+      isRetreating: false,
+      assignSprite: () => undefined,
+    };
     assets = "assets";
     collisions = "collisions";
     variables = "variables";
@@ -46,5 +50,11 @@ describe("chooseMovement", () => {
     GhostManager.chooseMovement(ghost, assets, collisions, variables);
     expect(GhostMovement.emptyPrevCollisions).toHaveBeenCalledTimes(1);
     expect(GhostMovement.emptyPrevCollisions).toHaveBeenCalledWith(ghost);
+  });
+
+  it("calls assignSprite on the ghost", () => {
+    jest.spyOn(ghost, "assignSprite");
+    GhostManager.chooseMovement(ghost, assets, collisions, variables);
+    expect(ghost.assignSprite).toHaveBeenCalledTimes(1);
   });
 });

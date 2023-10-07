@@ -12,6 +12,7 @@ describe("scareGhosts", () => {
       isScared: false,
       isRetreating: false,
       changeScaredState: () => undefined,
+      assignSprite: () => undefined,
     };
     ghosts = [ghost, ghost, ghost, ghost];
     cycleTimer = { isRunning: true, pause: () => undefined };
@@ -45,6 +46,12 @@ describe("scareGhosts", () => {
     jest.spyOn(ghost, "changeScaredState");
     PowerUpManager.scareGhosts(assets);
     expect(ghost.changeScaredState).toHaveBeenCalledTimes(4);
+  });
+
+  it("calls assignSprite if the ghosts are not scared or retreating", () => {
+    jest.spyOn(ghost, "assignSprite");
+    PowerUpManager.scareGhosts(assets);
+    expect(ghost.assignSprite).toHaveBeenCalledTimes(4);
   });
 
   it("does not call changeScaredState if the ghosts are scared", () => {

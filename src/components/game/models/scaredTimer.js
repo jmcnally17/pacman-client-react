@@ -12,7 +12,10 @@ export default class ScaredTimer {
     this.startTime = dateNow;
     this.timeout = setTimeout(() => {
       this.ghosts.forEach((ghost) => {
-        if (ghost.isScared) ghost.changeScaredState();
+        if (ghost.isScared) {
+          ghost.changeScaredState();
+          ghost.assignSprite();
+        }
       });
       cycleTimer.resume();
       this.isRunning = false;
@@ -31,7 +34,10 @@ export default class ScaredTimer {
     this.startTime = dateNow;
     this.timeout = setTimeout(() => {
       this.ghosts.forEach((ghost) => {
-        if (ghost.isScared) ghost.changeScaredState();
+        if (ghost.isScared) {
+          ghost.changeScaredState();
+          ghost.assignSprite();
+        }
       });
       cycleTimer.resume();
       this.isRunning = false;
