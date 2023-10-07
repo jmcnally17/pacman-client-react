@@ -18,7 +18,6 @@ export default function App() {
     if (localStorage.getItem("token")) {
       axios
         .get(authUrl, {
-          withCredentials: true,
           headers: {
             Authorization: localStorage.getItem("token"),
           },

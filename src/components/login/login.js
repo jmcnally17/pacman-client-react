@@ -30,16 +30,10 @@ export default function Login() {
 
   const handleSubmit = () => {
     axios
-      .post(
-        authUrl,
-        {
-          username: username,
-          password: password,
-        },
-        {
-          withCredentials: true,
-        }
-      )
+      .post(authUrl, {
+        username: username,
+        password: password,
+      })
       .then((res) => {
         if (res.status === 200) {
           localStorage.setItem("token", res.data);
