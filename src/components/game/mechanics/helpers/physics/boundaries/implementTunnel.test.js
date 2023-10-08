@@ -1,8 +1,8 @@
 import BoundaryManager from "./boundaryManager";
 
-let variables;
-
 describe("implementTunnel", () => {
+  let variables;
+
   beforeEach(() => {
     variables = { tileLength: 20 };
   });

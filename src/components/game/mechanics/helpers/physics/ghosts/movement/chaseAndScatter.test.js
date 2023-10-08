@@ -1,13 +1,13 @@
 import GhostMovement from "./ghostMovement";
 
-let ghost;
-let assets;
-let collisions;
-let variables;
-let mockCalculateDistance;
-let mockpickDirection;
-
 describe("chaseAndScatter", () => {
+  let ghost;
+  let assets;
+  let collisions;
+  let variables;
+  let mockCalculateDistance;
+  let mockpickDirection;
+
   beforeEach(() => {
     ghost = {
       position: { x: 190, y: 200 },

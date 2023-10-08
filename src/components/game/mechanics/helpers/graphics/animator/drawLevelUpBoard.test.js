@@ -1,10 +1,10 @@
 import Animator from "./animator";
 
-let ctx;
-let boundary;
-let boundaries;
-
 describe("drawLevelUpBoard", () => {
+  let ctx;
+  let boundary;
+  let boundaries;
+
   beforeEach(() => {
     ctx = {
       clearRect: () => undefined,

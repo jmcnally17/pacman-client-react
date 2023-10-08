@@ -1,10 +1,10 @@
 import GhostMovement from "./ghostMovement";
 
-let pacman;
-let pathway;
-let variables;
-
 describe("findPinkAimPath", () => {
+  let pacman;
+  let pathway;
+  let variables;
+
   beforeEach(() => {
     pacman = { position: { x: 300, y: 180 }, rotation: 0 };
     pathway = { position: { x: 350, y: 90 } };

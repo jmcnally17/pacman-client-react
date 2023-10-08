@@ -8,14 +8,16 @@ describe("ScaredTimer", () => {
       const mockGhost = {
         isScared: true,
         changeScaredState: () => undefined,
+        assignSprite: () => undefined,
+        checkSpeedMatchesState: () => undefined,
       };
       const mockGhosts = [mockGhost, mockGhost, mockGhost, mockGhost];
       const scaredTimer = new ScaredTimer(mockGhosts);
-      const mockCycleTimer = {
-        resume: () => undefined,
-      };
+      const mockCycleTimer = { resume: () => undefined };
       jest.spyOn(global, "setTimeout");
       jest.spyOn(mockGhost, "changeScaredState");
+      jest.spyOn(mockGhost, "assignSprite");
+      jest.spyOn(mockGhost, "checkSpeedMatchesState");
       jest.spyOn(mockCycleTimer, "resume");
       scaredTimer.timeRemaining = 4160;
       scaredTimer.isRunning = true;
@@ -27,6 +29,8 @@ describe("ScaredTimer", () => {
       expect(scaredTimer.timeout).not.toBeNull();
       jest.runOnlyPendingTimers();
       expect(mockGhost.changeScaredState).toHaveBeenCalledTimes(4);
+      expect(mockGhost.assignSprite).toHaveBeenCalledTimes(4);
+      expect(mockGhost.checkSpeedMatchesState).toHaveBeenCalledTimes(4);
       expect(mockCycleTimer.resume).toHaveBeenCalledTimes(1);
       expect(scaredTimer.isRunning).toBeFalsy();
     });

@@ -1,9 +1,9 @@
 import Graphics from "./graphics";
 
-let ctx;
-let variables;
-
 describe("displayScore", () => {
+  let ctx;
+  let variables;
+
   beforeEach(() => {
     ctx = {
       fillStyle: null,

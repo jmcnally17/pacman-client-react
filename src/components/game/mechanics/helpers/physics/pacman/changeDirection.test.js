@@ -1,11 +1,11 @@
 import PacmanManager from "./pacmanManager";
 
-let pacman;
-let boundaries;
-let assets;
-let checkDirectionChange;
-
 describe("changeDirection", () => {
+  let pacman;
+  let boundaries;
+  let assets;
+  let checkDirectionChange;
+
   beforeEach(() => {
     pacman = { speed: 5 };
     boundaries = "boundaries";

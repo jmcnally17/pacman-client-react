@@ -1,8 +1,8 @@
 import EventListener from "./eventListener";
 
-let variables;
-
 describe("addDirectionDetection", () => {
+  let variables;
+
   beforeEach(() => {
     variables = {
       lastKeyPressed: "",

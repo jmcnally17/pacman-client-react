@@ -1,10 +1,10 @@
 import GhostCollision from "./ghostCollision";
 import mockAxios from "jest-mock-axios";
 
-let variables;
-let getBackendUrl;
-
 describe("saveScore", () => {
+  let variables;
+  let getBackendUrl;
+
   beforeAll(() => {
     localStorage.setItem("token", "2ak3j38h2232hd7hd9");
   });

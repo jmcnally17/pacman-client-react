@@ -3,10 +3,10 @@ import Boundary from "../../models/boundary";
 
 jest.mock("../../models/boundary");
 
-let mockVariables;
-let mockMakeTunnelBoundaries;
-
 describe("makeBoundaries", () => {
+  let mockVariables;
+  let mockMakeTunnelBoundaries;
+
   beforeEach(() => {
     Boundary.mockClear();
     mockVariables = {

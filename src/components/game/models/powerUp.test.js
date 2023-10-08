@@ -1,10 +1,10 @@
 import PowerUp from "./powerUp";
 
-let powerUp;
-let eatenPowerUp;
-let mockCtx;
-
 describe("PowerUp", () => {
+  let powerUp;
+  let eatenPowerUp;
+  let mockCtx;
+
   beforeEach(() => {
     powerUp = new PowerUp(
       {

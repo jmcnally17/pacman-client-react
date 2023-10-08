@@ -7,13 +7,13 @@ jest.mock("../physics/ghosts/collisions/ghostCollision");
 
 jest.useFakeTimers();
 
-let variables;
-let ctx;
-let assets;
-let shrunkPacman;
-let runDeathAnimation;
-
 describe("runDeathAnimation", () => {
+  let variables;
+  let ctx;
+  let assets;
+  let shrunkPacman;
+  let runDeathAnimation;
+
   beforeEach(() => {
     Animator.mockClear();
     GhostCollision.mockClear();

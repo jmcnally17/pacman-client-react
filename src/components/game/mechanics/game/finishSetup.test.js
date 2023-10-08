@@ -3,13 +3,13 @@ import EventListener from "../helpers/eventListener/eventListener";
 
 jest.mock("../helpers/eventListener/eventListener");
 
-let variables;
-let player;
-let reactRoot;
-let assets;
-let ctx;
-
 describe("finishSetup", () => {
+  let variables;
+  let player;
+  let reactRoot;
+  let assets;
+  let ctx;
+
   beforeEach(() => {
     EventListener.mockClear();
     variables = {

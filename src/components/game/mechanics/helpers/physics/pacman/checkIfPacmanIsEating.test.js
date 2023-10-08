@@ -1,10 +1,10 @@
 import PacmanManager from "./pacmanManager";
 
-let pellet;
-let pacman;
-let assets;
-
 describe("checkIfPacmanIsEating", () => {
+  let pellet;
+  let pacman;
+  let assets;
+
   beforeEach(() => {
     pellet = { position: { x: 200, y: 300 }, radius: 2, hasBeenEaten: false };
     pacman = {

@@ -8,10 +8,7 @@ export default class Physics {
   static implementBoundaries(assets, ctx) {
     assets.props.boundaries.forEach((boundary) => {
       boundary.draw(ctx);
-      BoundaryManager.stopPacmanCollision(
-        boundary,
-        assets.characters.pacman
-      );
+      BoundaryManager.stopPacmanCollision(boundary, assets.characters.pacman);
     });
   }
 
@@ -19,11 +16,7 @@ export default class Physics {
     assets.props.pellets.forEach((pellet) => {
       if (!pellet.hasBeenEaten) {
         pellet.draw(ctx);
-        PelletManager.eatPellet(
-          pellet,
-          assets.characters.pacman,
-          variables
-        );
+        PelletManager.eatPellet(pellet, assets.characters.pacman, variables);
       }
     });
     PelletManager.checkLevelUpCondition(assets, variables, ctx);
@@ -40,15 +33,10 @@ export default class Physics {
 
   static implementGhosts(assets, ctx, variables) {
     Object.values(assets.characters.ghosts).forEach((ghost) => {
-      GhostManager.checkSpeedMatchesState(ghost, variables);
       const collisions = [];
       ghost.update(ctx);
       BoundaryManager.implementTunnel(ghost, variables);
-      GhostManager.updateCollisions(
-        assets.props.boundaries,
-        collisions,
-        ghost
-      );
+      GhostManager.updateCollisions(assets.props.boundaries, collisions, ghost);
       if (JSON.stringify(collisions) !== JSON.stringify(ghost.prevCollisions)) {
         GhostManager.chooseMovement(ghost, assets, collisions, variables);
       }

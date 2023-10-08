@@ -3,17 +3,17 @@ import Graphics from "../../graphics/graphics";
 
 jest.mock("../../graphics/graphics");
 
-let eatenPellet;
-let eatenPellets;
-let pellet;
-let pellets;
-let pacman;
-let audioPlayer;
-let assets;
-let variables;
-let ctx;
-
 describe("checkLevelUpCondition", () => {
+  let eatenPellet;
+  let eatenPellets;
+  let pellet;
+  let pellets;
+  let pacman;
+  let audioPlayer;
+  let assets;
+  let variables;
+  let ctx;
+
   beforeEach(() => {
     Graphics.mockClear();
     eatenPellet = { hasBeenEaten: true };

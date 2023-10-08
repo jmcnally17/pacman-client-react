@@ -1,9 +1,9 @@
 import Graphics from "./graphics";
 
-let ctx;
-let drawPacmanIcon;
-
 describe("displayLives", () => {
+  let ctx;
+  let drawPacmanIcon;
+
   beforeEach(() => {
     ctx = "ctx";
     drawPacmanIcon = jest.fn();

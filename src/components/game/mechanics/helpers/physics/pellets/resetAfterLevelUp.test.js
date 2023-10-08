@@ -1,22 +1,22 @@
 import PelletManager from "./pelletManager";
 
-let pacman;
-let ghost;
-let ghosts;
-let pellet;
-let pellets;
-let eatenPowerUp;
-let eatenPowerUps;
-let powerUp;
-let powerUps;
-let cycleTimer;
-let scaredTimer;
-let audioPlayer;
-let assets;
-let variables;
-let playGame;
-
 describe("resetAfterLevelUp", () => {
+  let pacman;
+  let ghost;
+  let ghosts;
+  let pellet;
+  let pellets;
+  let eatenPowerUp;
+  let eatenPowerUps;
+  let powerUp;
+  let powerUps;
+  let cycleTimer;
+  let scaredTimer;
+  let audioPlayer;
+  let assets;
+  let variables;
+  let playGame;
+
   beforeEach(() => {
     pacman = { reset: () => undefined };
     ghost = { reset: () => undefined };

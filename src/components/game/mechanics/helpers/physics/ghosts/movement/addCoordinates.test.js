@@ -1,9 +1,9 @@
 import GhostMovement from "./ghostMovement";
 
-let ghost;
-let variables;
-
 describe("addCoordinates", () => {
+  let ghost;
+  let variables;
+
   beforeEach(() => {
     ghost = { position: { x: 200, y: 300 } };
     variables = { tileLength: 32 };

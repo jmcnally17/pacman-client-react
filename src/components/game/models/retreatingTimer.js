@@ -11,6 +11,8 @@ export default class RetreatingTimer {
     this.startTime = dateNow;
     this.timeout = setTimeout(() => {
       this.ghost.changeRetreatingState();
+      this.ghost.assignSprite();
+      this.ghost.checkSpeedMatchesState();
       this.isRunning = false;
     }, 3000);
     this.timeRemaining = 3000;
@@ -27,6 +29,8 @@ export default class RetreatingTimer {
     this.startTime = dateNow;
     this.timeout = setTimeout(() => {
       this.ghost.changeRetreatingState();
+      this.ghost.assignSprite();
+      this.ghost.checkSpeedMatchesState();
       this.isRunning = false;
     }, this.timeRemaining);
   }

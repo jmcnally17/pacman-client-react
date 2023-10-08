@@ -3,9 +3,9 @@ import PowerUp from "../../models/powerUp";
 
 jest.mock("../../models/powerUp");
 
-let mockVariables;
-
 describe("makePowerUps", () => {
+  let mockVariables;
+
   beforeEach(() => {
     PowerUp.mockClear();
     mockVariables = {

@@ -5,15 +5,15 @@ import BoundaryManager from "./boundaries/boundaryManager";
 jest.mock("./ghosts/ghostManager");
 jest.mock("./boundaries/boundaryManager");
 
-let ghostOne;
-let ghostsOne;
-let ghostTwo;
-let ghostsTwo;
-let assets;
-let ctx;
-let variables;
-
 describe("implementGhosts", () => {
+  let ghostOne;
+  let ghostsOne;
+  let ghostTwo;
+  let ghostsTwo;
+  let assets;
+  let ctx;
+  let variables;
+
   beforeEach(() => {
     GhostManager.mockClear();
     BoundaryManager.mockClear();
@@ -37,15 +37,6 @@ describe("implementGhosts", () => {
     };
     ctx = "ctx";
     variables = "variables";
-  });
-
-  it("calls checkSpeedMatchesState on each ghost", () => {
-    Physics.implementGhosts(assets, ctx, variables);
-    expect(GhostManager.checkSpeedMatchesState).toHaveBeenCalledTimes(4);
-    expect(GhostManager.checkSpeedMatchesState).toHaveBeenCalledWith(
-      ghostOne,
-      variables
-    );
   });
 
   it("calls update on each ghost", () => {

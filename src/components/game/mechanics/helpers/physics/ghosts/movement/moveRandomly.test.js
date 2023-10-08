@@ -1,10 +1,10 @@
 import GhostMovement from "./ghostMovement";
 
-let ghost;
-let collisions;
-let pickRandomDirection;
-
 describe("moveRandomly", () => {
+  let ghost;
+  let collisions;
+  let pickRandomDirection;
+
   beforeEach(() => {
     ghost = {
       position: { x: 190, y: 200 },

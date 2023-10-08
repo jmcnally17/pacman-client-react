@@ -3,28 +3,33 @@ import Graphics from "../../../graphics/graphics";
 
 jest.mock("../../../graphics/graphics");
 
-let ghost;
-let scaredGhost;
-let pacman;
-let audioPlayer;
-let assets;
-let variables;
-let ctx;
-
 describe("GhostCollision.dealWithCollision", () => {
+  let ghost;
+  let retreatingTimer;
+  let scaredGhost;
+  let pacman;
+  let audioPlayer;
+  let assets;
+  let variables;
+  let ctx;
+
   beforeEach(() => {
     Graphics.mockClear();
     ghost = {
       isScared: false,
       isRetreating: false,
       reset: () => undefined,
+      checkSpeedMatchesState: () => undefined,
     };
+    retreatingTimer = { start: () => undefined };
     scaredGhost = {
       isScared: true,
       changeScaredState: () => undefined,
       isRetreating: false,
       changeRetreatingState: () => undefined,
-      retreatingTimer: { start: () => undefined },
+      retreatingTimer: retreatingTimer,
+      assignSprite: () => undefined,
+      checkSpeedMatchesState: () => undefined,
     };
     pacman = { radians: Math.PI / 24, isShrinking: false };
     audioPlayer = {
@@ -35,8 +40,9 @@ describe("GhostCollision.dealWithCollision", () => {
     variables = { score: 100, killCount: 2, animationId: 97 };
     ctx = "ctx";
     jest.spyOn(scaredGhost, "changeRetreatingState");
-    jest.spyOn(scaredGhost.retreatingTimer, "start");
+    jest.spyOn(retreatingTimer, "start");
     jest.spyOn(scaredGhost, "changeScaredState");
+    jest.spyOn(scaredGhost, "assignSprite");
   });
 
   it("sets the radians in Pac-Man to PI / 4 if the ghost is not scared or retreating", () => {
@@ -85,14 +91,29 @@ describe("GhostCollision.dealWithCollision", () => {
   });
 
   it("sends the ghost into retreating mode if the ghost is scared", () => {
+    jest.spyOn(scaredGhost, "checkSpeedMatchesState");
     GhostCollision.dealWithCollision(scaredGhost, assets, variables, ctx);
     expect(scaredGhost.changeRetreatingState).toHaveBeenCalledTimes(1);
     expect(scaredGhost.retreatingTimer.start).toHaveBeenCalledTimes(1);
     expect(scaredGhost.changeScaredState).toHaveBeenCalledTimes(1);
+    expect(scaredGhost.assignSprite).toHaveBeenCalledTimes(1);
+    expect(scaredGhost.checkSpeedMatchesState).toHaveBeenCalledTimes(1);
   });
 
   it("has no effect when the ghost is retreating", () => {
-    const mockRetreatingGhost = { isScared: false, isRetreating: true };
+    const mockRetreatingGhost = {
+      isScared: false,
+      isRetreating: true,
+      changeRetreatingState: () => undefined,
+      changeScaredState: () => undefined,
+      assignSprite: () => undefined,
+      checkSpeedMatchesState: () => undefined,
+      retreatingTimer: retreatingTimer,
+    };
+    jest.spyOn(mockRetreatingGhost, "changeRetreatingState");
+    jest.spyOn(mockRetreatingGhost, "changeScaredState");
+    jest.spyOn(mockRetreatingGhost, "assignSprite");
+    jest.spyOn(mockRetreatingGhost, "checkSpeedMatchesState");
     GhostCollision.dealWithCollision(
       mockRetreatingGhost,
       assets,
@@ -102,8 +123,10 @@ describe("GhostCollision.dealWithCollision", () => {
     expect(Graphics.runDeathAnimation).toHaveBeenCalledTimes(0);
     expect(variables.score).toBe(100);
     expect(variables.killCount).toBe(2);
-    expect(scaredGhost.changeRetreatingState).toHaveBeenCalledTimes(0);
-    expect(scaredGhost.retreatingTimer.start).toHaveBeenCalledTimes(0);
-    expect(scaredGhost.changeScaredState).toHaveBeenCalledTimes(0);
+    expect(mockRetreatingGhost.changeRetreatingState).toHaveBeenCalledTimes(0);
+    expect(mockRetreatingGhost.retreatingTimer.start).toHaveBeenCalledTimes(0);
+    expect(mockRetreatingGhost.changeScaredState).toHaveBeenCalledTimes(0);
+    expect(mockRetreatingGhost.assignSprite).toHaveBeenCalledTimes(0);
+    expect(mockRetreatingGhost.checkSpeedMatchesState).toHaveBeenCalledTimes(0);
   });
 });

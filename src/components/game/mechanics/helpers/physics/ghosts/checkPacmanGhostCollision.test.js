@@ -1,13 +1,13 @@
 import GhostManager from "./ghostManager";
 
-let ghost;
-let assets;
-let variables;
-let ctx;
-let collisionConditional;
-let dealWithCollision;
-
 describe("checkPacmanGhostCollision", () => {
+  let ghost;
+  let assets;
+  let variables;
+  let ctx;
+  let collisionConditional;
+  let dealWithCollision;
+
   beforeEach(() => {
     ghost = "ghost";
     assets = { characters: { pacman: "pacman" } };

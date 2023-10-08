@@ -1,12 +1,12 @@
 import GhostMovement from "./ghostMovement";
 
-let redGhost;
-let pacman;
-let assets;
-let variables;
-let pathway;
-
 describe("findCyanAimPath", () => {
+  let redGhost;
+  let pacman;
+  let assets;
+  let variables;
+  let pathway;
+
   beforeEach(() => {
     redGhost = { position: { x: 480, y: 170 } };
     pacman = { position: { x: 300, y: 250 }, rotation: 0 };

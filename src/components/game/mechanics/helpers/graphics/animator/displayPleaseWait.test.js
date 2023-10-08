@@ -1,9 +1,9 @@
 import Animator from "./animator";
 
-let ctx;
-let loadTint;
-
 describe("displayPleaseWait", () => {
+  let ctx;
+  let loadTint;
+
   beforeEach(() => {
     ctx = {
       globalAlpha: null,

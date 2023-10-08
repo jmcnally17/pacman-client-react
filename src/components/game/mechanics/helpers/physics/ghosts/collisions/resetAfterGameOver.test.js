@@ -1,22 +1,22 @@
 import GhostCollision from "./ghostCollision";
 
-let eatenPellet;
-let eatenPellets;
-let pellet;
-let pellets;
-let eatenPowerUp;
-let eatenPowerUps;
-let powerUp;
-let powerUps;
-let ghost;
-let ghosts;
-let pacman;
-let cycleTimer;
-let scaredTimer;
-let assets;
-let variables;
-
 describe("resetAfterGameOver", () => {
+  let eatenPellet;
+  let eatenPellets;
+  let pellet;
+  let pellets;
+  let eatenPowerUp;
+  let eatenPowerUps;
+  let powerUp;
+  let powerUps;
+  let ghost;
+  let ghosts;
+  let pacman;
+  let cycleTimer;
+  let scaredTimer;
+  let assets;
+  let variables;
+
   beforeEach(() => {
     eatenPellet = {
       hasBeenEaten: true,

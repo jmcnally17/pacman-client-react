@@ -1,12 +1,12 @@
 import Timer from "./timer";
 
-let cycleTimer;
-let scaredTimer;
-let retreatingTimer;
-let retreatingTimers;
-let timers;
-
 describe("resumeTimers", () => {
+  let cycleTimer;
+  let scaredTimer;
+  let retreatingTimer;
+  let retreatingTimers;
+  let timers;
+
   beforeEach(() => {
     cycleTimer = { resume: () => undefined };
     scaredTimer = { isRunning: false, resume: () => undefined };

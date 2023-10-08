@@ -2,10 +2,10 @@ import { render, screen, within } from "@testing-library/react";
 import mockAxios from "jest-mock-axios";
 import Leaderboard from "./leaderboard";
 
-let mockVariables;
-let mockScores;
-
 describe("Leaderboard", () => {
+  let mockVariables;
+  let mockScores;
+
   beforeEach(() => {
     mockVariables = {
       score: 2000,

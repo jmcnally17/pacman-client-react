@@ -43,7 +43,6 @@ export default class Ghost {
   }
 
   update(ctx) {
-    this.assignSprite();
     this.draw(ctx);
     this.position.x += this.velocity.x;
     this.position.y += this.velocity.y;
@@ -67,12 +66,84 @@ export default class Ghost {
     this.speed = this.tileLength / 8;
     this.prevCollisions = [];
     this.#resetStates();
+    this.assignSprite();
   }
 
   assignSprite() {
     if (this.isRetreating) this.#assignRetreatingSprite();
     else if (this.isScared) this.#assignScaredSprite();
     else this.#assignRegularSprite();
+  }
+
+  checkSpeedMatchesState() {
+    if (this.isScared && this.speed === this.tileLength / 8) {
+      this.adjustPosition();
+      this.velocity.x /= 2;
+      this.velocity.y /= 2;
+      this.speed /= 2;
+    } else if (this.isRetreating && this.speed === this.tileLength / 16) {
+      this.adjustPosition();
+      this.velocity.x *= 4;
+      this.velocity.y *= 4;
+      this.speed *= 4;
+    } else if (!this.isScared && this.speed === this.tileLength / 16) {
+      this.adjustPosition();
+      this.velocity.x *= 2;
+      this.velocity.y *= 2;
+      this.speed *= 2;
+    } else if (!this.isRetreating && this.speed === this.tileLength / 4) {
+      this.adjustPosition();
+      this.velocity.x /= 2;
+      this.velocity.y /= 2;
+      this.speed /= 2;
+    }
+  }
+
+  adjustPosition() {
+    if (this.isRetreating) this.shiftBeforeRetreating();
+    else this.shiftRegular();
+  }
+
+  shiftBeforeRetreating() {
+    if (this.velocity.x > 0) {
+      this.shiftLeft();
+    } else if (this.velocity.x < 0) {
+      this.shiftRight();
+    }
+    if (this.velocity.y > 0) {
+      this.shiftUp();
+    } else if (this.velocity.y < 0) {
+      this.shiftDown();
+    }
+  }
+
+  shiftRegular() {
+    if (this.position.x % 4 !== 0) this.position.x += 2;
+    if (this.position.y % 4 !== 0) this.position.y += 2;
+  }
+
+  shiftLeft() {
+    if (this.position.x % 8 === 2) this.position.x -= 2;
+    else if (this.position.x % 8 === 4) this.position.x -= 4;
+    else if (this.position.x % 8 === 6) this.position.x -= 6;
+  }
+
+  shiftRight() {
+    if (this.position.x % 8 === 2) this.position.x += 6;
+    else if (this.position.x % 8 === 4) this.position.x += 4;
+    else if (this.position.x % 8 === 6) this.position.x += 2;
+  }
+
+  shiftUp() {
+    if (this.position.y % 8 === 2) this.position.y -= 2;
+    else if (this.position.y % 8 === 4) this.position.y -= 4;
+    else if (this.position.y % 8 === 6) this.position.y -= 6;
+  }
+
+  shiftDown() {
+    if (this.position.y % 8 === 2) this.position.y += 6;
+    else if (this.position.y % 8 === 4) this.position.y += 4;
+    else if (this.position.y % 8 === 6) this.position.y += 2;
   }
 
   // private

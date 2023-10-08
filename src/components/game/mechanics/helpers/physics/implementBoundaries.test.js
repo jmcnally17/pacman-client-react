@@ -3,11 +3,11 @@ import BoundaryManager from "./boundaries/boundaryManager";
 
 jest.mock("./boundaries/boundaryManager");
 
-let boundary;
-let assets;
-let ctx;
-
 describe("implementBoundaries", () => {
+  let boundary;
+  let assets;
+  let ctx;
+
   beforeEach(() => {
     BoundaryManager.mockClear();
     boundary = { draw: () => undefined };

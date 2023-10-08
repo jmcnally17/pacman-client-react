@@ -1,8 +1,8 @@
 import GhostMovement from "./ghostMovement";
 
-let variables;
-
 describe("isOrangeFarFromPacman", () => {
+  let variables;
+
   beforeEach(() => {
     variables = { tileLength: 32 };
   });

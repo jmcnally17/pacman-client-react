@@ -1,10 +1,10 @@
 import Boundary from "./boundary";
 
-let boundary;
-let mockRegularImage;
-let mockWhiteImage;
-
 describe("Boundary", () => {
+  let boundary;
+  let mockRegularImage;
+  let mockWhiteImage;
+
   beforeEach(() => {
     mockRegularImage = {
       src: "./random-source.png",
