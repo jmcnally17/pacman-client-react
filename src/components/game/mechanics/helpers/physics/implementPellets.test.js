@@ -3,15 +3,15 @@ import PelletManager from "./pellets/pelletManager";
 
 jest.mock("./pellets/pelletManager");
 
-let pellet;
-let pellets;
-let eatenPellet;
-let eatenPellets;
-let assets;
-let ctx;
-let variables;
-
 describe("implementPellets", () => {
+  let pellet;
+  let pellets;
+  let eatenPellet;
+  let eatenPellets;
+  let assets;
+  let ctx;
+  let variables;
+
   beforeEach(() => {
     PelletManager.mockClear();
     pellet = { hasBeenEaten: false, draw: () => undefined };

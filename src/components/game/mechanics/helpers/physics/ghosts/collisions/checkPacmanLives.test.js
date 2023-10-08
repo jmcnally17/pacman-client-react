@@ -1,14 +1,14 @@
 import GhostCollision from "./ghostCollision";
 
-let pacman;
-let noLivesPacman;
-let assets;
-let variables;
-let ctx;
-let endGame;
-let resetAfterDeath;
-
 describe("checkPacmanLives", () => {
+  let pacman;
+  let noLivesPacman;
+  let assets;
+  let variables;
+  let ctx;
+  let endGame;
+  let resetAfterDeath;
+
   beforeEach(() => {
     pacman = { lives: 2 };
     noLivesPacman = { lives: 0 };

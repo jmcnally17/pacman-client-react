@@ -1,13 +1,13 @@
 import PowerUpManager from "./powerUpManager";
 
-let powerUp;
-let pacmanOne;
-let pacmanTwo;
-let assets;
-let variables;
-let scareGhosts;
-
 describe("eatPowerUp", () => {
+  let powerUp;
+  let pacmanOne;
+  let pacmanTwo;
+  let assets;
+  let variables;
+  let scareGhosts;
+
   beforeEach(() => {
     powerUp = {
       position: { x: 200, y: 200 },

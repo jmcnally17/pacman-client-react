@@ -2,11 +2,11 @@ import CycleTimer from "./cycleTimer";
 
 jest.useFakeTimers();
 
-let cycleTimer;
-let mockGhost;
-let mockGhosts;
-
 describe("CycleTimer", () => {
+  let cycleTimer;
+  let mockGhost;
+  let mockGhosts;
+
   beforeEach(() => {
     mockGhost = {
       changeChasingState: () => true,

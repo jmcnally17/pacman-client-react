@@ -1,21 +1,21 @@
 import AudioManager from "./audioManager";
 
-let assets;
-let siren;
-let playingSiren;
-let scared;
-let playingScared;
-let retreating;
-let playingRetreating;
-let audioPlayer;
-let scaredTimer;
-let runningScaredTimer;
-let retreatingTimer;
-let runningRetreatingTimer;
-let retreatingTimers;
-let runningRetreatingTimers;
-
 describe("playGhostAudio", () => {
+  let assets;
+  let siren;
+  let playingSiren;
+  let scared;
+  let playingScared;
+  let retreating;
+  let playingRetreating;
+  let audioPlayer;
+  let scaredTimer;
+  let runningScaredTimer;
+  let retreatingTimer;
+  let runningRetreatingTimer;
+  let retreatingTimers;
+  let runningRetreatingTimers;
+
   beforeEach(() => {
     siren = { playing: () => false };
     playingSiren = { playing: () => true };

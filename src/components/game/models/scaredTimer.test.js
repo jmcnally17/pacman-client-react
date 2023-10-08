@@ -2,12 +2,12 @@ import ScaredTimer from "./scaredTimer";
 
 jest.useFakeTimers();
 
-let mockGhost;
-let mockGhosts;
-let scaredTimer;
-let mockCycleTimer;
-
 describe("ScaredTimer", () => {
+  let mockGhost;
+  let mockGhosts;
+  let scaredTimer;
+  let mockCycleTimer;
+
   beforeEach(() => {
     mockGhost = {
       isScared: true,

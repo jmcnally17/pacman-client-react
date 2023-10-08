@@ -1,12 +1,12 @@
 import PowerUpManager from "./powerUpManager";
 
-let ghost;
-let ghosts;
-let cycleTimer;
-let scaredTimer;
-let assets;
-
 describe("scareGhosts", () => {
+  let ghost;
+  let ghosts;
+  let cycleTimer;
+  let scaredTimer;
+  let assets;
+
   beforeEach(() => {
     ghost = {
       isScared: false,

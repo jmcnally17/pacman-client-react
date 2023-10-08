@@ -5,13 +5,13 @@ import Leaderboard from "../../../../../../leaderboard/leaderboard";
 jest.mock("../../../graphics/animator/animator");
 jest.mock("../../../../../../leaderboard/leaderboard");
 
-let variables;
-let assets;
-let ctx;
-let saveScore;
-let resetAfterGameOver;
-
 describe("endGame", () => {
+  let variables;
+  let assets;
+  let ctx;
+  let saveScore;
+  let resetAfterGameOver;
+
   beforeEach(() => {
     Animator.mockClear();
     Leaderboard.mockClear();

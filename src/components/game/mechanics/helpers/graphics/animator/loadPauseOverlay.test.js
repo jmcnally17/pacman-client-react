@@ -1,11 +1,11 @@
 import Animator from "./animator";
 
-let ctx;
-let pauseTextImage;
-let loadTint;
-let loadPauseText;
-
 describe("loadPauseOverlay", () => {
+  let ctx;
+  let pauseTextImage;
+  let loadTint;
+  let loadPauseText;
+
   beforeEach(() => {
     ctx = "ctx";
     pauseTextImage = "pauseTextImage";

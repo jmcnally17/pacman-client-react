@@ -7,12 +7,12 @@ jest.mock("../audio/audioManager");
 jest.mock("../timer/timer");
 jest.mock("../graphics/animator/animator");
 
-let variables;
-let assets;
-let ctx;
-let escKeyEvent;
-
 describe("addPauseDetection", () => {
+  let variables;
+  let assets;
+  let ctx;
+  let escKeyEvent;
+
   beforeEach(() => {
     AudioManager.mockClear();
     Timer.mockClear();

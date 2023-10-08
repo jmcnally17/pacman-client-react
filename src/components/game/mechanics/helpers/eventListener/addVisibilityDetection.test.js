@@ -5,11 +5,11 @@ import Timer from "../timer/timer";
 jest.mock("../audio/audioManager");
 jest.mock("../timer/timer");
 
-let variables;
-let assets;
-let visibilityChange;
-
 describe("addVisibilityDetection", () => {
+  let variables;
+  let assets;
+  let visibilityChange;
+
   beforeEach(() => {
     AudioManager.mockClear();
     Timer.mockClear();

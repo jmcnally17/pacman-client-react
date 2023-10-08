@@ -1,9 +1,9 @@
 import Graphics from "./graphics";
 
-let ctx;
-let position;
-
 describe("drawPacmanIcon", () => {
+  let ctx;
+  let position;
+
   beforeEach(() => {
     ctx = {
       beginPath: () => undefined,

@@ -3,9 +3,9 @@ import Pellet from "../../models/pellet";
 
 jest.mock("../../models/pellet");
 
-let mockVariables;
-
 describe("makePellets", () => {
+  let mockVariables;
+
   beforeEach(() => {
     Pellet.mockClear();
     mockVariables = {

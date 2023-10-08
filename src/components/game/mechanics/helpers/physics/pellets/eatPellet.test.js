@@ -1,11 +1,11 @@
 import PelletManager from "./pelletManager";
 
-let pellet;
-let pacmanOne;
-let pacmanTwo;
-let variables;
-
 describe("eatPellet", () => {
+  let pellet;
+  let pacmanOne;
+  let pacmanTwo;
+  let variables;
+
   beforeEach(() => {
     pellet = {
       position: { x: 200, y: 200 },

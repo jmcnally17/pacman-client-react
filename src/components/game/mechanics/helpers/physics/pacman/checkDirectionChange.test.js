@@ -3,13 +3,13 @@ import BoundaryManager from "../boundaries/boundaryManager";
 
 jest.mock("../boundaries/boundaryManager");
 
-let pacman;
-let boundaryOne;
-let boundaryTwo;
-let boundaries;
-let velocity;
-
 describe("checkDirectionChange", () => {
+  let pacman;
+  let boundaryOne;
+  let boundaryTwo;
+  let boundaries;
+  let velocity;
+
   beforeEach(() => {
     BoundaryManager.mockClear();
     pacman = { velocity: { x: 20, y: 5 } };

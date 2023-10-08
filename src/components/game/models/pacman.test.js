@@ -1,11 +1,11 @@
 import PacMan from "./pacman";
 
-let pacman;
-let mockCtx;
-let mockMunchOne;
-let mockMunchTwo;
-
 describe("PacMan", () => {
+  let pacman;
+  let mockCtx;
+  let mockMunchOne;
+  let mockMunchTwo;
+
   beforeEach(() => {
     mockMunchOne = {
       src: "./audio/munch_one.wav",

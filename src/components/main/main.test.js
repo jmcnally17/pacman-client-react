@@ -1,9 +1,9 @@
 import { render, screen } from "@testing-library/react";
 import Main from "./main";
 
-let user;
-
 describe("Main", () => {
+  let user;
+
   beforeEach(() => {
     window.HTMLMediaElement.prototype.load = () => undefined;
     window.HTMLMediaElement.prototype.play = () => undefined;

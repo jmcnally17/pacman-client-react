@@ -7,13 +7,13 @@ jest.mock("../physics/pellets/pelletManager");
 
 jest.useFakeTimers();
 
-let variables;
-let assets;
-let ctx;
-let boundary;
-let runLevelUpAnimation;
-
 describe("runLevelUpAnimation", () => {
+  let variables;
+  let assets;
+  let ctx;
+  let boundary;
+  let runLevelUpAnimation;
+
   beforeEach(() => {
     Animator.mockClear();
     PelletManager.mockClear();

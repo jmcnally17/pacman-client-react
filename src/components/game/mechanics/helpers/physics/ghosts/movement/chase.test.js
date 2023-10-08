@@ -1,15 +1,15 @@
 import GhostMovement from "./ghostMovement";
 
-let pathway;
-let assets;
-let variables;
-let isOrangeFarFromPacman;
-let findRedOrangeAimPath;
-let findPinkAimPath;
-let findCyanAimPath;
-let findOrangeScatterPath;
-
 describe("chase", () => {
+  let pathway;
+  let assets;
+  let variables;
+  let isOrangeFarFromPacman;
+  let findRedOrangeAimPath;
+  let findPinkAimPath;
+  let findCyanAimPath;
+  let findOrangeScatterPath;
+
   beforeEach(() => {
     pathway = "pathway";
     assets = { characters: { pacman: "pacman" } };

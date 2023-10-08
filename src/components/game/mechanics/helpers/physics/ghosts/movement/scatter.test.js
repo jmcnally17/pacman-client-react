@@ -1,12 +1,12 @@
 import GhostMovement from "./ghostMovement";
 
-let pathway;
-let findRedScatterPath;
-let findPinkScatterPath;
-let findCyanScatterPath;
-let findOrangeScatterPath;
-
 describe("scatter", () => {
+  let pathway;
+  let findRedScatterPath;
+  let findPinkScatterPath;
+  let findCyanScatterPath;
+  let findOrangeScatterPath;
+
   beforeEach(() => {
     pathway = "pathway";
     findRedScatterPath = jest.fn();

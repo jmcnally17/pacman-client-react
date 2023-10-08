@@ -1,19 +1,19 @@
 import Animator from "./animator";
 
-let ctx;
-let boundary;
-let boundaries;
-let pellet;
-let pellets;
-let eatenPellet;
-let eatenPellets;
-let powerUp;
-let powerUps;
-let eatenPowerUp;
-let eatenPowerUps;
-let assets;
-
 describe("drawBoard", () => {
+  let ctx;
+  let boundary;
+  let boundaries;
+  let pellet;
+  let pellets;
+  let eatenPellet;
+  let eatenPellets;
+  let powerUp;
+  let powerUps;
+  let eatenPowerUp;
+  let eatenPowerUps;
+  let assets;
+
   beforeEach(() => {
     ctx = {
       clearRect: () => undefined,

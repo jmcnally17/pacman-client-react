@@ -1,16 +1,16 @@
 import GhostCollision from "./ghostCollision";
 
-let pacman;
-let cycleTimer;
-let scaredTimer;
-let ghost;
-let ghosts;
-let audioPlayer;
-let assets;
-let variables;
-let mockPlayGame;
-
 describe("resetAfterDeath", () => {
+  let pacman;
+  let cycleTimer;
+  let scaredTimer;
+  let ghost;
+  let ghosts;
+  let audioPlayer;
+  let assets;
+  let variables;
+  let mockPlayGame;
+
   beforeEach(() => {
     pacman = { reset: () => undefined };
     ghost = { reset: () => undefined };

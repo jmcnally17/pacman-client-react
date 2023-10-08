@@ -3,12 +3,12 @@ import Graphics from "../helpers/graphics/graphics";
 
 jest.mock("../helpers/graphics/graphics");
 
-let variables;
-let pacman;
-let info;
-let ctx;
-
 describe("implementGraphics", () => {
+  let variables;
+  let pacman;
+  let info;
+  let ctx;
+
   beforeEach(() => {
     Graphics.mockClear();
     variables = "variables";

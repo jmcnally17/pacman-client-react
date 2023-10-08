@@ -1,13 +1,13 @@
 import AudioPlayer from "./audioPlayer";
 
-let mockGhostSiren;
-let mockGhostScared;
-let mockGhostRetreating;
-let mockPacmanDeath;
-let mockLevelUp;
-let audioPlayer;
-
 describe("AudioPlayer", () => {
+  let mockGhostSiren;
+  let mockGhostScared;
+  let mockGhostRetreating;
+  let mockPacmanDeath;
+  let mockLevelUp;
+  let audioPlayer;
+
   beforeEach(() => {
     mockGhostSiren = {
       name: "siren",

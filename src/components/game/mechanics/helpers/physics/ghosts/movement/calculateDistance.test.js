@@ -1,17 +1,17 @@
 import GhostMovement from "./ghostMovement";
 
-let assets;
-let ghost;
-let pathwayOne;
-let pathwayTwo;
-let pathways;
-let variables;
-let addCoordinates;
-let chase;
-let scatter;
-let calculateHypotenuse;
-
 describe("calculateDistance", () => {
+  let assets;
+  let ghost;
+  let pathwayOne;
+  let pathwayTwo;
+  let pathways;
+  let variables;
+  let addCoordinates;
+  let chase;
+  let scatter;
+  let calculateHypotenuse;
+
   beforeEach(() => {
     assets = "assets";
     ghost = "ghost";

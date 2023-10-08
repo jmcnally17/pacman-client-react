@@ -3,12 +3,12 @@ import PowerUpManager from "./powerUps/powerUpManager";
 
 jest.mock("./powerUps/powerUpManager");
 
-let powerUp;
-let assets;
-let ctx;
-let variables;
-
 describe("implementPowerUps", () => {
+  let powerUp;
+  let assets;
+  let ctx;
+  let variables;
+
   beforeEach(() => {
     PowerUpManager.mockClear();
     powerUp = { hasBeenEaten: false, update: () => undefined };

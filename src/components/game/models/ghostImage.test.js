@@ -1,8 +1,8 @@
 import Ghost from "./ghost";
 
-let ghost;
-
 describe("Ghost", () => {
+  let ghost;
+
   beforeEach(() => {
     ghost = new Ghost(
       {

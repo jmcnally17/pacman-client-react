@@ -5,11 +5,11 @@ import BoundaryManager from "./boundaries/boundaryManager";
 jest.mock("./pacman/pacmanManager");
 jest.mock("./boundaries/boundaryManager");
 
-let variables;
-let assets;
-let ctx;
-
 describe("implementPacman", () => {
+  let variables;
+  let assets;
+  let ctx;
+
   beforeEach(() => {
     PacmanManager.mockClear();
     BoundaryManager.mockClear();

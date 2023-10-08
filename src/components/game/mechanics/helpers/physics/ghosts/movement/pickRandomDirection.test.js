@@ -1,10 +1,10 @@
 import GhostMovement from "./ghostMovement";
 import { mockRandom, resetMockRandom } from "jest-mock-random";
 
-let ghost;
-let pathways;
-
 describe("pickRandomDirection", () => {
+  let ghost;
+  let pathways;
+
   beforeEach(() => {
     ghost = { velocity: { x: 0, y: 0 }, speed: 4 };
     pathways = ["up", "down", "right", "left"];

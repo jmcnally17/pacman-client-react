@@ -3,15 +3,15 @@ import Graphics from "../graphics";
 
 jest.mock("../graphics");
 
-let shrinkingPacman;
-let levellingUpPacman;
-let pacman;
-let variables;
-let ctx;
-let assets;
-let playGame;
-
 describe("resumeAnimation", () => {
+  let shrinkingPacman;
+  let levellingUpPacman;
+  let pacman;
+  let variables;
+  let ctx;
+  let assets;
+  let playGame;
+
   beforeEach(() => {
     Graphics.mockClear();
     shrinkingPacman = { isShrinking: true, isLevellingUp: false };

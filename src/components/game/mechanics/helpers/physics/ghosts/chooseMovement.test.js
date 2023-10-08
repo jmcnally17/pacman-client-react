@@ -3,12 +3,12 @@ import GhostMovement from "./movement/ghostMovement";
 
 jest.mock("./movement/ghostMovement");
 
-let ghost;
-let assets;
-let collisions;
-let variables;
-
 describe("chooseMovement", () => {
+  let ghost;
+  let assets;
+  let collisions;
+  let variables;
+
   beforeEach(() => {
     GhostMovement.mockClear();
     ghost = {

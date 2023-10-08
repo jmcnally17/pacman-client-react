@@ -5,15 +5,15 @@ import BoundaryManager from "./boundaries/boundaryManager";
 jest.mock("./ghosts/ghostManager");
 jest.mock("./boundaries/boundaryManager");
 
-let ghostOne;
-let ghostsOne;
-let ghostTwo;
-let ghostsTwo;
-let assets;
-let ctx;
-let variables;
-
 describe("implementGhosts", () => {
+  let ghostOne;
+  let ghostsOne;
+  let ghostTwo;
+  let ghostsTwo;
+  let assets;
+  let ctx;
+  let variables;
+
   beforeEach(() => {
     GhostManager.mockClear();
     BoundaryManager.mockClear();

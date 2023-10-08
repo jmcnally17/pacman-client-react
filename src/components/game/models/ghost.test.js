@@ -1,12 +1,11 @@
 import Ghost from "./ghost";
 
-let ghost;
-let scaredChasingRetreatingGhost;
-let mockRetreatingTimer;
-let mockCtx;
-
 describe("Ghost", () => {
   const tileLength = 32;
+  let ghost;
+  let scaredChasingRetreatingGhost;
+  let mockRetreatingTimer;
+  let mockCtx;
 
   beforeEach(() => {
     ghost = new Ghost(

@@ -1,8 +1,8 @@
 import GhostMovement from "./ghostMovement";
 
-let ghost;
-
 describe("pickDirection", () => {
+  let ghost;
+
   beforeEach(() => {
     ghost = { velocity: { x: 0, y: 0 }, speed: 4 };
   });

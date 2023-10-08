@@ -3,12 +3,12 @@ import Game from "./game/game";
 
 jest.mock("./game/game");
 
-let player;
-let reactRoot;
-let ctx;
-let board;
-
 describe("playGame", () => {
+  let player;
+  let reactRoot;
+  let ctx;
+  let board;
+
   beforeEach(() => {
     Game.mockClear();
     player = { username: "John" };

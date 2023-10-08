@@ -3,10 +3,10 @@ import BoundaryManager from "../boundaries/boundaryManager";
 
 jest.mock("../boundaries/boundaryManager");
 
-let boundary;
-let boundaries;
-
 describe("updateCollisions", () => {
+  let boundary;
+  let boundaries;
+
   beforeEach(() => {
     BoundaryManager.mockClear();
     boundary = "boundary";

@@ -3,16 +3,16 @@ import Graphics from "../../../graphics/graphics";
 
 jest.mock("../../../graphics/graphics");
 
-let ghost;
-let retreatingTimer;
-let scaredGhost;
-let pacman;
-let audioPlayer;
-let assets;
-let variables;
-let ctx;
-
 describe("GhostCollision.dealWithCollision", () => {
+  let ghost;
+  let retreatingTimer;
+  let scaredGhost;
+  let pacman;
+  let audioPlayer;
+  let assets;
+  let variables;
+  let ctx;
+
   beforeEach(() => {
     Graphics.mockClear();
     ghost = {

@@ -1,9 +1,9 @@
 import Pellet from "./pellet";
 
-let pellet;
-let eatenPellet;
-
 describe("Pellet", () => {
+  let pellet;
+  let eatenPellet;
+
   beforeEach(() => {
     pellet = new Pellet(
       {

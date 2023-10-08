@@ -1,11 +1,11 @@
 import { render, screen } from "@testing-library/react";
 import Game from "./game";
 
-let mockPlayGame;
-let mockPlayer;
-let mockReactRoot;
-
 describe("Game", () => {
+  let mockPlayGame;
+  let mockPlayer;
+  let mockReactRoot;
+
   beforeEach(() => {
     mockPlayGame = jest.fn();
     mockPlayer = {

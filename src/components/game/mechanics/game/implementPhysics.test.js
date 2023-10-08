@@ -3,11 +3,11 @@ import Physics from "../helpers/physics/physics";
 
 jest.mock("../helpers/physics/physics");
 
-let assets;
-let ctx;
-let variables;
-
 describe("implementPhysics", () => {
+  let assets;
+  let ctx;
+  let variables;
+
   beforeEach(() => {
     Physics.mockClear();
     assets = "assets";

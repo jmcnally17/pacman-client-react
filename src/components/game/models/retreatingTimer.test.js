@@ -2,10 +2,10 @@ import RetreatingTimer from "./retreatingTimer";
 
 jest.useFakeTimers();
 
-let mockGhost;
-let retreatingTimer;
-
 describe("RetreatingTimer", () => {
+  let mockGhost;
+  let retreatingTimer;
+
   beforeEach(() => {
     mockGhost = {
       isRetreating: true,
