@@ -13,6 +13,7 @@ describe("scareGhosts", () => {
       isRetreating: false,
       changeScaredState: () => undefined,
       assignSprite: () => undefined,
+      checkSpeedMatchesState: () => undefined,
     };
     ghosts = [ghost, ghost, ghost, ghost];
     cycleTimer = { isRunning: true, pause: () => undefined };
@@ -54,11 +55,19 @@ describe("scareGhosts", () => {
     expect(ghost.assignSprite).toHaveBeenCalledTimes(4);
   });
 
+  it("calls checkSpeedMatchesState if the ghosts are not scared or retreating", () => {
+    jest.spyOn(ghost, "checkSpeedMatchesState");
+    PowerUpManager.scareGhosts(assets);
+    expect(ghost.checkSpeedMatchesState).toHaveBeenCalledTimes(4);
+  });
+
   it("does not call changeScaredState if the ghosts are scared", () => {
     const scaredGhost = {
       isScared: true,
       isRetreating: false,
       changeScaredState: () => undefined,
+      assignSprite: () => undefined,
+      checkSpeedMatchesState: () => undefined,
     };
     assets.characters.ghosts = [
       scaredGhost,
@@ -67,8 +76,12 @@ describe("scareGhosts", () => {
       scaredGhost,
     ];
     jest.spyOn(scaredGhost, "changeScaredState");
+    jest.spyOn(scaredGhost, "assignSprite");
+    jest.spyOn(scaredGhost, "checkSpeedMatchesState");
     PowerUpManager.scareGhosts(assets);
     expect(scaredGhost.changeScaredState).toHaveBeenCalledTimes(0);
+    expect(scaredGhost.assignSprite).toHaveBeenCalledTimes(0);
+    expect(scaredGhost.checkSpeedMatchesState).toHaveBeenCalledTimes(0);
   });
 
   it("does not call changeScaredState if the ghosts are retreating", () => {
@@ -76,6 +89,8 @@ describe("scareGhosts", () => {
       isScared: false,
       isRetreating: true,
       changeScaredState: () => undefined,
+      assignSprite: () => undefined,
+      checkSpeedMatchesState: () => undefined,
     };
     assets.characters.ghosts = [
       mockRetreatingGhost,
@@ -84,8 +99,12 @@ describe("scareGhosts", () => {
       mockRetreatingGhost,
     ];
     jest.spyOn(mockRetreatingGhost, "changeScaredState");
+    jest.spyOn(mockRetreatingGhost, "assignSprite");
+    jest.spyOn(mockRetreatingGhost, "checkSpeedMatchesState");
     PowerUpManager.scareGhosts(assets);
     expect(mockRetreatingGhost.changeScaredState).toHaveBeenCalledTimes(0);
+    expect(mockRetreatingGhost.assignSprite).toHaveBeenCalledTimes(0);
+    expect(mockRetreatingGhost.checkSpeedMatchesState).toHaveBeenCalledTimes(0);
   });
 
   it("starts the scaredTimer", () => {

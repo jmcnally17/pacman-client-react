@@ -52,9 +52,7 @@ describe("addVisibilityDetection", () => {
       EventListener.addVisibilityDetection(variables, assets);
       window.dispatchEvent(visibilityChange);
       expect(AudioManager.pauseAudio).toHaveBeenCalledTimes(1);
-      expect(AudioManager.pauseAudio).toHaveBeenCalledWith(
-        assets.audioPlayer
-      );
+      expect(AudioManager.pauseAudio).toHaveBeenCalledWith(assets.audioPlayer);
     });
 
     it("call pauseTimers if isWindowVisible is intially true and isGamePaused is false", () => {
@@ -69,9 +67,7 @@ describe("addVisibilityDetection", () => {
       variables.isWindowVisible = false;
       window.dispatchEvent(visibilityChange);
       expect(AudioManager.resumeAudio).toHaveBeenCalledTimes(1);
-      expect(AudioManager.resumeAudio).toHaveBeenCalledWith(
-        assets.audioPlayer
-      );
+      expect(AudioManager.resumeAudio).toHaveBeenCalledWith(assets.audioPlayer);
     });
 
     it("call resumeTimers if isWindowVisible is intially false and isGamePaused is false", () => {

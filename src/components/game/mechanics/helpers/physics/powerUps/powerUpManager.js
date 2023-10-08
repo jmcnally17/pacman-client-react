@@ -25,6 +25,7 @@ export default class PowerUpManager {
       if (!ghost.isScared && !ghost.isRetreating) {
         ghost.changeScaredState();
         ghost.assignSprite();
+        ghost.checkSpeedMatchesState();
       }
     });
     assets.timers.scaredTimer.start(assets.timers.cycleTimer);

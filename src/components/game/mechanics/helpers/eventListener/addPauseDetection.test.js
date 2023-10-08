@@ -66,9 +66,7 @@ describe("addPauseDetection", () => {
       EventListener.addPauseDetection(variables, assets, ctx);
       window.dispatchEvent(escKeyEvent);
       expect(AudioManager.pauseAudio).toHaveBeenCalledTimes(1);
-      expect(AudioManager.pauseAudio).toHaveBeenCalledWith(
-        assets.audioPlayer
-      );
+      expect(AudioManager.pauseAudio).toHaveBeenCalledWith(assets.audioPlayer);
     });
 
     it("calls pauseTimers if isGamePaused is intially false", () => {
@@ -93,9 +91,7 @@ describe("addPauseDetection", () => {
       variables.isGamePaused = true;
       window.dispatchEvent(escKeyEvent);
       expect(AudioManager.resumeAudio).toHaveBeenCalledTimes(1);
-      expect(AudioManager.resumeAudio).toHaveBeenCalledWith(
-        assets.audioPlayer
-      );
+      expect(AudioManager.resumeAudio).toHaveBeenCalledWith(assets.audioPlayer);
     });
 
     it("calls resumeTimers if isGamePaused is intially true", () => {

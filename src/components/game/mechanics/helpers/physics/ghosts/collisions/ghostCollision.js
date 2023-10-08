@@ -6,15 +6,12 @@ import playGame from "../../../../playGame";
 
 export default class GhostCollision {
   static collisionConditional(ghost, pacman) {
-    if (
+    return (
       ghost.position.y - ghost.radius <= pacman.position.y + pacman.radius &&
       ghost.position.y + ghost.radius >= pacman.position.y - pacman.radius &&
       ghost.position.x + ghost.radius >= pacman.position.x - pacman.radius &&
       ghost.position.x - ghost.radius <= pacman.position.x + pacman.radius
-    ) {
-      return true;
-    }
-    return false;
+    );
   }
 
   static dealWithCollision(ghost, assets, variables, ctx) {
@@ -32,6 +29,7 @@ export default class GhostCollision {
       ghost.retreatingTimer.start();
       ghost.changeScaredState();
       ghost.assignSprite();
+      ghost.checkSpeedMatchesState();
     }
   }
 

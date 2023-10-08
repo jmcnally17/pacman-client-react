@@ -3,36 +3,6 @@ import BoundaryManager from "../boundaries/boundaryManager";
 import GhostCollision from "./collisions/ghostCollision";
 
 export default class GhostManager {
-  static checkSpeedMatchesState(ghost, variables) {
-    if (ghost.isScared && ghost.speed === variables.tileLength / 8) {
-      GhostMovement.adjustPosition(ghost);
-      ghost.velocity.x /= 2;
-      ghost.velocity.y /= 2;
-      ghost.speed /= 2;
-    } else if (
-      ghost.isRetreating &&
-      ghost.speed === variables.tileLength / 16
-    ) {
-      GhostMovement.adjustPosition(ghost);
-      ghost.velocity.x *= 4;
-      ghost.velocity.y *= 4;
-      ghost.speed *= 4;
-    } else if (!ghost.isScared && ghost.speed === variables.tileLength / 16) {
-      GhostMovement.adjustPosition(ghost);
-      ghost.velocity.x *= 2;
-      ghost.velocity.y *= 2;
-      ghost.speed *= 2;
-    } else if (
-      !ghost.isRetreating &&
-      ghost.speed === variables.tileLength / 4
-    ) {
-      GhostMovement.adjustPosition(ghost);
-      ghost.velocity.x /= 2;
-      ghost.velocity.y /= 2;
-      ghost.speed /= 2;
-    }
-  }
-
   static updateCollisions(boundaries, collisions, ghost) {
     boundaries.forEach((boundary) => {
       if (

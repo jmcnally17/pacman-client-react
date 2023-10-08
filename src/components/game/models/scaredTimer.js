@@ -15,6 +15,7 @@ export default class ScaredTimer {
         if (ghost.isScared) {
           ghost.changeScaredState();
           ghost.assignSprite();
+          ghost.checkSpeedMatchesState();
         }
       });
       cycleTimer.resume();
@@ -37,6 +38,7 @@ export default class ScaredTimer {
         if (ghost.isScared) {
           ghost.changeScaredState();
           ghost.assignSprite();
+          ghost.checkSpeedMatchesState();
         }
       });
       cycleTimer.resume();

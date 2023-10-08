@@ -33,7 +33,6 @@ export default class Physics {
 
   static implementGhosts(assets, ctx, variables) {
     Object.values(assets.characters.ghosts).forEach((ghost) => {
-      GhostManager.checkSpeedMatchesState(ghost, variables);
       const collisions = [];
       ghost.update(ctx);
       BoundaryManager.implementTunnel(ghost, variables);

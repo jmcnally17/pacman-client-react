@@ -39,15 +39,6 @@ describe("implementGhosts", () => {
     variables = "variables";
   });
 
-  it("calls checkSpeedMatchesState on each ghost", () => {
-    Physics.implementGhosts(assets, ctx, variables);
-    expect(GhostManager.checkSpeedMatchesState).toHaveBeenCalledTimes(4);
-    expect(GhostManager.checkSpeedMatchesState).toHaveBeenCalledWith(
-      ghostOne,
-      variables
-    );
-  });
-
   it("calls update on each ghost", () => {
     jest.spyOn(ghostOne, "update");
     Physics.implementGhosts(assets, ctx, variables);

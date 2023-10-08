@@ -9,6 +9,7 @@ describe("RetreatingTimer", () => {
         isRetreating: true,
         changeRetreatingState: () => undefined,
         assignSprite: () => undefined,
+        checkSpeedMatchesState: () => undefined,
       };
       const retreatingTimer = new RetreatingTimer(mockGhost);
       retreatingTimer.timeRemaining = 1930;
@@ -16,6 +17,7 @@ describe("RetreatingTimer", () => {
       jest.spyOn(global, "setTimeout");
       jest.spyOn(mockGhost, "changeRetreatingState");
       jest.spyOn(mockGhost, "assignSprite");
+      jest.spyOn(mockGhost, "checkSpeedMatchesState");
       const mockDateNow = 13940;
       retreatingTimer.resume(mockDateNow);
       expect(retreatingTimer.startTime).toBe(13940);
@@ -25,6 +27,7 @@ describe("RetreatingTimer", () => {
       jest.runOnlyPendingTimers();
       expect(mockGhost.changeRetreatingState).toHaveBeenCalledTimes(1);
       expect(mockGhost.assignSprite).toHaveBeenCalledTimes(1);
+      expect(mockGhost.checkSpeedMatchesState).toHaveBeenCalledTimes(1);
       expect(retreatingTimer.isRunning).toBeFalsy();
     });
   });
