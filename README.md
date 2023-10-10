@@ -8,7 +8,7 @@ Java API (in progress): https://github.com/jmcnally17/pacman-api-java
 
 The original project monolith (with a full comprehensive commit history) can be found at https://github.com/jmcnally17/pacman-old
 
-[<img src="./images/pacman-play-button.png">](https://pacman-js92.onrender.com)
+[<img src="./images/pacman-play-button.png">](https://projectpacman.netlify.app)
 
 ### Technologies Used
 
@@ -17,7 +17,7 @@ The original project monolith (with a full comprehensive commit history) can be 
 - [HTML5 Canvas](https://www.w3schools.com/html/html5_canvas.asp) as a container for the graphics
 - [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/) for testing
 - [Pexels Draw](https://apps.apple.com/us/app/pexels-draw/id1320744895?mt=12) for creating the boundary images and ghost sprites
-- [Render](https://render.com/) for hosting
+- [Netlify](https://www.netlify.com/) for deployment
 - [GitHub](https://github.com/) for version control
 
 A huge thank you to [Chris Courses](https://www.youtube.com/c/ChrisCourses) YouTube channel for his tutorial which helped with some of the basic game mechanics. Link to the tutorial video can be found [here](https://youtu.be/5IMXpp3rohQ).
