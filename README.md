@@ -2,6 +2,8 @@
 
 This repository is the client React application for my solo Pac-Man project. Players can visit the live site and click play. Upon which the game will load with similar rules to the original Pac-Man where the player has to score as many points as they can while avoiding the ghosts that roam the board. This client connects to a backend server to display high scores made by other players on a leaderboard when all their lives run out and the game is over. The player can sign up and make an account themselves for their score to also be saved in the database.
 
+The SolidJS version of this app (in progress) can be found at https://github.com/jmcnally17/pacman-client-solid
+
 This app pairs with an API that has multiple versions: <br>
 JS API (deployed version): https://github.com/jmcnally17/pacman-api-js <br>
 Java API: https://github.com/jmcnally17/pacman-api-java
