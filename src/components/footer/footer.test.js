@@ -25,7 +25,7 @@ describe("Footer", () => {
     const githubRepoEl = screen.getByRole("link", { name: "GitHub" });
     expect(githubRepoEl).toHaveAttribute(
       "href",
-      "https://github.com/jmcnally17/pacman"
+      "https://github.com/jmcnally17/pacman-client-react"
     );
     expect(githubRepoEl).toHaveTextContent("GitHub");
   });
